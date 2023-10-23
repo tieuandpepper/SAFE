@@ -1,0 +1,15 @@
+Total combinations: 352716
+Total formulations: 1058148
+LP30 =     2,856,999.60 mL
+TMP   =        26,453.70 mL
+TEP   =        26,453.70 mL
+DMMP  =        26,453.70 mL
+TTFEP =        26,453.70 mL
+FEMC  =        26,453.70 mL
+FDEC  =        26,453.70 mL
+BTFE  =        26,453.70 mL
+TTE   =        26,453.70 mL
+HFPN  =        26,453.70 mL
+PFPN  =        26,453.70 mL
+TFPN  =        26,453.70 mL
+FPPN  =        26,453.70 mL
