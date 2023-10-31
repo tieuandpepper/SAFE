@@ -10,16 +10,16 @@
  * DB25_P16: Remote CW/CCW INPUT
  * DB25_P17: Remote START/STOP, CW/CCW, Prime GROUND
  * DB25_P20: Remote prime INPUT
- *                 +-----------------------+  
+ *                 +-----------------------+
  *                 |    Wiring diagram     |
  *                 |          DB25         |
- *                 +-----------------------+ 
+ *                 +-----------------------+
  *   _____________________________________________________
  *   | 13  12  11  10  09  08  07  06  05  04  03  02  01 |
  *    \  25  24  23  22  21  20  19  18  17  16  15  14  / 
  *     \________________________________________________/
  * 
- * 
+ * ----------------------------------------------------------------------------------------------------------
  *                 +-----------------------+  
  *                 |    Wiring diagram     |
  *                 |      Arduino UNO      |
@@ -56,25 +56,29 @@
 #define PRIME_CONTROL       8
 
 // Define state
-#define STATE_ON LOW
-#define STATE_OFF HIGH
-#define CW HIGH
-#define CCW LOW
-#define PRIME_ON LOW
+#define PUMP_ON   LOW
+#define PUMP_OFF  HIGH
+#define CW        HIGH
+#define CCW       LOW
+#define PRIME_ON  LOW
 #define PRIME_OFF HIGH
 
-void PumpControl(uint8_t state);
+// define functions
+void PumpStart(void);
+void PumpStop(void);
 void PumpDirection(uint8_t input_direction);
 void PumpPrime(uint8_t prime);
-void GetSpeed(void);
+void PumpGetSpeed(void);
+void PumpSetSpeed(float speed_percent);
 
 /*----------------------------------------------------------------------------------------------------------*/
 float curr_real_speed = 0;
 float curr_setting_speed = 0;
-uint8_t operate_state = STATE_OFF;
+uint8_t operate_state = PUMP_OFF;
 uint8_t direction_state = CW;
 uint8_t prime_state = PRIME_OFF;
 
+/// @brief 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -82,41 +86,63 @@ void setup() {
   pinMode(REMOTE_CONTROL, OUTPUT);
   pinMode(CLOCKWISE_CONTROL, OUTPUT);
   pinMode(PRIME_CONTROL, OUTPUT);
-  PumpControl(STATE_OFF);
+  PumpStop();
   PumpDirection(CW);
   PumpPrime(PRIME_OFF);
 }
-/*----------------------------------------------------------------------------------------------------------*/
-int x = 1;
+
+/// @brief 
 void loop() {
   // put your main code here, to run repeatedly:
   
 }
-/*----------------------------------------------------------------------------------------------------------*/
-void PumpControl(uint8_t state)
+
+/// @brief start the pump by driving the input voltage pin to LOW
+void PumpStart(void)
 {
-  operate_state = state;
-  digitalWrite(REMOTE_CONTROL, operate_state);
+  if (operate_state == PUMP_OFF)
+  {
+    operate_state = PUMP_ON;
+    digitalWrite(REMOTE_CONTROL, operate_state);
+  }
 }
-/*----------------------------------------------------------------------------------------------------------*/
+
+/// @brief STOP the pump by driving the input voltage pin to HIGH
+void PumpStop(void)
+{
+  if (operate_state == PUMP_ON)
+  {
+    operate_state = PUMP_OFF;
+    digitalWrite(REMOTE_CONTROL, operate_state);
+  }
+}
+
+/// @brief 
+/// @param input_direction 
 void PumpDirection(uint8_t input_direction)
 {
   direction_state = input_direction;
   digitalWrite(CLOCKWISE_CONTROL, direction_state);
 }
-/*----------------------------------------------------------------------------------------------------------*/
+
+/// @brief 
+/// @param prime 
 void PumpPrime(uint8_t prime)
 {
   prime_state = prime;
   digitalWrite(PRIME_CONTROL, prime_state);
 }
-/*----------------------------------------------------------------------------------------------------------*/
+
+/// @brief 
+/// @param  
 void PumpGetSpeed(void)
 {
   curr_real_speed = analogRead(SPEED_FEEDBACK)*(100/1023.0);
   Serial.println(curr_real_speed);
 }
-/*----------------------------------------------------------------------------------------------------------*/
+
+/// @brief 
+/// @param speed_percent 
 void PumpSetSpeed(float speed_percent)
 {
   curr_setting_speed = speed_percent * 255 / 100;
