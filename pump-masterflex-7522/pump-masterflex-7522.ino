@@ -19,7 +19,6 @@
  *    \  25  24  23  22  21  20  19  18  17  16  15  14  / 
  *     \________________________________________________/
  * 
- * ----------------------------------------------------------------------------------------------------------
  *                 +-----------------------+  
  *                 |    Wiring diagram     |
  *                 |      Arduino UNO      |
@@ -47,13 +46,13 @@
  *                     |_______________|
  * 
  */
-/*----------------------------------------------------------------------------------------------------------*/
 // Define pinout
 #define SPEED_CONTROL       11
-#define SPEED_FEEDBACK      A0 // analog pin
 #define REMOTE_CONTROL      10
 #define CLOCKWISE_CONTROL   9
 #define PRIME_CONTROL       8
+#define SPEED_FEEDBACK      A0 // analog pin
+#define SPEED_CONTROL_VERIFY A1 //analog pin
 
 // Define state
 #define PUMP_ON   LOW
@@ -63,22 +62,28 @@
 #define PRIME_ON  LOW
 #define PRIME_OFF HIGH
 
+// define a pump structure
+typedef struct PumpStruct {
+  double speed_actual = 0;
+  double speed_setting = 0;
+  uint8_t state_operate = PUMP_OFF;
+  uint8_t state_direction = CW;
+  uint8_t state_prime = PRIME_OFF;
+} PumpData;
+
 // define functions
-void PumpStart(void);
-void PumpStop(void);
-void PumpDirection(uint8_t input_direction);
-void PumpPrime(uint8_t prime);
-void PumpGetSpeed(void);
-void PumpSetSpeed(float speed_percent);
+void PumpStart(PumpData);
+void PumpStop(PumpData);
+void PumpDirection(PumpData, uint8_t);
+void PumpPrime(PumpData, uint8_t);
+void PumpGetSpeed(PumpData);
+void PumpSetSpeed(PumpData, double);
 
 /*----------------------------------------------------------------------------------------------------------*/
-float curr_real_speed = 0;
-float curr_setting_speed = 0;
-uint8_t operate_state = PUMP_OFF;
-uint8_t direction_state = CW;
-uint8_t prime_state = PRIME_OFF;
+PumpData pump;
+char buffer[100];
 
-/// @brief 
+/// @brief abc
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -86,66 +91,83 @@ void setup() {
   pinMode(REMOTE_CONTROL, OUTPUT);
   pinMode(CLOCKWISE_CONTROL, OUTPUT);
   pinMode(PRIME_CONTROL, OUTPUT);
-  PumpStop();
-  PumpDirection(CW);
-  PumpPrime(PRIME_OFF);
+  pinMode(SPEED_CONTROL_VERIFY,INPUT_PULLUP);
+  pinMode(SPEED_FEEDBACK, INPUT_PULLUP);
+  PumpDirection(pump,pump.state_direction);
+  PumpPrime(pump, pump.state_prime);
+  PumpStart(pump);
 }
 
-/// @brief 
+/// @brief something
 void loop() {
   // put your main code here, to run repeatedly:
-  
+  PumpSetSpeed(pump,50);
+  PumpGetSpeed(pump);
+  delay(1000);
 }
 
+
+
 /// @brief start the pump by driving the input voltage pin to LOW
-void PumpStart(void)
+void PumpStart(PumpData p)
 {
-  if (operate_state == PUMP_OFF)
+  if (p.state_operate == PUMP_OFF)
   {
-    operate_state = PUMP_ON;
-    digitalWrite(REMOTE_CONTROL, operate_state);
+    p.state_operate = PUMP_ON;
+    digitalWrite(REMOTE_CONTROL, p.state_operate);
   }
 }
 
 /// @brief STOP the pump by driving the input voltage pin to HIGH
-void PumpStop(void)
+void PumpStop(PumpData p)
 {
-  if (operate_state == PUMP_ON)
+  if (p.state_operate == PUMP_ON)
   {
-    operate_state = PUMP_OFF;
-    digitalWrite(REMOTE_CONTROL, operate_state);
+    p.state_operate = PUMP_OFF;
+    digitalWrite(REMOTE_CONTROL, p.state_operate);
   }
 }
 
 /// @brief 
 /// @param input_direction 
-void PumpDirection(uint8_t input_direction)
+void PumpDirection(PumpData p, uint8_t input_direction)
 {
-  direction_state = input_direction;
-  digitalWrite(CLOCKWISE_CONTROL, direction_state);
+  p.state_direction = input_direction;
+  digitalWrite(CLOCKWISE_CONTROL, p.state_direction);
 }
 
 /// @brief 
 /// @param prime 
-void PumpPrime(uint8_t prime)
+void PumpPrime(PumpData p, uint8_t prime)
 {
-  prime_state = prime;
-  digitalWrite(PRIME_CONTROL, prime_state);
+  p.state_prime = prime;
+  digitalWrite(PRIME_CONTROL, p.state_prime);
 }
 
 /// @brief 
 /// @param  
-void PumpGetSpeed(void)
+void PumpGetSpeed(PumpData p)
 {
-  curr_real_speed = analogRead(SPEED_FEEDBACK)*(100/1023.0);
-  Serial.println(curr_real_speed);
+  int output = analogRead(SPEED_FEEDBACK);
+  double voltage = ((double)output*5/1023);
+  p.speed_actual = voltage*100/5;
+  Serial.print("Output [pwm/1023] =");
+  Serial.print(output);
+  Serial.print(", voltage [V/5] = ");
+  Serial.print(voltage);
+  Serial.print(", speed % = ");
+  Serial.println(p.speed_actual);
 }
 
 /// @brief 
 /// @param speed_percent 
-void PumpSetSpeed(float speed_percent)
+void PumpSetSpeed(PumpData p,  double speed_percent)
 {
-  curr_setting_speed = speed_percent * 255 / 100;
-  analogWrite(SPEED_CONTROL,curr_setting_speed);
-  Serial.println(curr_setting_speed);
+  p.speed_setting = speed_percent;
+  analogWrite(SPEED_CONTROL,(int)p.speed_setting *255/100);
+  Serial.print("SetSpeed % = ");
+  Serial.println(p.speed_setting);
+  double pwm = (double)analogRead(SPEED_CONTROL_VERIFY)*5/1023;
+  Serial.print("VerifyVoltage [V/5] = ");
+  Serial.println(pwm);
 }
