@@ -58,6 +58,9 @@
 #define SPEED_FEEDBACK      A0 // analog pin
 
 /*----------------------------------------------------------------------------------------------------------*/
+const byte num_chars = 32;
+char received_chars[num_chars];
+bool new_data = false;
 
 MasterflexDB25Interface_t pump_interface {
   .start_stop_pin  = REMOTE_CONTROL,
@@ -69,6 +72,7 @@ MasterflexDB25Interface_t pump_interface {
 
 PumpMasterflex pump = PumpMasterflex(pump_interface);
 
+
 /// @brief Setup/ Initialization. Run first and run ONCE
 void setup() {
   Serial.begin(9600);
@@ -76,10 +80,56 @@ void setup() {
   pump.Stop();
   pump.PrimeStop();
   pump.SetDirection(DIR_CW);
+  Serial.println("Initialization completed!");
 }
 
 /// @brief Run after setup(). Will run in loop repeatedly
 void loop() {
-  pump.Start();
-  delay(1000);
+  ReadSerial();
+  SerialDataShow();
+  SerialProcessCommand();
+}
+
+void ReadSerial()
+{
+  static byte ndx = 0;
+  char rc;
+  while (Serial.available() > 0 && new_data == false) {
+      rc = Serial.read();
+
+      if (rc != '\n') {
+          received_chars[ndx] = rc;
+          ndx++;
+          if (ndx >= num_chars) {
+              ndx = num_chars - 1;
+          }
+      }
+      else {
+          received_chars[ndx] = '\0'; // terminate the string
+          ndx = 0;
+          new_data = true;
+      }
+  }
+}
+
+void SerialDataShow()
+{
+  if (new_data == true)
+  {
+    Serial.print("Received command: ");
+    Serial.println(received_chars);
+    new_data = false;
+  }
+}
+
+void SerialProcessCommand()
+{
+  if (new_data == false) {return;}
+  switch (received_chars[0])
+  {
+    case '1': pump.Connect(); break;
+    case '2': pump.Start(); break;
+    case '3': pump.Stop(); break;
+    default: break;
+  }
 }

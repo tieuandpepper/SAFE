@@ -18,7 +18,7 @@ PumpMasterflex::PumpMasterflex(MasterflexDB25Interface_t bd25)
 
 /// @brief Perform initializations on Arduino for the pump.
 /// @brief Set initial state parameters read from the pump
-void PumpMasterflex::Connect()
+void PumpMasterflex::Connect(void)
 {
     pinMode(_pins.voltage_out_pin, OUTPUT);
     pinMode(_pins.start_stop_pin, OUTPUT);
@@ -32,14 +32,14 @@ void PumpMasterflex::Connect()
 }
 
 /// @brief Start the pump by pulling the START/STOP pin to LOW
-void PumpMasterflex::Start()
+void PumpMasterflex::Start(void)
 {
     _state_op = PUMP_START;
     digitalWrite(_pins.start_stop_pin, _state_op);
 }
 
 /// @brief Stop the pump by pulling the START/STOP pin to HIGH
-void PumpMasterflex::Stop()
+void PumpMasterflex::Stop(void)
 {
     _state_op = PUMP_STOP;
     digitalWrite(_pins.start_stop_pin, _state_op);
@@ -48,7 +48,7 @@ void PumpMasterflex::Stop()
 /// @brief Retrieve the current state of START/STOP pin of the pump
 /// @return @c 0/LOW  the pump is running
 ///         @c 1/HIGH the pump is idle
-uint8_t PumpMasterflex::GetOpState()
+uint8_t PumpMasterflex::GetOpState(void)
 {
     _state_op = digitalRead(_pins.start_stop_pin);
     return _state_op;
@@ -63,7 +63,7 @@ void PumpMasterflex::SetDirection(uint8_t direction)
 }
 
 /// @brief Toggle the direction (clockwise/counterclockwise) by the CW/CCW pin
-void PumpMasterflex::ChangeDirection()
+void PumpMasterflex::ChangeDirection(void)
 {
     _state_dir = _state_dir ^ HIGH;
     digitalWrite(_pins.direction_pin, _state_dir);
@@ -72,21 +72,21 @@ void PumpMasterflex::ChangeDirection()
 /// @brief Retrieve the current state of CW/CCW pin of the pump
 /// @return @c 0/LOW  the pump is set counterclockwise
 ///         @c 1/HIGH the pump is set clockwise
-uint8_t PumpMasterflex::GetDirection()
+uint8_t PumpMasterflex::GetDirection(void)
 {
     _state_dir = digitalRead(_pins.direction_pin);
     return _state_dir;
 }
 
 /// @brief Start priming by pulling the Remote Prime pin to HIGH
-void PumpMasterflex::PrimeStart()
+void PumpMasterflex::PrimeStart(void)
 {
     _state_prime = PRIME_ON;
     digitalWrite(_pins.prime_pin, PRIME_ON);
 }
 
 /// @brief Stop priming by pulling the Remote Prime pin to LOW
-void PumpMasterflex::PrimeStop()
+void PumpMasterflex::PrimeStop(void)
 {
     _state_prime = PRIME_OFF;
     digitalWrite(_pins.prime_pin, PRIME_OFF);
@@ -105,7 +105,7 @@ void PumpMasterflex::Prime(uint64_t duration_ms)
 /// @brief Retrieve the current state of REMOTE PRIME pin of the pump
 /// @return @c 0/LOW  the pump is priming
 ///         @c 1/HIGH the pump is not priming
-uint8_t PumpMasterflex::GetPrimeState()
+uint8_t PumpMasterflex::GetPrimeState(void)
 {
     _state_prime = digitalRead(_pins.prime_pin);
     return _state_prime;
@@ -113,7 +113,7 @@ uint8_t PumpMasterflex::GetPrimeState()
 
 /// @brief Retrieve the setup tube size
 /// @return tube_size: 13, 14, 16, ...
-uint8_t PumpMasterflex::GetTubeSize()
+uint8_t PumpMasterflex::GetTubeSize(void)
 {
     return _tube.size;
 }
@@ -193,7 +193,7 @@ void PumpMasterflex::SetSpeed(double speed_ml_min)
 /// @brief Read the INPUT_VOLTAGE analog pin and calculate the current pump speed (by % and by ml/min)
 /// @brief Update @c speed_control (speed_percent and speed_ml_min)
 /// @return pump speed by percent
-double PumpMasterflex::GetSpeedPercent()
+double PumpMasterflex::GetSpeedPercent(void)
 {    
     double max_speed = _speed_control.max_speed;
     double min_speed = _speed_control.min_speed;
@@ -207,7 +207,7 @@ double PumpMasterflex::GetSpeedPercent()
 /// @brief Read the INPUT_VOLTAGE analog pin and calculate the current pump speed (by % and by ml/min)
 /// @brief Update @c speed_control (speed_percent and speed_ml_min)
 /// @return pump speed by ml/min
-double PumpMasterflex::GetSpeed()
+double PumpMasterflex::GetSpeed(void)
 {
     double max_speed = _speed_control.max_speed;
     double min_speed = _speed_control.min_speed;
