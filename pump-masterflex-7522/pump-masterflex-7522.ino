@@ -46,6 +46,12 @@
  *                    -|-A5         RX-|-
  *                     |_______________|
  * 
+ * RC low-pass filter circuit
+ * Vin ------ R ------- C ---------- GND
+ * <-PWM->             <---- analog --->
+ * R = 1.5 kOhm
+ * C = 22uF
+ * 
  */
 
 #include "PumpMasterflex.h"
@@ -81,32 +87,25 @@ void setup() {
   pump.PrimeStop();
   pump.SetDirection(DIR_CW);
   pump.SetTubeSize(14);
-  pump.SetVoltageLevel(5, 0.2);
+  pump.SetVoltageLevel(5, 0.4);
+  pump.SetMinSpeed(0);
+  pump.SetMaxSpeed(30);
   Serial.println("Initialization completed!");
 }
 
 /// @brief Run after setup(). Will run in loop repeatedly
 void loop() {
   pump.Start();
-  delay(5000);
-  pump.ChangeDirection();
-  Serial.println("Change direction");
-  delay(5000);
-  Serial.println("Change direction");
-  pump.ChangeDirection();
-  delay(5000);
-  pump.Stop();
-  delay(5000);
-  Serial.println("Prime start");
-  pump.PrimeStart();
-  delay(10000);
-  Serial.println("Prime stop");
-  pump.PrimeStop();
+}
+
+void SpeedValidation(double ml_min)
+{
+  Serial.print("\n\nSetSpeed: ");
+  Serial.println(ml_min);
+  pump.SetSpeed(ml_min);
   pump.Start();
-  delay(5000);
   Serial.print("GetSpeed: ");
   Serial.println(pump.GetSpeed());
-  delay(5000);
   Serial.print("GetSpeedPercent: ");
   Serial.println(pump.GetSpeedPercent());
   delay(5000);
