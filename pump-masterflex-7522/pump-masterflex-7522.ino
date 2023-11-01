@@ -80,56 +80,34 @@ void setup() {
   pump.Stop();
   pump.PrimeStop();
   pump.SetDirection(DIR_CW);
+  pump.SetTubeSize(14);
+  pump.SetVoltageLevel(5, 0.2);
   Serial.println("Initialization completed!");
 }
 
 /// @brief Run after setup(). Will run in loop repeatedly
 void loop() {
-  ReadSerial();
-  SerialDataShow();
-  SerialProcessCommand();
-}
-
-void ReadSerial()
-{
-  static byte ndx = 0;
-  char rc;
-  while (Serial.available() > 0 && new_data == false) {
-      rc = Serial.read();
-
-      if (rc != '\n') {
-          received_chars[ndx] = rc;
-          ndx++;
-          if (ndx >= num_chars) {
-              ndx = num_chars - 1;
-          }
-      }
-      else {
-          received_chars[ndx] = '\0'; // terminate the string
-          ndx = 0;
-          new_data = true;
-      }
-  }
-}
-
-void SerialDataShow()
-{
-  if (new_data == true)
-  {
-    Serial.print("Received command: ");
-    Serial.println(received_chars);
-    new_data = false;
-  }
-}
-
-void SerialProcessCommand()
-{
-  if (new_data == false) {return;}
-  switch (received_chars[0])
-  {
-    case '1': pump.Connect(); break;
-    case '2': pump.Start(); break;
-    case '3': pump.Stop(); break;
-    default: break;
-  }
+  pump.Start();
+  delay(5000);
+  pump.ChangeDirection();
+  Serial.println("Change direction");
+  delay(5000);
+  Serial.println("Change direction");
+  pump.ChangeDirection();
+  delay(5000);
+  pump.Stop();
+  delay(5000);
+  Serial.println("Prime start");
+  pump.PrimeStart();
+  delay(10000);
+  Serial.println("Prime stop");
+  pump.PrimeStop();
+  pump.Start();
+  delay(5000);
+  Serial.print("GetSpeed: ");
+  Serial.println(pump.GetSpeed());
+  delay(5000);
+  Serial.print("GetSpeedPercent: ");
+  Serial.println(pump.GetSpeedPercent());
+  delay(5000);
 }
