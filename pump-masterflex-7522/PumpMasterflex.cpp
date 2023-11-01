@@ -54,6 +54,21 @@ uint8_t PumpMasterflex::GetOpState()
     return this->state_op;
 }
 
+/// @brief Set the direction (clockwise/counterclockwise) by the CW/CCW pin
+/// @param direction @c 1/HIGH CW  @c 0/LOW CCW
+void PumpMasterflex::SetDirection(uint8_t direction)
+{
+    this->state_dir = direction;
+    digitalWrite(_pins.direction_pin, direction);
+}
+
+/// @brief Toggle the direction (clockwise/counterclockwise) by the CW/CCW pin
+void PumpMasterflex::ChangeDirection()
+{
+    this->state_dir = this->state_dir ^ HIGH;
+    digitalWrite(_pins.direction_pin, this->state_dir);
+}
+
 /// @brief Retrieve the current state of CW/CCW pin of the pump
 /// @return @c 0/LOW  the pump is set counterclockwise
 ///         @c 1/HIGH the pump is set clockwise
@@ -61,50 +76,6 @@ uint8_t PumpMasterflex::GetDirection()
 {
     this->state_dir = digitalRead(_pins.direction_pin);
     return this->state_dir;
-}
-
-/// @brief Retrieve the current state of REMOTE PRIME pin of the pump
-/// @return @c 0/LOW  the pump is priming
-///         @c 1/HIGH the pump is not priming
-uint8_t PumpMasterflex::GetPrimeState()
-{
-    this->state_prime = digitalRead(_pins.prime_pin);
-    return this->state_prime;
-}
-
-/// @brief Retrieve the setup tube size
-/// @return tube_size: 13, 14, 16, ...
-uint8_t PumpMasterflex::GetTubeSize()
-{
-    return this->tube.size;
-}
-
-/// @brief Read the INPUT_VOLTAGE analog pin and calculate the current pump speed (by % and by ml/min)
-/// @brief Update @c speed_control (speed_percent and speed_ml_min)
-/// @return pump speed by percent
-double PumpMasterflex::GetSpeedPercent()
-{    
-    double max_speed = this->speed_control.max_speed;
-    double min_speed = this->speed_control.min_speed;
-    int analog_val = analogRead(_pins.voltage_out_pin);
-    double voltage = (double)analog_val * ARDUINO_VCC / ARDUINO_ANALOG;
-    this->speed_control.speed_percent = (voltage - this->min_voltage) * 100 / (this->max_voltage - this->min_voltage);
-    this->speed_control.speed_ml_min = this->speed_control.speed_percent * (max_speed - min_speed) / 100 + min_speed;
-    return this->speed_control.speed_percent;
-}
-
-/// @brief Read the INPUT_VOLTAGE analog pin and calculate the current pump speed (by % and by ml/min)
-/// @brief Update @c speed_control (speed_percent and speed_ml_min)
-/// @return pump speed by ml/min
-double PumpMasterflex::GetSpeed()
-{
-    double max_speed = this->speed_control.max_speed;
-    double min_speed = this->speed_control.min_speed;
-    int analog_val = analogRead(_pins.voltage_out_pin);
-    double voltage = (double)analog_val * ARDUINO_VCC / ARDUINO_ANALOG;
-    this->speed_control.speed_percent = (voltage - this->min_voltage) * 100 / (this->max_voltage - this->min_voltage);
-    this->speed_control.speed_ml_min = this->speed_control.speed_percent * (max_speed - min_speed) / 100 + min_speed;
-    return this->speed_control.speed_ml_min;
 }
 
 /// @brief Start priming by pulling the Remote Prime pin to HIGH
@@ -131,19 +102,20 @@ void PumpMasterflex::Prime(uint64_t duration_ms)
     this->PrimeStop();
 }
 
-/// @brief Set the direction (clockwise/counterclockwise) by the CW/CCW pin
-/// @param direction @c 1/HIGH CW  @c 0/LOW CCW
-void PumpMasterflex::SetDirection(uint8_t direction)
+/// @brief Retrieve the current state of REMOTE PRIME pin of the pump
+/// @return @c 0/LOW  the pump is priming
+///         @c 1/HIGH the pump is not priming
+uint8_t PumpMasterflex::GetPrimeState()
 {
-    this->state_dir = direction;
-    digitalWrite(_pins.direction_pin, direction);
+    this->state_prime = digitalRead(_pins.prime_pin);
+    return this->state_prime;
 }
 
-/// @brief Toggle the direction (clockwise/counterclockwise) by the CW/CCW pin
-void PumpMasterflex::ChangeDirection()
+/// @brief Retrieve the setup tube size
+/// @return tube_size: 13, 14, 16, ...
+uint8_t PumpMasterflex::GetTubeSize()
 {
-    this->state_dir = this->state_dir ^ HIGH;
-    digitalWrite(_pins.direction_pin, this->state_dir);
+    return this->tube.size;
 }
 
 /// @brief Update @c speed_control (max_speed and min_speed) by the size of tube
@@ -192,16 +164,6 @@ void PumpMasterflex::SetMinSpeed(double speed)
     this->speed_control.min_speed = speed;
 }
 
-/// @brief Set the voltage threshold for the pump @c VOLTAGE_OUTPUT 
-/// @param voltage_max highest voltage for the OUTPUT_PIN
-/// @param voltage_min lowest voltage for the OUTPUT_PIN
-/// @warning Must be updated manually following the setting on the pump
-void PumpMasterflex::SetVoltageLevel(uint8_t voltage_max, uint8_t voltage_min = 0)
-{
-    this->max_voltage = voltage_max;
-    this->min_voltage = voltage_min;
-}
-
 /// @brief Set the pump speed by percentage
 /// @attention the pump speed percentage and ml/min values are both updated
 /// @param percent double from 0-100 (%)
@@ -226,4 +188,42 @@ void PumpMasterflex::SetSpeed(double speed_ml_min)
     this->speed_control.speed_percent = (speed_ml_min - min_speed) * 100 / (max_speed - min_speed);
     int pwm_val = (int)(speed_ml_min * ARDUINO_PWM / (max_speed - min_speed));
     analogWrite(_pins.voltage_in_pin, pwm_val);
+}
+
+/// @brief Read the INPUT_VOLTAGE analog pin and calculate the current pump speed (by % and by ml/min)
+/// @brief Update @c speed_control (speed_percent and speed_ml_min)
+/// @return pump speed by percent
+double PumpMasterflex::GetSpeedPercent()
+{    
+    double max_speed = this->speed_control.max_speed;
+    double min_speed = this->speed_control.min_speed;
+    int analog_val = analogRead(_pins.voltage_out_pin);
+    double voltage = (double)analog_val * ARDUINO_VCC / ARDUINO_ANALOG;
+    this->speed_control.speed_percent = (voltage - this->min_voltage) * 100 / (this->max_voltage - this->min_voltage);
+    this->speed_control.speed_ml_min = this->speed_control.speed_percent * (max_speed - min_speed) / 100 + min_speed;
+    return this->speed_control.speed_percent;
+}
+
+/// @brief Read the INPUT_VOLTAGE analog pin and calculate the current pump speed (by % and by ml/min)
+/// @brief Update @c speed_control (speed_percent and speed_ml_min)
+/// @return pump speed by ml/min
+double PumpMasterflex::GetSpeed()
+{
+    double max_speed = this->speed_control.max_speed;
+    double min_speed = this->speed_control.min_speed;
+    int analog_val = analogRead(_pins.voltage_out_pin);
+    double voltage = (double)analog_val * ARDUINO_VCC / ARDUINO_ANALOG;
+    this->speed_control.speed_percent = (voltage - this->min_voltage) * 100 / (this->max_voltage - this->min_voltage);
+    this->speed_control.speed_ml_min = this->speed_control.speed_percent * (max_speed - min_speed) / 100 + min_speed;
+    return this->speed_control.speed_ml_min;
+}
+
+/// @brief Set the voltage threshold for the pump @c VOLTAGE_OUTPUT 
+/// @param voltage_max highest voltage for the OUTPUT_PIN
+/// @param voltage_min lowest voltage for the OUTPUT_PIN
+/// @warning Must be updated manually following the setting on the pump
+void PumpMasterflex::SetVoltageLevel(uint8_t voltage_max, uint8_t voltage_min = 0)
+{
+    this->max_voltage = voltage_max;
+    this->min_voltage = voltage_min;
 }

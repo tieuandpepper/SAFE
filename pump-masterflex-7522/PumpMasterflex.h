@@ -67,23 +67,23 @@ class PumpMasterflex {
         void Connect();
         void Start();
         void Stop();
+        uint8_t GetOpState();
+        void SetDirection(uint8_t direction);
+        void ChangeDirection();
+        uint8_t GetDirection();
         void PrimeStart();
         void PrimeStop();
         void Prime(uint64_t duration_ms);
-        void SetDirection(uint8_t direction);
-        void ChangeDirection();
+        uint8_t GetPrimeState();
         void SetTubeSize(uint8_t size);
-        void SetVoltageLevel(uint8_t voltage_max, uint8_t voltage_min = 0);
-        void SetSpeedPercent(double percent);
-        void SetSpeed(double speed_ml_min);
+        uint8_t GetTubeSize();
         void SetMaxSpeed(double speed);
         void SetMinSpeed(double speed);
-        uint8_t GetOpState();
-        uint8_t GetDirection();
-        uint8_t GetPrimeState();
-        uint8_t GetTubeSize();
+        void SetSpeedPercent(double percent);
+        void SetSpeed(double speed_ml_min);
         double GetSpeedPercent();
         double GetSpeed();
+        void SetVoltageLevel(uint8_t voltage_max, uint8_t voltage_min = 0);
 };
 
 #endif
