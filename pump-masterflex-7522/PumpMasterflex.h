@@ -55,13 +55,13 @@ typedef struct TubeProperties {
 class PumpMasterflex {
     private:
         MasterflexDB25Interface_t _pins;
-        uint8_t state_op = PUMP_STOP;
-        uint8_t state_dir = DIR_CW;
-        uint8_t state_prime = PRIME_OFF;
-        Tube_t tube;
-        PumpSpeed_t speed_control;
-        uint32_t max_voltage;
-        uint32_t min_voltage;
+        uint8_t _state_op = PUMP_STOP;
+        uint8_t _state_dir = DIR_CW;
+        uint8_t _state_prime = PRIME_OFF;
+        Tube_t _tube;
+        PumpSpeed_t _speed_control;
+        uint32_t _max_voltage;
+        uint32_t _min_voltage;
     public:
         PumpMasterflex(MasterflexDB25Interface_t pins);
         void Connect();
