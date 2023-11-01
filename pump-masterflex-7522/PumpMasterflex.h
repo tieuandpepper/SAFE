@@ -7,7 +7,10 @@
 #define Morse_h
 
 #include "Arduino.h"
-
+// arduino constant
+#define ARDUINO_PWM 255
+#define ARDUINO_ANALOG 1023
+#define ARDUINO_VCC 5
 // Define state
 #define PUMP_ON    LOW
 #define PUMP_OFF   HIGH
@@ -26,15 +29,11 @@
 #define TUBE_MAX_SPEED_16  480 // ml/min (600rpm)
 #define TUBE_MIN_SPEED_16  0.80 // ml/min (1rpm)
 
-// preprocessor expansion to get tube properties
-#define concat(a,b) a##b
-#define tube_size(s) concat(TUBE_SIZE_, s)
-#define tube_max_speed(s) concat(TUBE_MAX_SPEED_,s)
-#define tube_min_speed(s) concat(TUBE_MIN_SPEED_,s)
-
 typedef struct PumpSpeed {
     double speed_percent;
     double speed_ml_min;
+    double max_speed;
+    double min_speed;
 } PumpSpeed_t;
 
 typedef struct MasterflexDB25Pins {
@@ -45,16 +44,20 @@ typedef struct MasterflexDB25Pins {
     uint8_t voltage_out_pin;
 } MasterflexDB25Interface_t;
 
+typedef struct TubeProperties {
+    uint8_t size;
+    double max_speed;
+    double min_speed;
+} Tube_t;
+
 class PumpMasterflex {
     private:
         MasterflexDB25Interface_t _pins;
         uint8_t state_op = PUMP_OFF;
         uint8_t state_dir = DIR_CW;
         uint8_t state_prime = PRIME_OFF;
-        uint8_t tube_size;
+        Tube_t tube;
         PumpSpeed_t speed_control;
-        uint32_t max_speed;
-        uint32_t min_speed;
         uint32_t max_voltage;
         uint32_t min_voltage;
     public:
@@ -79,7 +82,6 @@ class PumpMasterflex {
         uint8_t GetTubeSize();
         double GetSpeedPercent();
         double GetSpeed();
-
 };
 
 #endif

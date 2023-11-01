@@ -46,6 +46,9 @@
  *                     |_______________|
  * 
  */
+
+#include "PumpMasterflex.h"
+
 // Define pinout
 #define SPEED_CONTROL       11
 #define REMOTE_CONTROL      10
@@ -62,112 +65,29 @@
 #define PRIME_ON  LOW
 #define PRIME_OFF HIGH
 
-// define a pump structure
-typedef struct PumpStruct {
-  double speed_actual = 0;
-  double speed_setting = 0;
-  uint8_t state_operate = PUMP_OFF;
-  uint8_t state_direction = CW;
-  uint8_t state_prime = PRIME_OFF;
-} PumpData;
-
-// define functions
-void PumpStart(PumpData);
-void PumpStop(PumpData);
-void PumpDirection(PumpData, uint8_t);
-void PumpPrime(PumpData, uint8_t);
-void PumpGetSpeed(PumpData);
-void PumpSetSpeed(PumpData, double);
-
 /*----------------------------------------------------------------------------------------------------------*/
-PumpData pump;
-char buffer[100];
 
-/// @brief abc
+MasterflexDB25Interface_t pump_interface {
+  .start_stop_pin  = REMOTE_CONTROL,
+  .direction_pin   = CLOCKWISE_CONTROL,
+  .prime_pin       = PRIME_CONTROL,
+  .voltage_in_pin  = SPEED_CONTROL,
+  .voltage_out_pin = SPEED_FEEDBACK,
+};
+
+PumpMasterflex pump = PumpMasterflex(pump_interface);
+
+/// @brief Setup/ Initialization. Run first and run ONCE
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
-  pinMode(SPEED_CONTROL, OUTPUT);
-  pinMode(REMOTE_CONTROL, OUTPUT);
-  pinMode(CLOCKWISE_CONTROL, OUTPUT);
-  pinMode(PRIME_CONTROL, OUTPUT);
-  pinMode(SPEED_CONTROL_VERIFY,INPUT_PULLUP);
-  pinMode(SPEED_FEEDBACK, INPUT_PULLUP);
-  PumpDirection(pump,pump.state_direction);
-  PumpPrime(pump, pump.state_prime);
-  PumpStart(pump);
+  pump.Connect();
+  pump.Stop();
+  pump.PrimeStop();
+  pump.SetDirection(CW);
 }
 
-/// @brief something
+/// @brief Run after setup(). Will run in loop repeatedly
 void loop() {
-  // put your main code here, to run repeatedly:
-  PumpSetSpeed(pump,50);
-  PumpGetSpeed(pump);
+  pump.Start();
   delay(1000);
-}
-
-
-
-/// @brief start the pump by driving the input voltage pin to LOW
-void PumpStart(PumpData p)
-{
-  if (p.state_operate == PUMP_OFF)
-  {
-    p.state_operate = PUMP_ON;
-    digitalWrite(REMOTE_CONTROL, p.state_operate);
-  }
-}
-
-/// @brief STOP the pump by driving the input voltage pin to HIGH
-void PumpStop(PumpData p)
-{
-  if (p.state_operate == PUMP_ON)
-  {
-    p.state_operate = PUMP_OFF;
-    digitalWrite(REMOTE_CONTROL, p.state_operate);
-  }
-}
-
-/// @brief 
-/// @param input_direction 
-void PumpDirection(PumpData p, uint8_t input_direction)
-{
-  p.state_direction = input_direction;
-  digitalWrite(CLOCKWISE_CONTROL, p.state_direction);
-}
-
-/// @brief 
-/// @param prime 
-void PumpPrime(PumpData p, uint8_t prime)
-{
-  p.state_prime = prime;
-  digitalWrite(PRIME_CONTROL, p.state_prime);
-}
-
-/// @brief 
-/// @param  
-void PumpGetSpeed(PumpData p)
-{
-  int output = analogRead(SPEED_FEEDBACK);
-  double voltage = ((double)output*5/1023);
-  p.speed_actual = voltage*100/5;
-  Serial.print("Output [pwm/1023] =");
-  Serial.print(output);
-  Serial.print(", voltage [V/5] = ");
-  Serial.print(voltage);
-  Serial.print(", speed % = ");
-  Serial.println(p.speed_actual);
-}
-
-/// @brief 
-/// @param speed_percent 
-void PumpSetSpeed(PumpData p,  double speed_percent)
-{
-  p.speed_setting = speed_percent;
-  analogWrite(SPEED_CONTROL,(int)p.speed_setting *255/100);
-  Serial.print("SetSpeed % = ");
-  Serial.println(p.speed_setting);
-  double pwm = (double)analogRead(SPEED_CONTROL_VERIFY)*5/1023;
-  Serial.print("VerifyVoltage [V/5] = ");
-  Serial.println(pwm);
 }
