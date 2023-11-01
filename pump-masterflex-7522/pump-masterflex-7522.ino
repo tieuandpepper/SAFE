@@ -15,7 +15,8 @@
  *                 |          DB25         |
  *                 +-----------------------+
  *   _____________________________________________________
- *   | 13  12  11  10  09  08  07  06  05  04  03  02  01 |
+ *   [ 13  12  11  10  09  08  07  06  05  04  03  02  01 ]
+ *   [                                                    ]
  *    \  25  24  23  22  21  20  19  18  17  16  15  14  / 
  *     \________________________________________________/
  * 
@@ -55,15 +56,6 @@
 #define CLOCKWISE_CONTROL   9
 #define PRIME_CONTROL       8
 #define SPEED_FEEDBACK      A0 // analog pin
-#define SPEED_CONTROL_VERIFY A1 //analog pin
-
-// Define state
-#define PUMP_ON   LOW
-#define PUMP_OFF  HIGH
-#define CW        HIGH
-#define CCW       LOW
-#define PRIME_ON  LOW
-#define PRIME_OFF HIGH
 
 /*----------------------------------------------------------------------------------------------------------*/
 
@@ -83,7 +75,7 @@ void setup() {
   pump.Connect();
   pump.Stop();
   pump.PrimeStop();
-  pump.SetDirection(CW);
+  pump.SetDirection(DIR_CW);
 }
 
 /// @brief Run after setup(). Will run in loop repeatedly

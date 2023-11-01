@@ -11,13 +11,15 @@
 #define ARDUINO_PWM 255
 #define ARDUINO_ANALOG 1023
 #define ARDUINO_VCC 5
+
 // Define state
-#define PUMP_ON    LOW
-#define PUMP_OFF   HIGH
+#define PUMP_START LOW
+#define PUMP_STOP  HIGH
 #define DIR_CW     HIGH
 #define DIR_CCW    LOW
 #define PRIME_ON   LOW
 #define PRIME_OFF  HIGH
+
 // define tube size
 #define TUBE_SIZE_13 13
 #define TUBE_MAX_SPEED_13  36 // ml/min (600rpm)
@@ -53,7 +55,7 @@ typedef struct TubeProperties {
 class PumpMasterflex {
     private:
         MasterflexDB25Interface_t _pins;
-        uint8_t state_op = PUMP_OFF;
+        uint8_t state_op = PUMP_STOP;
         uint8_t state_dir = DIR_CW;
         uint8_t state_prime = PRIME_OFF;
         Tube_t tube;

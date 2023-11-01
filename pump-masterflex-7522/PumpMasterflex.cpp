@@ -17,6 +17,7 @@ PumpMasterflex::PumpMasterflex(MasterflexDB25Interface_t bd25)
 }
 
 /// @brief Perform initializations on Arduino for the pump.
+/// @brief Set initial state parameters read from the pump
 void PumpMasterflex::Connect()
 {
     pinMode(_pins.voltage_out_pin, OUTPUT);
@@ -33,15 +34,15 @@ void PumpMasterflex::Connect()
 /// @brief Start the pump by pulling the START/STOP pin to LOW
 void PumpMasterflex::Start()
 {
-    this->state_op = PUMP_ON;
-    digitalWrite(_pins.start_stop_pin, PUMP_ON);
+    this->state_op = PUMP_START;
+    digitalWrite(_pins.start_stop_pin, this->state_op);
 }
 
 /// @brief Stop the pump by pulling the START/STOP pin to HIGH
 void PumpMasterflex::Stop()
 {
-    this->state_op = PUMP_OFF;
-    digitalWrite(_pins.start_stop_pin, PUMP_OFF);
+    this->state_op = PUMP_STOP;
+    digitalWrite(_pins.start_stop_pin, this->state_op);
 }
 
 /// @brief Retrieve the current state of START/STOP pin of the pump
