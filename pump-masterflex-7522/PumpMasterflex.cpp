@@ -274,7 +274,7 @@ bool PumpMasterflex::SetMinVoltageLevel(uint32_t voltage_min)
 
 bool PumpMasterflex::Dispense(uint32_t amount_ul)
 {
-    uint64_t time = (60000 * amount_ul) / (speed);
+    uint64_t time = (60000 * amount_ul) / (_speed_control.speed_ml_min * 1000);
     bool res = this->Start();
     delay(time);
     res |= this->Stop();

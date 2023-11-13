@@ -50,6 +50,7 @@
  */
 
 #include "PumpMasterflex.h"
+#include "Comm.h"
 
 // Define pinout
 #define SPEED_CONTROL       11
@@ -144,7 +145,7 @@ void Controller()
   case '4':
     Serial.println("dispense. Continuous mode");
     long int t1 = millis();
-    pump.Dispense(3000,14000);
+    pump.Dispense(3000);
     t1 = millis() - t1;
     Serial.print("done in ");
     Serial.println(t1);
