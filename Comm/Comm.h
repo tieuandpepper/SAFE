@@ -42,29 +42,13 @@ enum pump_cmd_id
     PUMP_CMD_PRIME_MS,
 };
 
-typedef struct buffer_struct {
+typedef struct comm_buffer_struct {
     uint8_t data[BUFFER_SIZE];
     uint32_t size = 0;
-    bool empty_flag = true;
-} buffer_t;
+} comm_buffer_t;
 
-buffer_t received_buffer;
-buffer_t transmit_buffer;
-
-bool GetBytesComm()
-{
-    while (Serial.available() > 0 && received_buffer.size < BUFFER_SIZE)
-    {
-        received_buffer.data[received_buffer.size++] = Serial.read();
-    }
-    if (received_buffer.size > 0)
-    {
-        received_buffer.empty_flag = false;
-        return true;
-    }
-    return false;
-};
-
+bool CommGetBytes(comm_buffer_t* comm_input_buffer);
+bool CommSendBytes(comm_buffer_t* comm_output_buffer);
 
 
 #endif
