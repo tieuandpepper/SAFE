@@ -3,8 +3,8 @@
  * Created by Kevin Tieu, October 31, 2023
 */
 
-#ifndef Morse_h
-#define Morse_h
+#ifndef PumpMasterflex_h
+#define PumpMasterflex_h
 
 #include "Arduino.h"
 // arduino constant
@@ -32,6 +32,7 @@
 #define TUBE_MIN_SPEED_16  0.80 // ml/min (1rpm)
 
 typedef struct PumpSpeed {
+    // 0-1
     double speed_percent;
     double speed_ml_min;
     double max_speed;
@@ -64,26 +65,28 @@ class PumpMasterflex {
         uint32_t _min_voltage;
     public:
         PumpMasterflex(MasterflexDB25Interface_t pins);
-        void Connect();
-        void Start();
-        void Stop();
+        bool Connect();
+        bool Start();
+        bool Stop();
         uint8_t GetOpState();
-        void SetDirection(uint8_t direction);
-        void ChangeDirection();
+        bool SetDirection(uint32_t direction);
+        bool ChangeDirection();
         uint8_t GetDirection();
-        void PrimeStart();
-        void PrimeStop();
-        void Prime(uint64_t duration_ms);
+        bool PrimeStart();
+        bool PrimeStop();
+        bool Prime(uint32_t duration_ms);
         uint8_t GetPrimeState();
-        void SetTubeSize(uint8_t size);
+        bool SetTubeSize(uint32_t size);
         uint8_t GetTubeSize();
-        void SetMaxSpeed(double speed);
-        void SetMinSpeed(double speed);
-        void SetSpeedPercent(double percent);
-        void SetSpeed(double speed_ml_min);
-        double GetSpeedPercent();
-        double GetSpeed();
-        void SetVoltageLevel(uint8_t voltage_max, uint8_t voltage_min = 0);
+        bool SetMaxSpeed(uint32_t speed);
+        bool SetMinSpeed(uint32_t speed);
+        bool SetSpeedPercent(uint32_t percent);
+        bool SetSpeed(uint32_t speed_ml_min);
+        uint32_t GetSpeedPercent();
+        uint32_t GetSpeed();
+        bool SetMaxVoltageLevel(uint32_t voltage_max);
+        bool SetMinVoltageLevel(uint32_t voltage_min);
+        bool Dispense(uint32_t amount_ul);
 };
 
 #endif

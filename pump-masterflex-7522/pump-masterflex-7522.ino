@@ -46,11 +46,6 @@
  *                    -|-A5         RX-|-
  *                     |_______________|
  * 
- * RC low-pass filter circuit
- * Vin ------ R ------- C ---------- GND
- * <-PWM->             <---- analog --->
- * R = 1.5 kOhm
- * C = 22uF
  * 
  */
 
@@ -63,10 +58,13 @@
 #define PRIME_CONTROL       8
 #define SPEED_FEEDBACK      A0 // analog pin
 
+#define BUFFER_SIZE         40
+
 /*----------------------------------------------------------------------------------------------------------*/
-const byte num_chars = 32;
-char received_chars[num_chars];
 bool new_data = false;
+char buffer[BUFFER_SIZE];
+uint16_t msg_idx = 0;
+bool data_received = false;
 
 MasterflexDB25Interface_t pump_interface {
   .start_stop_pin  = REMOTE_CONTROL,
@@ -78,7 +76,6 @@ MasterflexDB25Interface_t pump_interface {
 
 PumpMasterflex pump = PumpMasterflex(pump_interface);
 
-
 /// @brief Setup/ Initialization. Run first and run ONCE
 void setup() {
   Serial.begin(9600);
@@ -87,26 +84,73 @@ void setup() {
   pump.PrimeStop();
   pump.SetDirection(DIR_CW);
   pump.SetTubeSize(14);
-  pump.SetVoltageLevel(5, 0.4);
+  pump.SetMaxVoltageLevel(5000);
+  pump.SetMinVoltageLevel(400);
   pump.SetMinSpeed(0);
-  pump.SetMaxSpeed(30);
+  pump.SetMaxSpeed(30000);
+//  pump.SetSpeed(6820);
   Serial.println("Initialization completed!");
+  Serial.println(pump.GetSpeed());
 }
 
 /// @brief Run after setup(). Will run in loop repeatedly
 void loop() {
-  pump.Start();
+  ReadSerial();
+  Controller();
 }
 
-void SpeedValidation(double ml_min)
+void ReadSerial()
 {
-  Serial.print("\n\nSetSpeed: ");
-  Serial.println(ml_min);
-  pump.SetSpeed(ml_min);
-  pump.Start();
-  Serial.print("GetSpeed: ");
-  Serial.println(pump.GetSpeed());
-  Serial.print("GetSpeedPercent: ");
-  Serial.println(pump.GetSpeedPercent());
-  delay(5000);
+  char c;
+//  msg_idx = 0;
+  while (Serial.available() > 0)
+  {
+    c = Serial.read();
+    if (c != '\n' && (msg_idx < BUFFER_SIZE - 1))
+    {
+      buffer[msg_idx++] = c;
+    }
+    else
+    {
+      buffer[msg_idx] = '\0';
+      data_received = true;
+      msg_idx = 0;
+      Serial.print("Received data: ");
+      Serial.println(buffer);
+    }
+  }
+}
+
+void Controller()
+{
+  if (!data_received)
+  {
+    return;
+  }
+  switch (buffer[0])
+  {
+  case '1':
+    Serial.println("start");
+    pump.Start();
+    break;
+  case '2':
+    Serial.println("stop");
+    pump.Stop();
+    break;
+  case '3':
+    Serial.println("switch");
+    pump.ChangeDirection();
+    break;
+  case '4':
+    Serial.println("dispense. Continuous mode");
+    long int t1 = millis();
+    pump.Dispense(3000,14000);
+    t1 = millis() - t1;
+    Serial.print("done in ");
+    Serial.println(t1);
+    break;
+  default:
+    break;
+  }
+  data_received = false;
 }
