@@ -9,11 +9,11 @@
 /// @return true/1 if success
 bool CommProtocol::GetBytes()
 {
-    while (Serial.available() && _buffer_input->size < BUFFER_SIZE)
+    while (Serial.available() && _buffer_input.size < BUFFER_SIZE)
     {
-        _buffer_input->data[_buffer_input->size++] = Serial.read();
+        _buffer_input.data[_buffer_input.size++] = Serial.read();
     }
-    if (_buffer_input->size > 0)
+    if (_buffer_input.size > 0)
     {
         return true;
     }
@@ -25,13 +25,13 @@ bool CommProtocol::GetBytes()
 /// @return true/1 if success 
 bool CommProtocol::CommSendBytes()
 {
-    if (_buffer_output->size == 0)
+    if (_buffer_output.size == 0)
     {
         return false;
     }
-    Serial.write(_buffer_output->data,_buffer_output->size);
-    memset(_buffer_output->data, 0, _buffer_output->size);
-    _buffer_output->size = 0;
+    Serial.write(_buffer_output.data,_buffer_output.size);
+    memset(_buffer_output.data, 0, _buffer_output.size);
+    _buffer_output.size = 0;
     return true;
 }
 
