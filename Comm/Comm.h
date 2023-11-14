@@ -9,8 +9,13 @@
 #include "Arduino.h"
 
 #define BUFFER_SIZE 64
-#define START_BITS 0xADDA
-#define STOP_BITS  0xBCCB
+#define PARAM_SIZE  56
+#define MIN_CMD_LEN 8
+#define MIN_RESP_LEN 8
+#define MAX_MSG_COUNT 8
+#define START_CMD_BITS 0xADDA
+#define START_RESP_BITS 0xBEEB
+#define STOP_BITS  0xFDDF
 
 // Response ID
 
@@ -42,13 +47,41 @@ enum pump_cmd_id
     PUMP_CMD_PRIME_MS,
 };
 
-typedef struct comm_buffer_struct {
+typedef struct comm_msg_struct {
     uint8_t data[BUFFER_SIZE];
     uint32_t size = 0;
-} comm_buffer_t;
+} msg_t;
 
-bool CommGetBytes(comm_buffer_t* comm_input_buffer);
-bool CommSendBytes(comm_buffer_t* comm_output_buffer);
+typedef struct comm_cmd_struct {
+    uint8_t cpnt_id;
+    uint8_t cmd_id;
+    uint32_t parameter[PARAM_SIZE];
+    uint8_t parameter_cnt = 0;
+} cmd_t;
+
+typedef struct comm_resp_struct {
+    uint8_t cpnt_id;
+    uint8_t resp_id;
+    uint32_t parameter[PARAM_SIZE];
+    uint8_t parameter_cnt = 0;
+} resp_t;
+
+class CommProtocol {
+    private:
+    msg_t _buffer_input;
+    msg_t _buffer_output;
+    cmd_t _command_msg[MAX_MSG_COUNT];
+    uint8_t _command_cnt = 0;
+    resp_t _response_msg[MAX_MSG_COUNT];
+    uint8_t _response_cnt = 0;
+
+    public:
+    bool GetBytes();
+    bool SendBytes();
+    bool StripBytes();
+    bool PadBytes();
+};
+
 
 
 #endif

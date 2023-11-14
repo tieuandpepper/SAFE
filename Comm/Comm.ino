@@ -1,7 +1,7 @@
 #include "Comm.h"
 
-comm_buffer_t comm_input_buffer;
-comm_buffer_t comm_output_buffer;
+msg_t buffer_input;
+msg_t buffer_output;
 uint32_t count = 0;
 void setup()
 {
@@ -13,26 +13,26 @@ void loop()
 {
     count++;
     Serial.println(count);
-    if (CommGetBytes(&comm_input_buffer))
+    if (CommGetBytes(&buffer_input))
     {
-        for (int i = 0; i < comm_input_buffer.size; ++i)
+        for (int i = 0; i < buffer_input.size; ++i)
         {
-          Serial.write(comm_input_buffer.data[i]);
+          Serial.write(buffer_input.data[i]);
           Serial.print(" or ");
-          Serial.println(int(comm_input_buffer.data[i]));        
+          Serial.println(int(buffer_input.data[i]));        
         }
         Serial.println("Data received");
     }
-    if (comm_input_buffer.size > 0 && digitalRead(8)==HIGH)
+    if (buffer_input.size > 0 && digitalRead(8)==HIGH)
     {
-        for (int i = 0; i < comm_input_buffer.size; ++i)
+        for (int i = 0; i < buffer_input.size; ++i)
         {
-          Serial.write(comm_input_buffer.data[i]);
+          Serial.write(buffer_input.data[i]);
           Serial.print(" or ");
-          Serial.println(int(comm_input_buffer.data[i]));        
+          Serial.println(int(buffer_input.data[i]));        
         }
-        memset(comm_input_buffer.data,0, comm_input_buffer.size);
-        comm_input_buffer.size = 0;
+        memset(buffer_input.data,0, buffer_input.size);
+        buffer_input.size = 0;
         Serial.println("Data sent");
     }
     delay(5000);

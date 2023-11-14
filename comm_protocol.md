@@ -16,19 +16,20 @@
 - Every command from the central controller has the following structure for every frame:
 
         <start_sequence> <component_ID> <command_ID> <num_bytes>   <input>     <CRC>   <stop_sequence>
-        <---2 Bytes----> <--2 Bytes---> <-2 Bytes--> <-2 Bytes-> <num_bytes> <2 Bytes> <---2 Bytes--->
+        <---2 Bytes----> <--1 Bytes---> <-1 Bytes--> <-1 Bytes-> <num_bytes> <1 Bytes> <---2 Bytes--->
 
-        Total: 12 + num_bytes (num_bytes is the length of input in bytes (each input is 4 bytes (32 bits)). Ex: a command with no input is 16 bytes)
+        Total: 8 + num_bytes (num_bytes is the length of input in bytes (each input is 4 bytes (32 bits)). Ex: a command with no input is 8 bytes)
 - Every response from the peripheral devices to the central controller have the following structure:
 
         <start_sequence> <component_ID> <response_ID> <num_bytes>  <content>     <CRC> <stop_sequence>
-        <---2 Bytes----> <--2 Bytes---> <--2 Bytes--> <-2 Bytes-> <num_bytes> <2 Bytes><---2 Bytes--->
-        Total: 12 + num_bytes (num_bytes > 0, each content data is 4 byte (32 bits))
+        <---2 Bytes----> <--1 Bytes---> <--1 Bytes--> <-1 Bytes-> <num_bytes> <1 Bytes><---2 Bytes--->
+        Total: 8 + num_bytes (num_bytes > 0, each content data is 4 byte (32 bits))
 
 ## Start/Stop sequence/bits
 
-- Start sequnece: `ADDA`
-- Stop  sequence: `BCCB` 
+- Command start sequence: `ADDA`
+- Response start sequence: `BEEB`
+- Stop  sequence: `FDDF` 
 
 ## Component ID ##
 
