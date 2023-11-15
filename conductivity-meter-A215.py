@@ -1,3 +1,4 @@
+# The mini-USB to USB comm only works with WINDOWS
 # Default baud rate: 9600 | 8 data bits | Parity: none | Stop bits: 1 | flow control: none
 # Terminate a command: CR - carriage return, ASCII 13 (0x0D)
 # Characters in command: \n is ignored. lower case characters is converted to upper case internally.

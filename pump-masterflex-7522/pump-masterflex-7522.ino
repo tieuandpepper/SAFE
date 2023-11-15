@@ -50,107 +50,78 @@
  */
 
 #include "PumpMasterflex.h"
+#include "Controller.h"
 
+#define PUMP_COUNT                  2
 // Define pinout
-#define SPEED_CONTROL       11
-#define REMOTE_CONTROL      10
-#define CLOCKWISE_CONTROL   9
-#define PRIME_CONTROL       8
-#define SPEED_FEEDBACK      A0 // analog pin
+#define PUMP_1_SPEED_CONTROL       11
+#define PUMP_1_REMOTE_CONTROL      10
+#define PUMP_1_CLOCKWISE_CONTROL   9
+#define PUMP_1_PRIME_CONTROL       8
+#define PUMP_1_SPEED_FEEDBACK      A0 // analog pin
 
-#define BUFFER_SIZE         40
+#define PUMP_2_SPEED_CONTROL       7
+#define PUMP_2_REMOTE_CONTROL      6
+#define PUMP_2_CLOCKWISE_CONTROL   5
+#define PUMP_2_PRIME_CONTROL       4
+#define PUMP_2_SPEED_FEEDBACK      A1 // analog pin
 
 /*----------------------------------------------------------------------------------------------------------*/
-bool new_data = false;
-char buffer[BUFFER_SIZE];
-uint16_t msg_idx = 0;
-bool data_received = false;
 
-MasterflexDB25Interface_t pump_interface {
-  .start_stop_pin  = REMOTE_CONTROL,
-  .direction_pin   = CLOCKWISE_CONTROL,
-  .prime_pin       = PRIME_CONTROL,
-  .voltage_in_pin  = SPEED_CONTROL,
-  .voltage_out_pin = SPEED_FEEDBACK,
+
+MasterflexDB25Interface_t pump_1_interface {
+  .start_stop_pin  = PUMP_1_REMOTE_CONTROL,
+  .direction_pin   = PUMP_1_CLOCKWISE_CONTROL,
+  .prime_pin       = PUMP_1_PRIME_CONTROL,
+  .voltage_in_pin  = PUMP_1_SPEED_CONTROL,
+  .voltage_out_pin = PUMP_1_SPEED_FEEDBACK,
 };
 
-PumpMasterflex pump = PumpMasterflex(pump_interface);
+MasterflexDB25Interface_t pump_2_interface {
+  .start_stop_pin  = PUMP_2_REMOTE_CONTROL,
+  .direction_pin   = PUMP_2_CLOCKWISE_CONTROL,
+  .prime_pin       = PUMP_2_PRIME_CONTROL,
+  .voltage_in_pin  = PUMP_2_SPEED_CONTROL,
+  .voltage_out_pin = PUMP_2_SPEED_FEEDBACK,
+};
+
+PumpMasterflex pump[] = {PumpMasterflex(pump_1_interface), PumpMasterflex(pump_2_interface)};
 
 /// @brief Setup/ Initialization. Run first and run ONCE
 void setup() {
   Serial.begin(9600);
-  pump.Connect();
-  pump.Stop();
-  pump.PrimeStop();
-  pump.SetDirection(DIR_CW);
-  pump.SetTubeSize(14);
-  pump.SetMaxVoltageLevel(5000);
-  pump.SetMinVoltageLevel(400);
-  pump.SetMinSpeed(0);
-  pump.SetMaxSpeed(30000);
-//  pump.SetSpeed(6820);
+  for (int i = 0; i < PUMP_COUNT; i++)
+  {
+    pump[i].Connect();
+    pump[i].Stop();
+    pump[i].PrimeStop();
+    pump[i].SetDirection(DIR_CW);
+    pump[i].SetTubeSize(14);
+    pump[i].SetMaxVoltageLevel(5000);
+    pump[i].SetMinVoltageLevel(400);
+    pump[i].SetMinSpeed(0);
+    pump[i].SetMaxSpeed(30000);
+  }
   Serial.println("Initialization completed!");
-  Serial.println(pump.GetSpeed());
 }
 
+uint32_t res;
+cmd_t command;
 /// @brief Run after setup(). Will run in loop repeatedly
 void loop() {
-  ReadSerial();
-  Controller();
-}
-
-void ReadSerial()
-{
-  char c;
-//  msg_idx = 0;
-  while (Serial.available() > 0)
+  // Serial.println("Ready");
+  if (GetCommand(&command) == CMD_RECEIVED)
   {
-    c = Serial.read();
-    if (c != '\n' && (msg_idx < BUFFER_SIZE - 1))
+    res = Controller(pump, &command);
+    if (res == CMD_INVALID)
     {
-      buffer[msg_idx++] = c;
+      Serial.println("Invalid command");
     }
-    else
+    else 
     {
-      buffer[msg_idx] = '\0';
-      data_received = true;
-      msg_idx = 0;
-      Serial.print("Received data: ");
-      Serial.println(buffer);
+      Serial.print("Command return ");
+      Serial.println(res);
     }
   }
-}
-
-void Controller()
-{
-  if (!data_received)
-  {
-    return;
-  }
-  switch (buffer[0])
-  {
-  case '1':
-    Serial.println("start");
-    pump.Start();
-    break;
-  case '2':
-    Serial.println("stop");
-    pump.Stop();
-    break;
-  case '3':
-    Serial.println("switch");
-    pump.ChangeDirection();
-    break;
-  case '4':
-    Serial.println("dispense. Continuous mode");
-    long int t1 = millis();
-    pump.Dispense(3000,14000);
-    t1 = millis() - t1;
-    Serial.print("done in ");
-    Serial.println(t1);
-    break;
-  default:
-    break;
-  }
-  data_received = false;
+  delay(500);
 }
