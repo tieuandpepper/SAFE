@@ -15,7 +15,7 @@ class ConductivityMeter:
     # self.stop_bits = 1
     # self.flow_control = None
     self.port = comm_port
-    self.terminal = serial.serial(port = self.port,  self.baud_rate, timeout=.1)
+    self.terminal = serial.Serial(port = self.port,  baudrate = self.baud_rate,timeout=10)
     self.terminal.close()
   
   def __str__(self):
@@ -30,9 +30,17 @@ class ConductivityMeter:
     self.terminal.write(bytes(msg,  'utf-8'))
     self.terminal.close()
   
-  def getData(self)->list:
+  def getData(self):
     self.terminal.open()
-    data = self.terminal.read_until(expect='>')
+    data = self.terminal.read_until(expected='>')
     self.terminal.close()
     return data
   
+meter = ConductivityMeter("COM15")
+print(meter)
+meter.sendCommand("GETLOG",[])
+while 1:
+  data = meter.getData().decode("utf-8")
+  print(data)
+  if data.find('>') != -1:
+    break
