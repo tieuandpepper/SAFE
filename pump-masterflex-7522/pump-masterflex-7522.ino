@@ -98,9 +98,9 @@ void setup() {
     pump[i].SetDirection(DIR_CW);
     pump[i].SetTubeSize(14);
     pump[i].SetMaxVoltageLevel(5000);
-    pump[i].SetMinVoltageLevel(400);
+    pump[i].SetMinVoltageLevel(100);
     pump[i].SetMinSpeed(0);
-    pump[i].SetMaxSpeed(30000);
+    pump[i].SetMaxSpeed(3770);
   }
   Serial.println("Initialization completed!");
 }

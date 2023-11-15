@@ -8,11 +8,11 @@ uint32_t Controller(PumpMasterflex pumps[PUMP_COUNT], cmd_t* command)
   uint8_t pump_idx = 0;
   if (command->target.equals(PUMP_1))
   {
-    pump_idx = 1;
+    pump_idx = 0;
   }
   else if (command->target.equals(PUMP_2))
   {
-    pump_idx = 2;
+    pump_idx = 1;
   }
   else {
     return CMD_INVALID;

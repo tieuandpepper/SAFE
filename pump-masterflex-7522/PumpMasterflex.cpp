@@ -51,7 +51,7 @@ bool PumpMasterflex::Start()
 /// @brief Stop the pump by pulling the START/STOP pin to HIGH
 bool PumpMasterflex::Stop()
 {
-    digitalWrite(_pins.start_stop_pin, _state_op);
+    digitalWrite(_pins.start_stop_pin, PUMP_STOP);
     delay(DELAY_MS);
     if (digitalRead(_pins.start_stop_pin) != PUMP_STOP)
     {
@@ -120,9 +120,10 @@ bool PumpMasterflex::PrimeStart()
     return true;
 }
 
-/// @brief Stop priming by pulling the Remote Prime pin to LOW
+/// @brief Stop priming by pulling the Remote Prime pin to HIGH
 bool PumpMasterflex::PrimeStop()
 {
+    digitalWrite(_pins.prime_pin, PRIME_OFF);
     delay(DELAY_MS);
     if (digitalRead(_pins.direction_pin) != PRIME_OFF)
     {
