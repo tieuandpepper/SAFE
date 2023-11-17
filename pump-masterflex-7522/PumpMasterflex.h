@@ -33,10 +33,10 @@
 
 typedef struct PumpSpeed {
     // 0-1
-    double speed_percent;
-    double speed_ml_min;
-    double max_speed;
-    double min_speed;
+    float speed_percent;
+    float speed_ml_min;
+    float max_speed;
+    float min_speed;
 } PumpSpeed_t;
 
 typedef struct MasterflexDB25Pins {
@@ -49,8 +49,8 @@ typedef struct MasterflexDB25Pins {
 
 typedef struct TubeProperties {
     uint8_t size;
-    double max_speed;
-    double min_speed;
+    float max_speed;
+    float min_speed;
 } Tube_t;
 
 class PumpMasterflex {
@@ -61,8 +61,8 @@ class PumpMasterflex {
         uint8_t _state_prime = PRIME_OFF;
         Tube_t _tube;
         PumpSpeed_t _speed_control;
-        uint32_t _max_voltage;
-        uint32_t _min_voltage;
+        float _max_voltage;
+        float _min_voltage;
     public:
         PumpMasterflex(MasterflexDB25Interface_t pins);
         bool Connect();
@@ -80,8 +80,11 @@ class PumpMasterflex {
         uint8_t GetTubeSize();
         bool SetMaxSpeed(uint32_t speed);
         bool SetMinSpeed(uint32_t speed);
+        uint32_t GetMaxSpeed();
+        uint32_t GetMinSpeed();
         bool SetSpeedPercent(uint32_t percent);
-        bool SetSpeed(uint32_t speed_ml_min);
+        bool SetSpeed(uint32_t speed_ul_min);
+        uint32_t GetSpeedSetting();
         uint32_t GetSpeedPercent();
         uint32_t GetSpeed();
         bool SetMaxVoltageLevel(uint32_t voltage_max);

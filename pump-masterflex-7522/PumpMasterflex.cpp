@@ -22,7 +22,7 @@ PumpMasterflex::PumpMasterflex(MasterflexDB25Interface_t bd25)
 /// @brief Set initial state parameters read from the pump
 bool PumpMasterflex::Connect()
 {
-    pinMode(_pins.voltage_out_pin, OUTPUT);
+    pinMode(_pins.voltage_in_pin, OUTPUT);
     pinMode(_pins.start_stop_pin, OUTPUT);
     pinMode(_pins.direction_pin, OUTPUT);
     pinMode(_pins.prime_pin, OUTPUT);
@@ -140,7 +140,7 @@ bool PumpMasterflex::Prime(uint32_t duration_ms)
 {
     bool res = this->PrimeStart();
     delay(duration_ms);
-    res |= this->PrimeStop();
+    res &= this->PrimeStop();
     return res;
 }
 
@@ -197,7 +197,7 @@ bool PumpMasterflex::SetTubeSize(uint32_t size)
 /// @note return in @c ml/min
 bool PumpMasterflex::SetMaxSpeed(uint32_t speed)
 {
-    _speed_control.max_speed = (double)speed / 1000;
+    _speed_control.max_speed = (float)speed / 1000;
     return true;
 }
 
@@ -207,18 +207,29 @@ bool PumpMasterflex::SetMaxSpeed(uint32_t speed)
 /// @note return in @c ml/min
 bool PumpMasterflex::SetMinSpeed(uint32_t speed)
 {
-    _speed_control.min_speed = (double)speed / 1000;
+    _speed_control.min_speed = (float)speed / 1000;
     return true;
 }
 
+uint32_t PumpMasterflex::GetMaxSpeed(void)
+{
+    return (uint32_t)(_speed_control.max_speed * 1000);
+}
+
+uint32_t PumpMasterflex::GetMinSpeed(void)
+{
+    return (uint32_t)(_speed_control.min_speed * 1000);
+}
+
+
 /// @brief Set the pump speed by percentage
 /// @attention the pump speed percentage and ml/min values are both updated
-/// @param percent double from 0-100 (%)
+/// @param percent float from 0-100 (%)
 bool PumpMasterflex::SetSpeedPercent(uint32_t percent)
 {
-    double min_speed = _speed_control.min_speed;
-    double max_speed = _speed_control.max_speed;
-    _speed_control.speed_percent = (double)percent / 100;
+    float min_speed = _speed_control.min_speed;
+    float max_speed = _speed_control.max_speed;
+    _speed_control.speed_percent = (float)percent / 100;
     _speed_control.speed_ml_min = min_speed + (_speed_control.speed_percent * (max_speed - min_speed));
     int pwm_val = (int)(_speed_control.speed_percent * ARDUINO_PWM);
     analogWrite(_pins.voltage_in_pin, pwm_val);
@@ -228,32 +239,44 @@ bool PumpMasterflex::SetSpeedPercent(uint32_t percent)
 /// @brief Set the pump speed by ml/min value
 /// @attention the pump speed percentage and ml/min values are both updated
 /// @note The continuous mode is not accurate due to fluctuating voltage signals
-/// @param speed_ml_min double from min_speed to max_speed (ml/min)
-bool PumpMasterflex::SetSpeed(uint32_t speed_ml_min)
+/// @param speed_ul_min from min_speed to max_speed (ul/min)
+bool PumpMasterflex::SetSpeed(uint32_t speed_ul_min)
 {
-    double min_speed = _speed_control.min_speed;
-    double max_speed = _speed_control.max_speed;
-    _speed_control.speed_ml_min = (double)speed_ml_min / 1000;
+    float min_speed = _speed_control.min_speed;
+    float max_speed = _speed_control.max_speed;
+    _speed_control.speed_ml_min = (float)speed_ul_min / 1000;
     _speed_control.speed_percent = (_speed_control.speed_ml_min - min_speed) / (max_speed - min_speed);
     int pwm_val = (int)(_speed_control.speed_percent * ARDUINO_PWM);
     analogWrite(_pins.voltage_in_pin, pwm_val);
     return true;
 }
 
-/// @brief Read the INPUT_VOLTAGE analog pin and calculate the current pump speed (by % and by ml/min)
-/// @brief Update @c speed_control (speed_percent and speed_ml_min)
+/// @brief @b TODO Read the INPUT_VOLTAGE analog pin and calculate the current pump speed (by % and by ml/min)
 /// @return pump speed by percent (0-100)
 uint32_t PumpMasterflex::GetSpeedPercent()
-{    
+{
     return (uint32_t)(_speed_control.speed_percent*100);
 }
 
-/// @brief Read the INPUT_VOLTAGE analog pin and calculate the current pump speed (by % and by ml/min)
-/// @brief Update @c speed_control (speed_percent and speed_ml_min)
+/// @brief Read the INPUT_VOLTAGE analog pin and calculate the current pump speed (by ml/min)
 /// @return pump speed by ul/min
 uint32_t PumpMasterflex::GetSpeed(void)
 {
-    return (uint32_t)(_speed_control.speed_ml_min*1000);
+    // analog read range 0-1023. operating voltage is 5V
+    float voltage = ((float)analogRead(_pins.voltage_out_pin)*5) / 1023;
+    // Serial.println(voltage);
+    float percent   = (voltage - _min_voltage)/(_max_voltage-_min_voltage);
+    // Serial.println(percent);
+    uint32_t speed = (uint32_t)(1000 * (percent * (_speed_control.max_speed-_speed_control.min_speed) + _speed_control.min_speed));
+    // Serial.println(speed);
+    return speed;
+}
+
+/// @brief Get the speed in software setting
+/// @return speed in ul/min
+uint32_t PumpMasterflex::GetSpeedSetting(void)
+{
+    return (uint32_t)(_speed_control.speed_ml_min * 1000);
 }
 
 /// @brief Set the voltage threshold for the pump @c VOLTAGE_OUTPUT 
@@ -261,7 +284,7 @@ uint32_t PumpMasterflex::GetSpeed(void)
 /// @warning Must be updated manually following the setting on the pump
 bool PumpMasterflex::SetMaxVoltageLevel(uint32_t voltage_max)
 {
-    _max_voltage = voltage_max;
+    _max_voltage = (float)voltage_max / 1000;
     return true;
 }
 /// @brief Set the voltage threshold for the pump @c VOLTAGE_OUTPUT
@@ -269,15 +292,15 @@ bool PumpMasterflex::SetMaxVoltageLevel(uint32_t voltage_max)
 /// @warning Must be updated manually following the setting on the pump
 bool PumpMasterflex::SetMinVoltageLevel(uint32_t voltage_min)
 {
-    _min_voltage = voltage_min;
+    _min_voltage = (float)voltage_min / 1000;
     return true;
 }
 
 bool PumpMasterflex::Dispense(uint32_t amount_ul)
 {
-    uint64_t time = (60000 * amount_ul) / (_speed_control.speed_ml_min * 1000);
+    uint64_t time = (uint64_t)((60000 * amount_ul) / (_speed_control.speed_ml_min * 1000));
     bool res = this->Start();
     delay(time);
-    res |= this->Stop();
+    res &= this->Stop();
     return res;
 }

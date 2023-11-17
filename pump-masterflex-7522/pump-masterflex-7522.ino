@@ -29,28 +29,29 @@
  *                     |           SDA-|-
  *                     |          AREF-|-
  *                     |           GND-|- 
- *                     |           D13-|- 
+ *                     |           D13-|- mixer_relay_in
  *                    -|-IOREF     D12-|- 
  *                    -|-RESET     D11-|- DB25_P1 - 1
  *                    -|-3.3V      D10-|- DB25_P15 - 1
- *                    -|-5V        D09-|- DB25_P16 - 1
- *           DB25_P17 -|-GND       D08-|- DB25_P20 - 1
- *   DB25_P3, DB25_P5 -|-GND           | 
+ *    mixer_relay_Vcc -|-5V        D09-|- DB25_P16 - 1
+ *                    -|-GND       D08-|- DB25_P20 - 1
+ *                    -|-GND           | 
  *                    -|-VIN       D07-|- DB25_P1 - 2
  *                     |           D06-|- DB25_P15 - 2
  *       DB25_P14 - 1 -|-A0        D05-|- DB25_P16 - 2
  *       DB25_P14 - 2 -|-A1        D04-|- DB25_P20 - 2
- *                    -|-V2        D03-|-
+ *                    -|-A2        D03-|-
  *                    -|-A3        D02-|-
  *                    -|-A4         TX-|-
  *                    -|-A5         RX-|-
  *                     |_______________|
  * 
- * 
+ * GND: DB25_P17 (1,2), DB25_P3(1,2), DB25_P5(1,2), mixer_relay_GND
  */
 
 #include "PumpMasterflex.h"
 #include "Controller.h"
+#include "mixer.h"
 
 #define PUMP_COUNT                  2
 // Define pinout
@@ -65,6 +66,8 @@
 #define PUMP_2_CLOCKWISE_CONTROL   5
 #define PUMP_2_PRIME_CONTROL       4
 #define PUMP_2_SPEED_FEEDBACK      A1 // analog pin
+
+#define MIXER_PIN                      13
 
 /*----------------------------------------------------------------------------------------------------------*/
 
@@ -85,11 +88,20 @@ MasterflexDB25Interface_t pump_2_interface {
   .voltage_out_pin = PUMP_2_SPEED_FEEDBACK,
 };
 
-PumpMasterflex pump[] = {PumpMasterflex(pump_1_interface), PumpMasterflex(pump_2_interface)};
+PumpMasterflex pump[] = 
+{
+  PumpMasterflex(pump_1_interface),
+  PumpMasterflex(pump_2_interface),
+};
+
+mixer_t mixer;
 
 /// @brief Setup/ Initialization. Run first and run ONCE
 void setup() {
   Serial.begin(9600);
+  mixer.pin = MIXER_PIN;
+  pinMode(mixer.pin,OUTPUT);
+  digitalWrite(mixer.pin, LOW);
   for (int i = 0; i < PUMP_COUNT; i++)
   {
     pump[i].Connect();
@@ -98,30 +110,47 @@ void setup() {
     pump[i].SetDirection(DIR_CW);
     pump[i].SetTubeSize(14);
     pump[i].SetMaxVoltageLevel(5000);
-    pump[i].SetMinVoltageLevel(100);
+    pump[i].SetMinVoltageLevel(0);
     pump[i].SetMinSpeed(0);
-    pump[i].SetMaxSpeed(3770);
+    pump[i].SetMaxSpeed(37700);
+    pump[i].SetSpeed(14000);
   }
-  Serial.println("Initialization completed!");
+  Serial.println("READY");
 }
 
 uint32_t res;
 cmd_t command;
+resp_t response;
 /// @brief Run after setup(). Will run in loop repeatedly
 void loop() {
   // Serial.println("Ready");
   if (GetCommand(&command) == CMD_RECEIVED)
   {
-    res = Controller(pump, &command);
+    if (command.target.equals(MIXER))
+    {
+      res = MixerController(&mixer, &command);
+    }
+    else
+    {
+      res = PumpController(pump, &command);
+    }
+    response.source = command.target;
+    // Serial.println("READY");
     if (res == CMD_INVALID)
     {
-      Serial.println("Invalid command");
+      response.resp_id = RESP_INVALID;
+      // Serial.println("Invalid command");
     }
     else 
     {
-      Serial.print("Command return ");
-      Serial.println(res);
+      // Serial.print("Command return ");
+      // Serial.println(res);
+      response.resp_id = RESP_VALID;
+      response.data = res;
     }
+    SendResponse(response);
+    command.operand = 0;
+    response.data = 0;
   }
-  delay(500);
+  delay(200);
 }
