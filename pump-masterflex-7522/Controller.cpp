@@ -3,7 +3,7 @@
 /// @brief 
 /// @param command 
 /// @return 
-uint32_t Controller(PumpMasterflex pumps[PUMP_COUNT], cmd_t* command)
+uint32_t PumpController(PumpMasterflex pumps[PUMP_COUNT], cmd_t* command)
 {
   uint8_t pump_idx = 0;
   if (command->target.equals(PUMP_1))
@@ -18,38 +18,73 @@ uint32_t Controller(PumpMasterflex pumps[PUMP_COUNT], cmd_t* command)
     return CMD_INVALID;
   }
   
-  if (command->command.equals(PUMP_START))
+  if (command->command_id.equals(PUMP_START))
   {
     return pumps[pump_idx].Start();
   }
-  else if (command->command.equals(PUMP_STOP))
+  if (command->command_id.equals(PUMP_STOP))
   {
     return pumps[pump_idx].Stop();
   }
-  else if (command->command.equals(PUMP_CW))
+  if (command->command_id.equals(PUMP_CW))
   {
     return pumps[pump_idx].SetDirection(DIR_CW);
   }
-  else if (command->command.equals(PUMP_CCW))
+  if (command->command_id.equals(PUMP_CCW))
   {
     return pumps[pump_idx].SetDirection(DIR_CCW);
   }
-  else if (command->command.equals(PUMP_GETSPEED))
+  if (command->command_id.equals(PUMP_GETSPEED))
   {
     return pumps[pump_idx].GetSpeed();
   }
-  else if (command->command.equals(PUMP_SETSPEED))
+  if (command->command_id.equals(PUMP_SETSPEED))
   {
     return pumps[pump_idx].SetSpeed(command->operand);
   }
-  else if (command->command.equals(PUMP_DISPENSE))
+  if (command->command_id.equals(PUMP_DISPENSE))
   {
-    return pumps[pump_idx].SetSpeed(command->operand);
+    return pumps[pump_idx].Dispense(command->operand);
   }
-  else {
-    Serial.println("No matching command");
+  if (command->command_id.equals(PUMP_GETSPEEDSETTING))
+  {
+    return pumps[pump_idx].GetSpeedSetting();
+  }
+  if (command->command_id.equals(PUMP_SETMAXSPEED))
+  {
+    return pumps[pump_idx].SetMaxSpeed(command->operand);
+  }
+  if (command->command_id.equals(PUMP_SETMINSPEED))
+  {
+    return pumps[pump_idx].SetMinSpeed(command->operand);
+  }
+  if (command->command_id.equals(PUMP_GETMAXSPEED))
+  {
+    return pumps[pump_idx].GetMaxSpeed();
+  }
+  if (command->command_id.equals(PUMP_GETMINSPEED))
+  {
+    return pumps[pump_idx].GetMinSpeed();
+  }
+    // Serial.println("No matching command");
     return CMD_INVALID;
+}
+
+uint32_t MixerController(mixer_t * mixer, cmd_t * command)
+{
+  if (command->command_id.equals(MIXER_START))
+  {
+    return MixerStart(mixer);
   }
+  if (command->command_id.equals(MIXER_STOP))
+  {
+    return MixerStop(mixer);
+  }
+  if (command->command_id.equals(MIXER_RUN))
+  {
+    return MixerRun(mixer, command->operand);
+  }
+  return CMD_INVALID;
 }
 
 /// @brief get data from buffer and parse it into command struct
@@ -64,6 +99,7 @@ uint8_t GetCommand(cmd_t* command)
   String buffer = Serial.readStringUntil('.');
   // trim whitespace and turn all characters uppercase
   buffer.trim();
+  buffer.replace(" ", "");
   buffer.toUpperCase();
   Serial.println(buffer);
   // extract target ID
@@ -73,7 +109,7 @@ uint8_t GetCommand(cmd_t* command)
     return CMD_NOTHING;
   }
   command->target = buffer.substring(first_idx,last_idx);
-  Serial.print("Target: "); Serial.println(command->target);
+  Serial.print("Target="); Serial.print(command->target);
   // extract command ID
   first_idx = last_idx + 1;
   last_idx = buffer.indexOf(',',first_idx);
@@ -87,8 +123,8 @@ uint8_t GetCommand(cmd_t* command)
     command->target = "";
     return CMD_NOTHING;
   }
-  command->command = buffer.substring(first_idx,last_idx);
-  Serial.print("Command: "); Serial.println(command->command);
+  command->command_id = buffer.substring(first_idx,last_idx);
+  Serial.print(" | Command="); Serial.print(command->command_id);
   // extract operand ID
   first_idx = last_idx + 1;
   last_idx = buffer.length();
@@ -96,6 +132,19 @@ uint8_t GetCommand(cmd_t* command)
   {
     command->operand = buffer.substring(first_idx, last_idx).toInt();
   }
-  Serial.print("Operand: "); Serial.println(command->operand);
+  Serial.print(" | Operand="); Serial.println(command->operand);
   return CMD_RECEIVED;
 }
+
+uint8_t SendResponse(resp_t response)
+{
+  String buffer = "RESP,";
+  buffer += response.resp_id;
+  buffer += ",";
+  buffer += response.source;
+  buffer += ",";
+  buffer += response.data;
+  buffer += ".";
+  Serial.println(buffer);
+}
+
