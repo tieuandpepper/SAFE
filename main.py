@@ -38,9 +38,9 @@ def main():
     if len(ready_msg) > 0:
       print(ready_msg)
   
-  command_list = ["pump2,disp,5000.",
+  command_list = ["pump1,disp,5000.",
                   "mixer, run, 10000.",
-                  "pump1, disp, 3000.",
+                  "pump2, disp, 3000.",
                   ]
   for cmd in command_list:
     SendCommand(arduino, cmd)

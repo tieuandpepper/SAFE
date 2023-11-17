@@ -55,17 +55,17 @@
 
 #define PUMP_COUNT                  2
 // Define pinout
-#define PUMP_1_SPEED_CONTROL       11
-#define PUMP_1_REMOTE_CONTROL      10
-#define PUMP_1_CLOCKWISE_CONTROL   9
-#define PUMP_1_PRIME_CONTROL       8
-#define PUMP_1_SPEED_FEEDBACK      A0 // analog pin
+#define PUMP_2_SPEED_CONTROL       11
+#define PUMP_2_REMOTE_CONTROL      10
+#define PUMP_2_CLOCKWISE_CONTROL   9
+#define PUMP_2_PRIME_CONTROL       8
+#define PUMP_2_SPEED_FEEDBACK      A0 // analog pin
 
-#define PUMP_2_SPEED_CONTROL       7
-#define PUMP_2_REMOTE_CONTROL      6
-#define PUMP_2_CLOCKWISE_CONTROL   5
-#define PUMP_2_PRIME_CONTROL       4
-#define PUMP_2_SPEED_FEEDBACK      A1 // analog pin
+#define PUMP_1_SPEED_CONTROL       7
+#define PUMP_1_REMOTE_CONTROL      6
+#define PUMP_1_CLOCKWISE_CONTROL   5
+#define PUMP_1_PRIME_CONTROL       4
+#define PUMP_1_SPEED_FEEDBACK      A1 // analog pin
 
 #define MIXER_PIN                      13
 
