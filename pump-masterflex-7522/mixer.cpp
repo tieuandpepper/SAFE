@@ -25,7 +25,7 @@ bool MixerStop(mixer_t* mixer)
   return true;
 }
 
-bool MixerRun(mixer_t * mixer, uint32_t time_ms)
+bool MixerRun(mixer_t * mixer, int32_t time_ms)
 {
   bool res = MixerStart(mixer);
   delay(time_ms);

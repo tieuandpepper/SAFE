@@ -28,6 +28,7 @@
 #define PUMP_SETMINSPEED    "SETMIN"
 #define PUMP_GETMAXSPEED    "GETMAX"
 #define PUMP_GETMINSPEED    "GETMIN"
+#define PUMP_PIPESETVOL     "PIPESET"
 #define MIXER_START         "START"
 #define MIXER_STOP          "STOP"
 #define MIXER_RUN           "RUN"
@@ -48,11 +49,11 @@ typedef struct cmd_type {
 typedef struct resp_type {
   String resp_id;
   String source;
-  uint32_t data = 0;
+  int32_t data = 0;
 } resp_t;
 
-uint32_t PumpController(PumpMasterflex pumps[PUMP_COUNT], cmd_t* command);
-uint32_t MixerController(mixer_t * mixer, cmd_t * command);
+int32_t PumpController(PumpMasterflex pumps[PUMP_COUNT], cmd_t* command);
+int32_t MixerController(mixer_t * mixer, cmd_t * command);
 uint8_t GetCommand(cmd_t* command);
 uint8_t SendResponse(resp_t response);
 

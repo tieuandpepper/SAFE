@@ -118,7 +118,7 @@ void setup() {
   Serial.println("READY");
 }
 
-uint32_t res;
+int32_t res;
 cmd_t command;
 resp_t response;
 /// @brief Run after setup(). Will run in loop repeatedly

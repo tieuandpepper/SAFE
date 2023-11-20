@@ -13,6 +13,6 @@ typedef struct mixer_type
 
 bool MixerStart(mixer_t* mixer);
 bool MixerStop(mixer_t* mixer);
-bool MixerRun(mixer_t * mixer, uint32_t time_ms);
+bool MixerRun(mixer_t * mixer, int32_t time_ms);
 
 #endif

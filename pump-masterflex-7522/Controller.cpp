@@ -3,7 +3,7 @@
 /// @brief 
 /// @param command 
 /// @return 
-uint32_t PumpController(PumpMasterflex pumps[PUMP_COUNT], cmd_t* command)
+int32_t PumpController(PumpMasterflex pumps[PUMP_COUNT], cmd_t* command)
 {
   uint8_t pump_idx = 0;
   if (command->target.equals(PUMP_1))
@@ -74,7 +74,7 @@ uint32_t PumpController(PumpMasterflex pumps[PUMP_COUNT], cmd_t* command)
 /// @param mixer 
 /// @param command 
 /// @return 
-uint32_t MixerController(mixer_t * mixer, cmd_t * command)
+int32_t MixerController(mixer_t * mixer, cmd_t * command)
 {
   if (command->command_id.equals(MIXER_START))
   {
