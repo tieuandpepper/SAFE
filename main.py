@@ -1,12 +1,7 @@
 # SYSTEM CONTROLLER
 import serial
 import time
-# from CondMeterA215 import *
-
-# comm port used
-ARDUINO_PORT = "/dev/tty.usbserial-1420"
-# COND_METER_PORT = "COM6"
-baurd_rate = 9600
+import CondMeterA215
 
 def PrintResponse(comm_port):
   response = "No response"
@@ -27,7 +22,13 @@ def PrintCommand(comm_port):
 def SendCommand(comm_port, command):
   comm_port.write(bytes(command,'utf-8'))
 
+
+###################################################################################
 def main():
+  # comm port used
+  ARDUINO_PORT = "/dev/tty.usbserial-1420"
+  # COND_METER_PORT = "COM6"
+  baurd_rate = 9600
   arduino = serial.Serial(port = ARDUINO_PORT,  baudrate=baurd_rate, timeout=.5)
   # cond_meter = ConductivityMeter(COND_METER_PORT, baurd_rate)
 
@@ -52,9 +53,9 @@ def main():
 
   arduino.close()
   
-
+####################################################################################
 
 
 
 if __name__ == '__main__':
-    main()
+  main()

@@ -18,9 +18,9 @@
 // define command ID
 #define PUMP_START          "START"
 #define PUMP_STOP           "STOP"
-#define PUMP_CW             "CW"
-#define PUMP_CCW            "CCW"
-#define PUMP_DISPENSE       "DISP"
+#define PUMP_CW             "CLOCK"
+#define PUMP_CCW            "COUNTERCLOCK"
+#define PUMP_DISPENSE       "DISPENSE"
 #define PUMP_GETSPEED       "GET"
 #define PUMP_SETSPEED       "SET"
 #define PUMP_GETSPEEDSETTING "GETSETTING"

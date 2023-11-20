@@ -29,7 +29,6 @@ bool PumpMasterflex::Connect()
     _state_op = this->GetOpState();
     _state_dir = this->GetDirection();
     _state_prime = this->GetPrimeState();
-    _speed_control.speed_percent = this->GetSpeedPercent();
     _speed_control.speed_ml_min = this->GetSpeed();
     return true;
 }
@@ -221,23 +220,8 @@ uint32_t PumpMasterflex::GetMinSpeed(void)
     return (uint32_t)(_speed_control.min_speed * 1000);
 }
 
-
-/// @brief Set the pump speed by percentage
-/// @attention the pump speed percentage and ml/min values are both updated
-/// @param percent float from 0-100 (%)
-bool PumpMasterflex::SetSpeedPercent(uint32_t percent)
-{
-    float min_speed = _speed_control.min_speed;
-    float max_speed = _speed_control.max_speed;
-    _speed_control.speed_percent = (float)percent / 100;
-    _speed_control.speed_ml_min = min_speed + (_speed_control.speed_percent * (max_speed - min_speed));
-    int pwm_val = (int)(_speed_control.speed_percent * ARDUINO_PWM);
-    analogWrite(_pins.voltage_in_pin, pwm_val);
-    return true;
-}
-
 /// @brief Set the pump speed by ml/min value
-/// @attention the pump speed percentage and ml/min values are both updated
+/// @attention the pump speed ml/min values are both updated
 /// @note The continuous mode is not accurate due to fluctuating voltage signals
 /// @param speed_ul_min from min_speed to max_speed (ul/min)
 bool PumpMasterflex::SetSpeed(uint32_t speed_ul_min)
@@ -245,17 +229,14 @@ bool PumpMasterflex::SetSpeed(uint32_t speed_ul_min)
     float min_speed = _speed_control.min_speed;
     float max_speed = _speed_control.max_speed;
     _speed_control.speed_ml_min = (float)speed_ul_min / 1000;
-    _speed_control.speed_percent = (_speed_control.speed_ml_min - min_speed) / (max_speed - min_speed);
-    int pwm_val = (int)(_speed_control.speed_percent * ARDUINO_PWM);
+    if (_speed_control.speed_ml_min < min_speed)
+    {
+        _speed_control.speed_ml_min = min_speed;
+    }
+    float speed_percent = (_speed_control.speed_ml_min - min_speed) / (max_speed - min_speed);
+    int pwm_val = (int)(speed_percent * ARDUINO_PWM);
     analogWrite(_pins.voltage_in_pin, pwm_val);
     return true;
-}
-
-/// @brief @b TODO Read the INPUT_VOLTAGE analog pin and calculate the current pump speed (by % and by ml/min)
-/// @return pump speed by percent (0-100)
-uint32_t PumpMasterflex::GetSpeedPercent()
-{
-    return (uint32_t)(_speed_control.speed_percent*100);
 }
 
 /// @brief Read the INPUT_VOLTAGE analog pin and calculate the current pump speed (by ml/min)
@@ -265,6 +246,10 @@ uint32_t PumpMasterflex::GetSpeed(void)
     // analog read range 0-1023. operating voltage is 5V
     float voltage = ((float)analogRead(_pins.voltage_out_pin)*5) / 1023;
     // Serial.println(voltage);
+    if (voltage < _min_voltage)
+    {
+        voltage = _min_voltage;
+    }
     float percent   = (voltage - _min_voltage)/(_max_voltage-_min_voltage);
     // Serial.println(percent);
     uint32_t speed = (uint32_t)(1000 * (percent * (_speed_control.max_speed-_speed_control.min_speed) + _speed_control.min_speed));
@@ -296,11 +281,50 @@ bool PumpMasterflex::SetMinVoltageLevel(uint32_t voltage_min)
     return true;
 }
 
+/// @brief Dispense a predetermined amount of liquid
+/// @param amount_ul amount of dispensed liquid in uL
+/// @return true/1 if success
 bool PumpMasterflex::Dispense(uint32_t amount_ul)
 {
-    uint64_t time = (uint64_t)((60000 * amount_ul) / (_speed_control.speed_ml_min * 1000));
+    uint64_t time;
+    if (_pipe_state == PIPE_EMPTY)
+    {
+        time = (uint64_t)((60 * (amount_ul + _pipe_vol + _tuning_vol)) / (_speed_control.speed_ml_min));
+        _pipe_state = PIPE_PRIMED;
+    }
+    else
+    {
+        time = (uint64_t)((60 * (amount_ul + _tuning_vol)) / (_speed_control.speed_ml_min));
+    }
     bool res = this->Start();
     delay(time);
     res &= this->Stop();
     return res;
+}
+
+/// @brief Set the amount of liquid used to fill pipes (only use the first time for each liquid)
+/// @param vol_ul volume in uL
+/// @return 1/true
+bool PumpMasterflex::PipeSetVol(uint32_t vol_ul)
+{
+    _pipe_vol = vol_ul;
+    return true;
+}
+
+/// @brief Set the amount of liquid used to fill pipes (only use the first time for each liquid)
+/// @param vol_ul volume in uL
+/// @return 1/true
+bool PumpMasterflex::PipeSetState(uint8_t state)
+{
+    _pipe_state = state;
+    return true;
+}
+
+/// @brief Set the tuning volume for the pump (after calibration)
+/// @param amount_ul amount in uL
+/// @return true
+bool PumpMasterflex::SetTuningVol(int32_t amount_ul)
+{
+    _tuning_vol = amount_ul;
+    return true;
 }

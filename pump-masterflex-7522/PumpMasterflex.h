@@ -19,6 +19,8 @@
 #define DIR_CCW    LOW
 #define PRIME_ON   LOW
 #define PRIME_OFF  HIGH
+#define PIPE_PRIMED 1
+#define PIPE_EMPTY  0
 
 // define tube size
 #define TUBE_SIZE_13 13
@@ -32,8 +34,6 @@
 #define TUBE_MIN_SPEED_16  0.80 // ml/min (1rpm)
 
 typedef struct PumpSpeed {
-    // 0-1
-    float speed_percent;
     float speed_ml_min;
     float max_speed;
     float min_speed;
@@ -63,6 +63,9 @@ class PumpMasterflex {
         PumpSpeed_t _speed_control;
         float _max_voltage;
         float _min_voltage;
+        uint32_t _pipe_vol = 0;
+        int32_t _tuning_vol = 0;
+        uint8_t _pipe_state = PIPE_EMPTY;
     public:
         PumpMasterflex(MasterflexDB25Interface_t pins);
         bool Connect();
@@ -82,14 +85,15 @@ class PumpMasterflex {
         bool SetMinSpeed(uint32_t speed);
         uint32_t GetMaxSpeed();
         uint32_t GetMinSpeed();
-        bool SetSpeedPercent(uint32_t percent);
         bool SetSpeed(uint32_t speed_ul_min);
         uint32_t GetSpeedSetting();
-        uint32_t GetSpeedPercent();
         uint32_t GetSpeed();
         bool SetMaxVoltageLevel(uint32_t voltage_max);
         bool SetMinVoltageLevel(uint32_t voltage_min);
         bool Dispense(uint32_t amount_ul);
+        bool PipeSetVol(uint32_t vol_ul);
+        bool PipeSetState(uint8_t state);
+        bool SetTuningVol(int32_t amount_ul);
 };
 
 #endif

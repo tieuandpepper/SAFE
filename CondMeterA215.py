@@ -50,11 +50,11 @@ class ConductivityMeter:
     self.terminal.close()
     return data
   
-meter = ConductivityMeter("COM15")
-print(meter)
-meter.sendCommand("GETLOG",[])
-while 1:
-  data = meter.getData().decode("utf-8")
-  print(data)
-  if data.find('>') != -1:
-    break
+# meter = ConductivityMeter("COM15")
+# print(meter)
+# meter.sendCommand("GETLOG",[])
+# while 1:
+#   data = meter.getData().decode("utf-8")
+#   print(data)
+#   if data.find('>') != -1:
+#     break

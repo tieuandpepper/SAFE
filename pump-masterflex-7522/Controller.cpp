@@ -70,6 +70,10 @@ uint32_t PumpController(PumpMasterflex pumps[PUMP_COUNT], cmd_t* command)
     return CMD_INVALID;
 }
 
+/// @brief 
+/// @param mixer 
+/// @param command 
+/// @return 
 uint32_t MixerController(mixer_t * mixer, cmd_t * command)
 {
   if (command->command_id.equals(MIXER_START))
@@ -136,6 +140,9 @@ uint8_t GetCommand(cmd_t* command)
   return CMD_RECEIVED;
 }
 
+/// @brief 
+/// @param response 
+/// @return 
 uint8_t SendResponse(resp_t response)
 {
   String buffer = "RESP,";

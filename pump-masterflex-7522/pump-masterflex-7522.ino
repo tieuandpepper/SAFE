@@ -110,7 +110,7 @@ void setup() {
     pump[i].SetDirection(DIR_CW);
     pump[i].SetTubeSize(14);
     pump[i].SetMaxVoltageLevel(5000);
-    pump[i].SetMinVoltageLevel(0);
+    pump[i].SetMinVoltageLevel(100);
     pump[i].SetMinSpeed(0);
     pump[i].SetMaxSpeed(37700);
     pump[i].SetSpeed(14000);
