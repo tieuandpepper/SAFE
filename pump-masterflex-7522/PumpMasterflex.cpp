@@ -75,7 +75,7 @@ bool PumpMasterflex::SetDirection(int32_t direction)
 {
     digitalWrite(_pins.direction_pin, direction);
     delay(DELAY_MS);
-    if (digitalRead(_pins.start_stop_pin) != direction)
+    if (digitalRead(_pins.direction_pin) != direction)
     {
         return false;
     }
