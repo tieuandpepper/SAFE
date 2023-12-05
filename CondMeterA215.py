@@ -18,11 +18,12 @@ only 1 command is processed at a time
       SETKEYLOCK <NUM>: enable/disable key pad (1/0)
 """
 
-
+import time
 import serial
 
 class ConductivityMeter:
   def __init__(self, comm_port, brate=9600):
+    self.unit = "uS/cm"
     self.baud_rate = brate
     # self.data_bits = 8
     # self.parity = None
@@ -45,11 +46,24 @@ class ConductivityMeter:
     self.terminal.close()
   
   def getData(self):
+    data = ""
+    # time.sleep(5)
     self.terminal.open()
-    data = self.terminal.read_until(expected='>')
+    while 1:
+      tempdata = self.terminal.readline().decode('utf-8')
+      data = data + tempdata
+      if data.find('>') != -1:
+        break
     self.terminal.close()
     return data
   
+  def getConductivity(self):
+    keyword = "Conductivity"
+    self.sendCommand("GETMEAS", [])
+    data = self.getData()
+    cond_reading = data[(data.find(keyword)+len(keyword)):data.find(self.unit)]
+    return float(cond_reading)
+
 # meter = ConductivityMeter("COM15")
 # print(meter)
 # meter.sendCommand("GETLOG",[])

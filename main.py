@@ -1,7 +1,7 @@
 # SYSTEM CONTROLLER
 import serial
 import time
-import CondMeterA215
+import CondMeterA215 as cm
 
 def PrintResponse(comm_port):
   response = "No response"
@@ -26,11 +26,12 @@ def SendCommand(comm_port, command):
 ###################################################################################
 def main():
   # comm port used
-  ARDUINO_PORT = "/dev/tty.usbserial-1420"
-  # COND_METER_PORT = "COM6"
-  baurd_rate = 9600
-  arduino = serial.Serial(port = ARDUINO_PORT,  baudrate=baurd_rate, timeout=.5)
-  # cond_meter = ConductivityMeter(COND_METER_PORT, baurd_rate)
+  # ARDUINO_PORT = "/dev/tty.usbserial-1420"
+  ARDUINO_PORT = "COM9"
+  COND_METER_PORT = "COM15"
+  baud_rate = 9600
+  arduino = serial.Serial(port = ARDUINO_PORT,  baudrate=baud_rate, timeout=.5)
+  cond_meter = cm.ConductivityMeter(COND_METER_PORT, baud_rate)
 
   ready_msg = ""
   while ready_msg.find("READY") == -1:
@@ -39,17 +40,24 @@ def main():
     if len(ready_msg) > 0:
       print(ready_msg)
   
-  command_list = ["pump1,dispense,5000.",
+  command_list = [
+                  "pump1,dispense,15000.",
                   "mixer, run, 10000.",
-                  "pump2, dispense, 3000.",
+                  "condmeter, getmeas.",
+                  "pump2, dispense, 15000.",
                   ]
   for cmd in command_list:
+    component = cmd[:cmd.find(",")].upper()
+    # print(component)
+    if component == "CONDMETER":
+      conductivity = cond_meter.getConductivity()
+      print("Conductivity reading: {} uS/cm".format(conductivity))
+      continue
     SendCommand(arduino, cmd)
     PrintCommand(arduino)
     PrintResponse(arduino)
 
-  # Measure the conductivity
-  # cond_meter.sendCommand("GETMEAS",[])
+
 
   arduino.close()
   

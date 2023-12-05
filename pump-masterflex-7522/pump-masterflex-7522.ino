@@ -115,6 +115,8 @@ void setup() {
     pump[i].SetMaxSpeed(37700);
     pump[i].SetSpeed(14000);
   }
+  pump[0].PipeSetVol(1600);
+  pump[1].PipeSetVol(1700);
   Serial.println("READY");
 }
 
