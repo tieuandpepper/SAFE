@@ -63,12 +63,3 @@ class ConductivityMeter:
     data = self.getData()
     cond_reading = data[(data.find(keyword)+len(keyword)):data.find(self.unit)]
     return float(cond_reading)
-
-# meter = ConductivityMeter("COM15")
-# print(meter)
-# meter.sendCommand("GETLOG",[])
-# while 1:
-#   data = meter.getData().decode("utf-8")
-#   print(data)
-#   if data.find('>') != -1:
-#     break
