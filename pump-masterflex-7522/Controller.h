@@ -8,7 +8,7 @@
 #define BUFFER_SIZE         64
 #define CMD_RECEIVED 1
 #define CMD_NOTHING 0
-#define CMD_INVALID 99
+#define CMD_INVALID -99
 #define PUMP_COUNT  2
 // define target
 #define PUMP_1              "PUMP1"

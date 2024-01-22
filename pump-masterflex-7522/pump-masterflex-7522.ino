@@ -52,6 +52,7 @@
 #include "PumpMasterflex.h"
 #include "Controller.h"
 #include "mixer.h"
+#include <DFRobot_MAX31855.h>
 
 #define PUMP_COUNT                  2
 // Define pinout
@@ -95,6 +96,7 @@ PumpMasterflex pump[] =
 };
 
 mixer_t mixer;
+DFRobot_MAX31855 max31855;
 
 /// @brief Setup/ Initialization. Run first and run ONCE
 void setup() {
@@ -117,6 +119,7 @@ void setup() {
   }
   pump[0].PipeSetVol(1600);
   pump[1].PipeSetVol(1700);
+  max31855.begin();
   Serial.println("READY");
 }
 
@@ -128,7 +131,12 @@ void loop() {
   // Serial.println("Ready");
   if (GetCommand(&command) == CMD_RECEIVED)
   {
-    if (command.target.equals(MIXER))
+    if (command.target.equals("TEMP"))
+    {
+      float temp = max31855.readCelsius();
+      res = (int32_t)temp;
+    }
+    else if (command.target.equals(MIXER))
     {
       res = MixerController(&mixer, &command);
     }
