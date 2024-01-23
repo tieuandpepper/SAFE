@@ -121,6 +121,40 @@ void setup() {
   pump[1].PipeSetVol(1700);
   max31855.begin();
   Serial.println("READY");
+  xTaskCreate(TaskMixingPump,                       // Point to TaskMixingPump function
+              "MixingPumpControl",                  // Task name
+              128,                                  // number of words (32 bits/ 4 bytes) for the task's stack
+              NULL,                                 // task input parameter
+              2,                                    // priority number (0 is lowest-idle)
+              NULL);                                // task's handle  
+
+  xTaskCreate(TaskMixer,                            // Point to TaskMixer function
+              "MixerControl",                       // Task name
+              128,                                  // number of words (32 bits/ 4 bytes) for the task's stack
+              NULL,                                 // task input parameter
+              2,                                    // priority number (0 is lowest-idle)
+              NULL);                                // task's handle
+
+  xTaskCreate(TaskTransferPump,                     // Point to TaskTransferPump function
+              "TransferPumpControl",                // Task name
+              128,                                  // number of words (32 bits/ 4 bytes) for the task's stack
+              NULL,                                 // task input parameter
+              2,                                    // priority number (0 is lowest-idle)
+              NULL);                                // task's handle
+
+  xTaskCreate(TaskTempSensor,                       // Point to TaskTempSensor function
+              "TemperatureSensorControl",           // Task name
+              512,                                  // number of words (32 bits/ 4 bytes) for the task's stack
+              NULL,                                 // task input parameter
+              2,                                    // priority number (0 is lowest-idle)
+              NULL);                                // task's handle
+              
+  xTaskCreate(TaskLighter,                          // Point to TaskLighter function
+              "LighterControl",                     // Task name
+              512,                                  // number of words (32 bits/ 4 bytes) for the task's stack
+              NULL,                                 // task input parameter
+              2,                                    // priority number (0 is lowest-idle)
+              NULL);                                // task's handle
 }
 
 int32_t res;
