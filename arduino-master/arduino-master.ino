@@ -53,6 +53,7 @@
 #include "Controller.h"
 #include "mixer.h"
 #include <DFRobot_MAX31855.h>
+#include <Arduino_FreeRTOS.h>
 
 #define PUMP_COUNT                  2
 // Define pinout
@@ -71,7 +72,6 @@
 #define MIXER_PIN                      13
 
 /*----------------------------------------------------------------------------------------------------------*/
-
 
 MasterflexDB25Interface_t pump_1_interface {
   .start_stop_pin  = PUMP_1_REMOTE_CONTROL,
