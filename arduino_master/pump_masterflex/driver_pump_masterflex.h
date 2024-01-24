@@ -3,8 +3,8 @@
  * Created by Kevin Tieu, October 31, 2023
 */
 
-#ifndef PumpMasterflex_h
-#define PumpMasterflex_h
+#ifndef DRIVER_PUMP_MASTERFLEX_H
+#define DRIVER_PUMP_MASTERFLEX_H
 
 #include "Arduino.h"
 // arduino constant

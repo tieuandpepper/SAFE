@@ -1,5 +1,5 @@
-#ifndef Mixer_h
-#define Mixer_h
+#ifndef MIXER_H
+#define MIXER_H
 
 #include "Arduino.h"
 

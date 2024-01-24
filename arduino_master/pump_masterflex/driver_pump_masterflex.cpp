@@ -3,7 +3,7 @@
 */
 
 #include "Arduino.h"
-#include "PumpMasterflex.h"
+#include "driver_pump_masterflex.h"
 
 #define DELAY_MS (5)
 
