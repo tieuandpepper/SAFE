@@ -41,10 +41,12 @@ def main():
       print(ready_msg)
   
   command_list = [
-                  "pump1,dispense,15000.",
-                  "mixer, run, 10000.",
-                  "condmeter, getmeas.",
-                  "pump2, dispense, 15000.",
+                  # "pump1,dispense,15000.",
+                  # "mixer, run, 10000.",
+                  # "condmeter, getmeas.",
+                  # "pump2, dispense, 15000.",
+                  "lighter, ignite, 2000.",
+                  "fire, read, 10.",
                   ]
   for cmd in command_list:
     component = cmd[:cmd.find(",")].upper()

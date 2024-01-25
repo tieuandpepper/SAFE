@@ -25,12 +25,12 @@
  *                 |      Arduino UNO      |
  *                 +-----------------------+ 
  *                     _________________
- *                     |           SCL-|-
- *                     |           SDA-|-
+ *                     |           SCL-|- temp_clock
+ *                     |           SDA-|- temp_data
  *                     |          AREF-|-
  *                     |           GND-|- 
  *                     |           D13-|- mixer_relay_in
- *                    -|-IOREF     D12-|- 
+ *                    -|-IOREF     D12-|- IRsensor_data
  *                    -|-RESET     D11-|- DB25_P1 - 1
  *                    -|-3.3V      D10-|- DB25_P15 - 1
  *    mixer_relay_Vcc -|-5V        D09-|- DB25_P16 - 1
@@ -40,8 +40,8 @@
  *                     |           D06-|- DB25_P15 - 2
  *       DB25_P14 - 1 -|-A0        D05-|- DB25_P16 - 2
  *       DB25_P14 - 2 -|-A1        D04-|- DB25_P20 - 2
- *                    -|-A2        D03-|-
- *                    -|-A3        D02-|-
+ *                    -|-A2        D03-|- lighter_enable
+ *                    -|-A3        D02-|- lighter_charging
  *                    -|-A4         TX-|-
  *                    -|-A5         RX-|-
  *                     |_______________|
@@ -119,22 +119,45 @@ void setup() {
   }
   pump[0].PipeSetVol(1600);
   pump[1].PipeSetVol(1700);
+  // temp sensor
   max31855.begin();
+  pinMode(12, INPUT);
+  pinMode(3, OUTPUT);
+  pinMode(2,OUTPUT);
+  digitalWrite(2,HIGH);
+  delay(5000);
+  digitalWrite(2,LOW);
   Serial.println("READY");
 }
 
 int32_t res;
 cmd_t command;
 resp_t response;
+bool readTemp = false;
+long time_sec = 0;
 /// @brief Run after setup(). Will run in loop repeatedly
 void loop() {
   // Serial.println("Ready");
   if (GetCommand(&command) == CMD_RECEIVED)
   {
-    if (command.target.equals("TEMP"))
+    if (command.target.equals("FIRE"))
     {
-      float temp = max31855.readCelsius();
-      res = (int32_t)temp;
+      if (command.command_id.equals("READ"))
+      {
+        readTemp = true;
+        time_sec = command.operand;
+        res = CMD_RECEIVED;
+      }
+      else {
+        res = CMD_INVALID;
+      }
+    }
+    if (command.target.equals("LIGHTER"))
+    {
+      digitalWrite(3, HIGH);
+      delay(command.operand);
+      digitalWrite(3, LOW);
+      res = CMD_RECEIVED;
     }
     else if (command.target.equals(MIXER))
     {
@@ -163,4 +186,32 @@ void loop() {
     response.data = 0;
   }
   delay(200);
+  if (readTemp == true)
+  {
+    TempSensorRead(time_sec);
+    readTemp = false;
+  }
+}
+
+void TempSensorRead(long time_sec)
+{
+  float temp;
+  int IRsensor_data;
+  while (--time_sec > 0)
+  {
+    temp = max31855.readCelsius();
+    IRsensor_data = digitalRead(12);
+    Serial.print("IR Sensor: ");
+    if (IRsensor_data == LOW)
+    {
+      Serial.println("Fire detected");
+    }
+    else {
+      Serial.println("No fire");
+    }
+    Serial.print("Temp Sensor: ");
+    Serial.print(temp);
+    Serial.println(" deg C");
+    delay(500);
+  }
 }
