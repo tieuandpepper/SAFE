@@ -13,14 +13,18 @@
 #define RTOS_MANAGER_H
 
 #include <Arduino_FreeRTOS.h>
-#include "pump_masterflex/driver_pump_masterflex.h"
+#include <semphr.h>
+#include <DebugLog.h>
 #include "arduino_pinout.h"
+#include "pump_masterflex/driver_pump_masterflex.h"
+#include "mixer/task_mixer.h"
 
 #define TASK_PRIORITY_COMMUNICATION       2
 #define TASK_PRIORITY_PROCESSING          3
 #define TASK_PRIORITY_MONITORING          4
 
-QueueHandle_t x = xSemaphoreCreateBinary();
+extern SemaphoreHandle_t mutex_mixing_vessel;
+
 
 void TaskMixingPump(void * pvParameters);
 void TaskMixer(void * pvParameters);

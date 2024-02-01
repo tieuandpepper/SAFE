@@ -30,19 +30,19 @@
  *                         |           SDA-|-
  *                         |          AREF-|-
  *                         |           GND-|- 
- *                         |           D13-|- mixer_relay_in
+ *                         |           D13-|- 
  *                        -|-IOREF     D12-|- 
- *                        -|-RESET     D11-|- DB25_P1
- *                        -|-3.3V      D10-|- DB25_P15
- *        mixer_relay_Vcc -|-5V        D09-|- DB25_P16
- *                        -|-GND       D08-|- DB25_P20
+ *                        -|-RESET     D11-|- 
+ *                        -|-3.3V      D10-|- 
+ *        mixer_relay_Vcc -|-5V        D09-|- 
+ *                        -|-GND       D08-|- mixer_relay_in
  *                        -|-GND           | 
  *                        -|-VIN       D07-|- 
  *                         |           D06-|- 
- *               DB25_P14 -|-A0        D05-|- 
- *                        -|-A1        D04-|- 
- *                        -|-A2        D03-|-
- *                        -|-A3        D02-|-
+ *                        -|-A0        D05-|- DB25_P01
+ *                        -|-A1        D04-|- DB25_P15
+ *                        -|-A2        D03-|- DB25_P16
+ *               DB25_P14 -|-A3        D02-|- DB25_P20
  *                        -|-A4         TX-|-
  *                        -|-A5         RX-|-
  *                         |_______________|
@@ -55,26 +55,26 @@
  *                 
  *      COMPONENT        |             PIN             | ARDUINO PIN | POWER SUPPLY 
  *      -----------------+-----------------------------+-------------+--------------
- *      MIXING PUMP      |    CONNECTOR-DB25 PIN-01    |    D11      |              
+ *      MIXING PUMP      |    CONNECTOR-DB25 PIN-01    |    D05      |              
  *      MIXING PUMP      |    CONNECTOR-DB25 PIN-03    |    GND      |              
  *      MIXING PUMP      |    CONNECTOR-DB25 PIN-05    |    GND      |              
- *      MIXING PUMP      |    CONNECTOR-DB25 PIN-14    |    A0       |              
- *      MIXING PUMP      |    CONNECTOR-DB25 PIN-15    |    D10      |              
- *      MIXING PUMP      |    CONNECTOR-DB25 PIN-16    |    D09      |              
+ *      MIXING PUMP      |    CONNECTOR-DB25 PIN-14    |    A3       |              
+ *      MIXING PUMP      |    CONNECTOR-DB25 PIN-15    |    D04      |              
+ *      MIXING PUMP      |    CONNECTOR-DB25 PIN-16    |    D03      |              
  *      MIXING PUMP      |    CONNECTOR-DB25 PIN-17    |    GND      |              
- *      MIXING PUMP      |    CONNECTOR-DB25 PIN-20    |    D08      |              
+ *      MIXING PUMP      |    CONNECTOR-DB25 PIN-20    |    D02      |              
  *      MIXER            |          RELAY - GND        |    GND      |              
  *      MIXER            |          RELAY - VCC        |     5V      |              
- *      MIXER            |          RELAY - IN         |    D13      |              
+ *      MIXER            |          RELAY - IN         |    D08      |              
  *  
  */
 
 // Masterflex mixing pump pinout
-#define PIN_MIXING_PUMP_SPEED_CONTROL       11
-#define PIN_MIXING_PUMP_REMOTE_CONTROL      10
-#define PIN_MIXING_PUMP_CLOCKWISE_CONTROL   9
-#define PIN_MIXING_PUMP_PRIME_CONTROL       8
-#define PIN_MIXING_PUMP_SPEED_FEEDBACK      A0 // analog pin
+#define PIN_MIXING_PUMP_SPEED_CONTROL       5
+#define PIN_MIXING_PUMP_REMOTE_CONTROL      4
+#define PIN_MIXING_PUMP_CLOCKWISE_CONTROL   3
+#define PIN_MIXING_PUMP_PRIME_CONTROL       2
+#define PIN_MIXING_PUMP_SPEED_FEEDBACK      A3 // analog pin
 
 // Mixer pin
-#define PIN_MIXER_ENABLE                    13
+#define PIN_MIXER_ENABLE                    8

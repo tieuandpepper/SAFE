@@ -6,26 +6,37 @@
  * @date 2024-01-23
  * 
  * @copyright Copyright (c) 2024
- * 
+ *
  */
 
 #include <Arduino_FreeRTOS.h>
+#include <DebugLog.h>
 #include "arduino_pinout.h"
 #include "rtos_manager.h"
 
+SemaphoreHandle_t mutex_mixing_vessel;
+SemaphoreHandle_t mutex_test_chamber;
 /*----------------------------------------------------------------------------------------------------------*/
 
 /// @brief Setup/ Initialization. Run first and run ONCE
 void setup() {
   Serial.begin(9600);
-
+  mutex_mixing_vessel = xSemaphoreCreateMutex();
+  if (mutex_mixing_vessel != NULL) {
+    LOG_INFO("Mutex mixing vessel created");
+  }
+  mutex_test_chamber = xSemaphoreCreateMutex();
+  if (mutex_test_chamber != NULL) {
+    LOG_INFO("Mutex test chamber created");
+  }
+  
   xTaskCreate(TaskMixingPump,                       // Point to TaskMixingPump function
               "MixingPumpControl",                  // Task name
               128,                                  // number of words (32 bits/ 4 bytes) for the task's stack
               NULL,                                 // task input parameter
               TASK_PRIORITY_PROCESSING,             // priority number (0 is lowest-idle)
               NULL);                                // task's handle  
-
+  LOG_INFO("Finish creating task 1");
   xTaskCreate(TaskMixer,                            // Point to TaskMixer function
               "MixerControl",                       // Task name
               128,                                  // number of words (32 bits/ 4 bytes) for the task's stack
@@ -33,43 +44,47 @@ void setup() {
               TASK_PRIORITY_PROCESSING,             // priority number (0 is lowest-idle)
               NULL);                                // task's handle
 
-  xTaskCreate(TaskTransferPump,                     // Point to TaskTransferPump function
-              "TransferPumpControl",                // Task name
-              128,                                  // number of words (32 bits/ 4 bytes) for the task's stack
-              NULL,                                 // task input parameter
-              TASK_PRIORITY_PROCESSING,             // priority number (0 is lowest-idle)
-              NULL);                                // task's handle
+  // xTaskCreate(TaskTransferPump,                     // Point to TaskTransferPump function
+  //             "TransferPumpControl",                // Task name
+  //             128,                                  // number of words (32 bits/ 4 bytes) for the task's stack
+  //             NULL,                                 // task input parameter
+  //             TASK_PRIORITY_PROCESSING,             // priority number (0 is lowest-idle)
+  //             NULL);                                // task's handle
 
-  xTaskCreate(TaskTestMonitor,                      // Point to TaskTestMonitor function
-              "TestMonitor",                        // Task name
-              1024,                                 // number of words (32 bits/ 4 bytes) for the task's stack
-              NULL,                                 // task input parameter
-              TASK_PRIORITY_MONITORING,             // priority number (0 is lowest-idle)
-              NULL);                                // task's handle
+  // xTaskCreate(TaskTestMonitor,                      // Point to TaskTestMonitor function
+  //             "TestMonitor",                        // Task name
+  //             1024,                                 // number of words (32 bits/ 4 bytes) for the task's stack
+  //             NULL,                                 // task input parameter
+  //             TASK_PRIORITY_MONITORING,             // priority number (0 is lowest-idle)
+  //             NULL);                                // task's handle
 
-  xTaskCreate(TaskLighter,                          // Point to TaskLighter function
-              "LighterControl",                     // Task name
-              128,                                  // number of words (32 bits/ 4 bytes) for the task's stack
-              NULL,                                 // task input parameter
-              TASK_PRIORITY_PROCESSING,             // priority number (0 is lowest-idle)
-              NULL);                                // task's handle
+  // xTaskCreate(TaskLighter,                          // Point to TaskLighter function
+  //             "LighterControl",                     // Task name
+  //             128,                                  // number of words (32 bits/ 4 bytes) for the task's stack
+  //             NULL,                                 // task input parameter
+  //             TASK_PRIORITY_PROCESSING,             // priority number (0 is lowest-idle)
+  //             NULL);                                // task's handle
               
-  xTaskCreate(TaskCommandProcess,                   // Point to TaskCommandProcess function
-              "CommandProcess",                     // Task name
-              1024,                                 // number of words (32 bits/ 4 bytes) for the task's stack
-              NULL,                                 // task input parameter
-              TASK_PRIORITY_COMMUNICATION,          // priority number (0 is lowest-idle)
-              NULL);                                // task's handle
+  // xTaskCreate(TaskCommandProcess,                   // Point to TaskCommandProcess function
+  //             "CommandProcess",                     // Task name
+  //             1024,                                 // number of words (32 bits/ 4 bytes) for the task's stack
+  //             NULL,                                 // task input parameter
+  //             TASK_PRIORITY_COMMUNICATION,          // priority number (0 is lowest-idle)
+  //             NULL);                                // task's handle
 
-  xTaskCreate(TaskResponseProcess,                  // Point to TaskResponseProcess function
-              "ResponseProcess",                    // Task name
-              1024,                                 // number of words (32 bits/ 4 bytes) for the task's stack
-              NULL,                                 // task input parameter
-              TASK_PRIORITY_COMMUNICATION,          // priority number (0 is lowest-idle)
-              NULL);                                // task's handle
+  // xTaskCreate(TaskResponseProcess,                  // Point to TaskResponseProcess function
+  //             "ResponseProcess",                    // Task name
+  //             1024,                                 // number of words (32 bits/ 4 bytes) for the task's stack
+  //             NULL,                                 // task input parameter
+  //             TASK_PRIORITY_COMMUNICATION,          // priority number (0 is lowest-idle)
+  //             NULL);                                // task's handle
+  LOG_INFO("Finish creating task");
+  // Start the scheduler
+  vTaskStartScheduler();
+  LOG_ERROR("Proper scheduler will never come here");
 }
 
-int32_t res;
+// int32_t res;
 // cmd_t command;
 // resp_t response;
 /// @brief Run after setup(). Will run in loop repeatedly
@@ -108,5 +123,5 @@ void loop() {
   //   command.operand = 0;
   //   response.data = 0;
   // }
-  delay(200);
+  // delay(200);
 }
