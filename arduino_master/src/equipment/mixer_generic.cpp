@@ -1,4 +1,4 @@
-#include "mixer.h"
+#include "mixer_generic.h"
 
 
 bool MixerStart(mixer_t* mixer)

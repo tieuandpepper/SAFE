@@ -64,7 +64,7 @@
  *      MIXING PUMP      |    CONNECTOR-DB25 PIN-17    |    GND      |              
  *      MIXING PUMP      |    CONNECTOR-DB25 PIN-20    |    D02      |              
  *      MIXER            |          RELAY - GND        |    GND      |              
- *      MIXER            |          RELAY - VCC        |     5V      |              
+ *      MIXER            |          RELAY - VCC        |     5V      |          
  *      MIXER            |          RELAY - IN         |    D08      |              
  *  
  */

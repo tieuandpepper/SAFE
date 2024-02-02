@@ -2,8 +2,8 @@
 #define Controller_h
 
 #include "Arduino.h"
-#include "PumpMasterflex.h"
-#include "mixer.h"
+#include "equipment/pump_masterflex.h"
+#include "equipment/mixer_generic.h"
 
 #define BUFFER_SIZE         64
 #define CMD_RECEIVED 1

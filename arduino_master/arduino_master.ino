@@ -16,6 +16,7 @@
 
 SemaphoreHandle_t mutex_mixing_vessel;
 SemaphoreHandle_t mutex_test_chamber;
+QueueHandle_t queue_pc_cmd;
 /*----------------------------------------------------------------------------------------------------------*/
 
 /// @brief Setup/ Initialization. Run first and run ONCE
@@ -36,7 +37,7 @@ void setup() {
               NULL,                                 // task input parameter
               TASK_PRIORITY_PROCESSING,             // priority number (0 is lowest-idle)
               NULL);                                // task's handle  
-  LOG_INFO("Finish creating task 1");
+
   xTaskCreate(TaskMixer,                            // Point to TaskMixer function
               "MixerControl",                       // Task name
               128,                                  // number of words (32 bits/ 4 bytes) for the task's stack
