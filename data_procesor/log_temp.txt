@@ -1,0 +1,1579 @@
+11:35:44:867 -> READY
+---- Closed serial port /dev/tty.usbserial-110 due to disconnection from the machine ----
+---- Opened the serial port /dev/tty.usbserial-110 ----
+11:37:13:687 -> READY
+11:37:27:311 -> FIRE,READ,10
+11:37:27:311 -> Target=FIRE | Command=READ | Operand=10
+11:37:27:344 -> RESP,INVALID,FIRE,0.
+11:37:27:525 -> IR Sensor: No fire
+11:37:27:525 -> Temp Sensor: 21.50 deg C
+11:37:28:026 -> IR Sensor: No fire
+11:37:28:026 -> Temp Sensor: 21.50 deg C
+11:37:28:527 -> IR Sensor: Fire detected
+11:37:28:527 -> Temp Sensor: 21.50 deg C
+11:37:29:029 -> IR Sensor: Fire detected
+11:37:29:029 -> Temp S
+---- Closed serial port /dev/tty.usbserial-110 due to disconnection from the machine ----
+---- Opened the serial port /dev/tty.Bluetooth-Incoming-Port ----
+---- Closed the serial port /dev/tty.usbserial-110 ----
+---- Opened the serial port /dev/tty.usbserial-110 ----
+---- Closed the serial port /dev/tty.usbserial-110 ----
+---- Opened the serial port /dev/tty.usbserial-110 ----
+11:38:08:410 -> READY
+11:38:08:410 -> FIRE,READ,10
+11:38:08:410 -> Target=FIRE | Command=READ | Operand=10
+11:38:08:442 -> RESP,INVALID,FIRE,0.
+11:38:08:630 -> IR Sensor: Fire detected
+11:38:08:630 -> Temp Sensor: 21.50 deg C
+11:38:09:132 -> IR Sensor: No fire
+11:38:09:132 -> Temp Sensor: 21.50 deg C
+11:38:09:633 -> IR Sensor: No fire
+11:38:09:633 -> Temp Sensor: 21.50 deg C
+11:38:10:134 -> IR Sensor: No fire
+11:38:10:134 -> Temp Sensor: 21.50 deg C
+11:38:10:636 -> IR Sensor: Fire detected
+11:38:10:636 -> Temp Sensor: 21.50 deg C
+11:38:11:138 -> IR Sensor: Fire detected
+11:38:11:138 -> Temp Sensor: 21.50 deg C
+11:38:11:639 -> IR Sensor: Fire detected
+11:38:11:639 -> Temp Sensor: 21.50 deg C
+11:38:12:141 -> IR Sensor: Fire detected
+11:38:12:141 -> Temp Sensor: 21.50 deg C
+11:38:12:642 -> IR Sensor: Fire detected
+11:38:12:642 -> Temp Sensor: 21.50 deg C
+11:38:41:742 -> FIRE,READ,10
+11:38:41:742 -> Target=FIRE | Command=READ | Operand=10
+11:38:41:775 -> RESP,INVALID,FIRE,0.
+11:38:41:954 -> IR Sensor: No fire
+11:38:41:954 -> Temp Sensor: 21.25 deg C
+11:38:42:456 -> IR Sensor: No fire
+11:38:42:456 -> Temp Sensor: 21.25 deg C
+11:38:42:958 -> IR Sensor: No fire
+11:38:42:958 -> Temp Sensor: 21.25 deg C
+11:38:43:459 -> IR Sensor: No fire
+11:38:43:459 -> Temp Sensor: 21.25 deg C
+11:38:43:961 -> IR Sensor: No fire
+11:38:43:961 -> Temp Sensor: 21.25 deg C
+11:38:44:462 -> IR Sensor: No fire
+11:38:44:462 -> Temp Sensor: 21.25 deg C
+11:38:44:964 -> IR Sensor: No fire
+11:38:44:964 -> Temp Sensor: 21.25 deg C
+11:38:45:465 -> IR Sensor: No fire
+11:38:45:465 -> Temp Sensor: 21.25 deg C
+11:38:45:967 -> IR Sensor: No fire
+11:38:45:967 -> Temp Sensor: 21.25 deg C
+11:39:07:866 -> 
+11:39:07:866 -> Target= | Command= | Operand=0
+11:39:07:893 -> RESP,INVALID,,0.
+11:39:45:863 -> 
+11:39:45:863 -> Target= | Command= | Operand=0
+11:39:45:890 -> RESP,INVALID,,0.
+11:39:47:263 -> 
+11:39:47:263 -> Target= | Command= | Operand=0
+11:39:47:289 -> RESP,INVALID,,0.
+11:40:31:661 -> 
+11:40:31:661 -> Target= | Command= | Operand=0
+11:40:31:687 -> RESP,INVALID,,0.
+11:41:22:057 -> 
+11:41:22:057 -> Target= | Command= | Operand=0
+11:41:22:084 -> RESP,INVALID,,0.
+11:41:34:258 -> FIRE,READ,10
+11:41:34:258 -> Target=FIRE | Command=READ | Operand=10
+11:41:34:291 -> RESP,INVALID,FIRE,0.
+11:41:34:471 -> IR Sensor: No fire
+11:41:34:471 -> Temp Sensor: 21.00 deg C
+11:41:34:973 -> IR Sensor: No fire
+11:41:34:973 -> Temp Sensor: 21.00 deg C
+11:41:35:474 -> IR Sensor: No fire
+11:41:35:474 -> Temp Sensor: 21.00 deg C
+11:41:35:975 -> IR Sensor: No fire
+11:41:35:975 -> Temp Sensor: 21.00 deg C
+11:41:36:477 -> IR Sensor: No fire
+11:41:36:477 -> Temp Sensor: 21.00 deg C
+11:41:36:979 -> IR Sensor: No fire
+11:41:36:979 -> Temp Sensor: 21.00 deg C
+11:41:37:480 -> IR Sensor: No fire
+11:41:37:480 -> Temp Sensor: 21.00 deg C
+11:41:37:981 -> IR Sensor: No fire
+11:41:37:981 -> Temp Sensor: 21.00 deg C
+11:41:38:483 -> IR Sensor: No fire
+11:41:38:483 -> Temp Sensor: 21.00 deg C
+11:43:00:177 -> 
+11:43:00:177 -> Target= | Command= | Operand=0
+11:43:00:204 -> RESP,INVALID,,0.
+11:43:03:379 -> FIRE,READ,1000
+11:43:03:379 -> Target=FIRE | Command=READ | Operand=1000
+11:43:03:412 -> RESP,INVALID,FIRE,0.
+11:43:03:596 -> IR Sensor: No fire
+11:43:03:596 -> Temp Sensor: 20.75 deg C
+11:43:04:097 -> IR Sensor: No fire
+11:43:04:097 -> Temp Sensor: 20.75 deg C
+11:43:04:599 -> IR Sensor: No fire
+11:43:04:599 -> Temp Sensor: 20.75 deg C
+11:43:05:100 -> IR Sensor: No fire
+11:43:05:100 -> Temp Sensor: 20.75 deg C
+11:43:05:602 -> IR Sensor: No fire
+11:43:05:602 -> Temp Sensor: 20.75 deg C
+11:43:06:104 -> IR Sensor: No fire
+11:43:06:104 -> Temp Sensor: 20.50 deg C
+11:43:06:605 -> IR Sensor: No fire
+11:43:06:605 -> Temp Sensor: 20.75 deg C
+11:43:07:106 -> IR Sensor: No fire
+11:43:07:106 -> Temp Sensor: 20.75 deg C
+11:43:07:608 -> IR Sensor: No fire
+11:43:07:608 -> Temp Sensor: 20.75 deg C
+11:43:08:109 -> IR Sensor: No fire
+11:43:08:109 -> Temp Sensor: 20.75 deg C
+11:43:08:611 -> IR Sensor: No fire
+11:43:08:611 -> Temp Sensor: 20.75 deg C
+11:43:09:112 -> IR Sensor: No fire
+11:43:09:112 -> Temp Sensor: 20.75 deg C
+11:43:09:613 -> IR Sensor: No fire
+11:43:09:613 -> Temp Sensor: 20.75 deg C
+11:43:10:115 -> IR Sensor: No fire
+11:43:10:115 -> Temp Sensor: 20.75 deg C
+11:43:10:617 -> IR Sensor: No fire
+11:43:10:617 -> Temp Sensor: 20.75 deg C
+11:43:11:118 -> IR Sensor: No fire
+11:43:11:118 -> Temp Sensor: 20.75 deg C
+11:43:11:620 -> IR Sensor: No fire
+11:43:11:620 -> Temp Sensor: 20.75 deg C
+11:43:12:121 -> IR Sensor: No fire
+11:43:12:121 -> Temp Sensor: 20.75 deg C
+11:43:12:623 -> IR Sensor: No fire
+11:43:12:623 -> Temp Sensor: 20.75 deg C
+11:43:13:124 -> IR Sensor: No fire
+11:43:13:124 -> Temp Sensor: 20.75 deg C
+11:43:13:626 -> IR Sensor: No fire
+11:43:13:626 -> Temp Sensor: 20.50 deg C
+11:43:14:127 -> IR Sensor: No fire
+11:43:14:127 -> Temp Sensor: 20.75 deg C
+11:43:14:629 -> IR Sensor: No fire
+11:43:14:629 -> Temp Sensor: 20.75 deg C
+11:43:15:130 -> IR Sensor: No fire
+11:43:15:130 -> Temp Sensor: 20.75 deg C
+11:43:15:632 -> IR Sensor: No fire
+11:43:15:632 -> Temp Sensor: 20.75 deg C
+11:43:16:133 -> IR Sensor: No fire
+11:43:16:133 -> Temp Sensor: 20.75 deg C
+11:43:16:635 -> IR Sensor: No fire
+11:43:16:635 -> Temp Sensor: 20.75 deg C
+11:43:17:136 -> IR Sensor: No fire
+11:43:17:136 -> Temp Sensor: 20.75 deg C
+11:43:17:638 -> IR Sensor: No fire
+11:43:17:638 -> Temp Sensor: 20.75 deg C
+11:43:18:139 -> IR Sensor: No fire
+11:43:18:139 -> Temp Sensor: 20.75 deg C
+11:43:18:641 -> IR Sensor: No fire
+11:43:18:641 -> Temp Sensor: 20.75 deg C
+11:43:19:142 -> IR Sensor: No fire
+11:43:19:142 -> Temp Sensor: 20.75 deg C
+11:43:19:644 -> IR Sensor: No fire
+11:43:19:644 -> Temp Sensor: 20.75 deg C
+11:43:20:145 -> IR Sensor: No fire
+11:43:20:145 -> Temp Sensor: 20.50 deg C
+11:43:20:647 -> IR Sensor: No fire
+11:43:20:647 -> Temp Sensor: 20.50 deg C
+11:43:21:148 -> IR Sensor: No fire
+11:43:21:148 -> Temp Sensor: 20.75 deg C
+11:43:21:650 -> IR Sensor: No fire
+11:43:21:650 -> Temp Sensor: 20.75 deg C
+11:43:22:151 -> IR Sensor: No fire
+11:43:22:151 -> Temp Sensor: 20.75 deg C
+11:43:22:653 -> IR Sensor: No fire
+11:43:22:653 -> Temp Sensor: 20.50 deg C
+11:43:23:154 -> IR Sensor: No fire
+11:43:23:154 -> Temp Sensor: 20.75 deg C
+11:43:23:656 -> IR Sensor: No fire
+11:43:23:656 -> Temp Sensor: 20.50 deg C
+11:43:24:157 -> IR Sensor: No fire
+11:43:24:157 -> Temp Sensor: 20.75 deg C
+11:43:24:658 -> IR Sensor: No fire
+11:43:24:658 -> Temp Sensor: 20.75 deg C
+11:43:25:160 -> IR Sensor: No fire
+11:43:25:160 -> Temp Sensor: 20.75 deg C
+11:43:25:662 -> IR Sensor: No fire
+11:43:25:662 -> Temp Sensor: 20.75 deg C
+11:43:26:163 -> IR Sensor: No fire
+11:43:26:163 -> Temp Sensor: 20.75 deg C
+11:43:26:665 -> IR Sensor: No fire
+11:43:26:665 -> Temp Sensor: 20.75 deg C
+11:43:27:166 -> IR Sensor: No fire
+11:43:27:166 -> Temp Sensor: 20.75 deg C
+11:43:27:667 -> IR Sensor: No fire
+11:43:27:667 -> Temp Sensor: 20.50 deg C
+11:43:28:169 -> IR Sensor: No fire
+11:43:28:169 -> Temp Sensor: 20.50 deg C
+11:43:28:671 -> IR Sensor: No fire
+11:43:28:671 -> Temp Sensor: 20.75 deg C
+11:43:29:172 -> IR Sensor: No fire
+11:43:29:172 -> Temp Sensor: 20.50 deg C
+11:43:29:674 -> IR Sensor: No fire
+11:43:29:674 -> Temp Sensor: 20.75 deg C
+11:43:30:175 -> IR Sensor: No fire
+11:43:30:175 -> Temp Sensor: 20.50 deg C
+11:43:30:676 -> IR Sensor: No fire
+11:43:30:676 -> Temp Sensor: 20.75 deg C
+11:43:31:178 -> IR Sensor: No fire
+11:43:31:178 -> Temp Sensor: 20.50 deg C
+11:43:31:679 -> IR Sensor: No fire
+11:43:31:679 -> Temp Sensor: 20.75 deg C
+11:43:32:181 -> IR Sensor: No fire
+11:43:32:181 -> Temp Sensor: 20.50 deg C
+11:43:32:682 -> IR Sensor: No fire
+11:43:32:682 -> Temp Sensor: 20.50 deg C
+11:43:33:184 -> IR Sensor: No fire
+11:43:33:184 -> Temp Sensor: 20.75 deg C
+11:43:33:685 -> IR Sensor: No fire
+11:43:33:685 -> Temp Sensor: 20.50 deg C
+11:43:34:187 -> IR Sensor: No fire
+11:43:34:187 -> Temp Sensor: 20.50 deg C
+11:43:34:689 -> IR Sensor: No fire
+11:43:34:689 -> Temp Sensor: 20.50 deg C
+11:43:35:190 -> IR Sensor: No fire
+11:43:35:190 -> Temp Sensor: 20.75 deg C
+11:43:35:692 -> IR Sensor: No fire
+11:43:35:692 -> Temp Sensor: 20.75 deg C
+11:43:36:193 -> IR Sensor: No fire
+11:43:36:193 -> Temp Sensor: 20.75 deg C
+11:43:36:694 -> IR Sensor: No fire
+11:43:36:694 -> Temp Sensor: 20.75 deg C
+11:43:37:196 -> IR Sensor: No fire
+11:43:37:196 -> Temp Sensor: 20.75 deg C
+11:43:37:697 -> IR Sensor: No fire
+11:43:37:697 -> Temp Sensor: 20.50 deg C
+11:43:38:199 -> IR Sensor: No fire
+11:43:38:199 -> Temp Sensor: 20.75 deg C
+11:43:38:700 -> IR Sensor: Fire detected
+11:43:38:700 -> Temp Sensor: 20.50 deg C
+11:43:39:202 -> IR Sensor: No fire
+11:43:39:202 -> Temp Sensor: 20.50 deg C
+11:43:39:704 -> IR Sensor: No fire
+11:43:39:704 -> Temp Sensor: 20.50 deg C
+11:43:40:205 -> IR Sensor: No fire
+11:43:40:205 -> Temp Sensor: 20.50 deg C
+11:43:40:706 -> IR Sensor: Fire detected
+11:43:40:706 -> Temp Sensor: 20.50 deg C
+11:43:41:208 -> IR Sensor: No fire
+11:43:41:208 -> Temp Sensor: 20.50 deg C
+11:43:41:710 -> IR Sensor: No fire
+11:43:41:710 -> Temp Sensor: 20.75 deg C
+11:43:42:211 -> IR Sensor: No fire
+11:43:42:211 -> Temp Sensor: 20.50 deg C
+11:43:42:712 -> IR Sensor: No fire
+11:43:42:712 -> Temp Sensor: 20.75 deg C
+11:43:43:214 -> IR Sensor: No fire
+11:43:43:214 -> Temp Sensor: 20.50 deg C
+11:43:43:715 -> IR Sensor: No fire
+11:43:43:715 -> Temp Sensor: 20.50 deg C
+11:43:44:217 -> IR Sensor: No fire
+11:43:44:217 -> Temp Sensor: 20.50 deg C
+11:43:44:718 -> IR Sensor: No fire
+11:43:44:718 -> Temp Sensor: 20.75 deg C
+11:43:45:220 -> IR Sensor: No fire
+11:43:45:220 -> Temp Sensor: 20.50 deg C
+11:43:45:721 -> IR Sensor: No fire
+11:43:45:721 -> Temp Sensor: 20.50 deg C
+11:43:46:223 -> IR Sensor: No fire
+11:43:46:223 -> Temp Sensor: 20.50 deg C
+11:43:46:724 -> IR Sensor: No fire
+11:43:46:724 -> Temp Sensor: 20.50 deg C
+11:43:47:226 -> IR Sensor: No fire
+11:43:47:226 -> Temp Sensor: 20.50 deg C
+11:43:47:727 -> IR Sensor: No fire
+11:43:47:727 -> Temp Sensor: 20.50 deg C
+11:43:48:229 -> IR Sensor: No fire
+11:43:48:229 -> Temp Sensor: 20.50 deg C
+11:43:48:730 -> IR Sensor: No fire
+11:43:48:730 -> Temp Sensor: 20.50 deg C
+11:43:49:232 -> IR Sensor: No fire
+11:43:49:232 -> Temp Sensor: 20.50 deg C
+11:43:49:733 -> IR Sensor: No fire
+11:43:49:733 -> Temp Sensor: 20.50 deg C
+11:43:50:235 -> IR Sensor: No fire
+11:43:50:235 -> Temp Sensor: 20.50 deg C
+11:43:50:736 -> IR Sensor: No fire
+11:43:50:736 -> Temp Sensor: 20.50 deg C
+11:43:51:238 -> IR Sensor: No fire
+11:43:51:238 -> Temp Sensor: 20.50 deg C
+11:43:51:739 -> IR Sensor: No fire
+11:43:51:739 -> Temp Sensor: 20.50 deg C
+11:43:52:241 -> IR Sensor: No fire
+11:43:52:241 -> Temp Sensor: 20.50 deg C
+11:43:52:742 -> IR Sensor: No fire
+11:43:52:742 -> Temp Sensor: 20.50 deg C
+11:43:53:243 -> IR Sensor: No fire
+11:43:53:243 -> Temp Sensor: 20.50 deg C
+11:43:53:745 -> IR Sensor: No fire
+11:43:53:745 -> Temp Sensor: 20.50 deg C
+11:43:54:246 -> IR Sensor: No fire
+11:43:54:246 -> Temp Sensor: 20.50 deg C
+11:43:54:748 -> IR Sensor: No fire
+11:43:54:748 -> Temp Sensor: 20.50 deg C
+11:43:55:249 -> IR Sensor: No fire
+11:43:55:249 -> Temp Sensor: 20.50 deg C
+11:43:55:751 -> IR Sensor: No fire
+11:43:55:751 -> Temp Sensor: 20.50 deg C
+11:43:56:252 -> IR Sensor: No fire
+11:43:56:252 -> Temp Sensor: 20.50 deg C
+11:43:56:754 -> IR Sensor: No fire
+11:43:56:754 -> Temp Sensor: 20.50 deg C
+11:43:57:255 -> IR Sensor: No fire
+11:43:57:255 -> Temp Sensor: 20.75 deg C
+11:43:57:757 -> IR Sensor: No fire
+11:43:57:757 -> Temp Sensor: 20.50 deg C
+11:43:58:258 -> IR Sensor: No fire
+11:43:58:258 -> Temp Sensor: 20.75 deg C
+11:43:58:760 -> IR Sensor: No fire
+11:43:58:760 -> Temp Sensor: 20.50 deg C
+11:43:59:261 -> IR Sensor: No fire
+11:43:59:261 -> Temp Sensor: 20.50 deg C
+11:43:59:763 -> IR Sensor: No fire
+11:43:59:763 -> Temp Sensor: 20.50 deg C
+11:44:00:264 -> IR Sensor: No fire
+11:44:00:264 -> Temp Sensor: 20.50 deg C
+11:44:00:766 -> IR Sensor: No fire
+11:44:00:766 -> Temp Sensor: 20.50 deg C
+11:44:01:267 -> IR Sensor: No fire
+11:44:01:267 -> Temp Sensor: 20.50 deg C
+11:44:01:769 -> IR Sensor: No fire
+11:44:01:769 -> Temp Sensor: 20.50 deg C
+11:44:02:270 -> IR Sensor: No fire
+11:44:02:270 -> Temp Sensor: 20.50 deg C
+11:44:02:772 -> IR Sensor: No fire
+11:44:02:772 -> Temp Sensor: 20.50 deg C
+11:44:03:273 -> IR Sensor: No fire
+11:44:03:273 -> Temp Sensor: 20.50 deg C
+11:44:03:775 -> IR Sensor: No fire
+11:44:03:775 -> Temp Sensor: 20.50 deg C
+11:44:04:276 -> IR Sensor: No fire
+11:44:04:276 -> Temp Sensor: 20.50 deg C
+11:44:04:778 -> IR Sensor: No fire
+11:44:04:778 -> Temp Sensor: 20.50 deg C
+11:44:05:279 -> IR Sensor: No fire
+11:44:05:279 -> Temp Sensor: 20.50 deg C
+11:44:05:781 -> IR Sensor: No fire
+11:44:05:781 -> Temp Sensor: 20.50 deg C
+11:44:06:282 -> IR Sensor: No fire
+11:44:06:282 -> Temp Sensor: 20.50 deg C
+11:44:06:784 -> IR Sensor: No fire
+11:44:06:784 -> Temp Sensor: 20.50 deg C
+11:44:07:285 -> IR Sensor: No fire
+11:44:07:285 -> Temp Sensor: 20.50 deg C
+11:44:07:787 -> IR Sensor: No fire
+11:44:07:787 -> Temp Sensor: 20.50 deg C
+11:44:08:288 -> IR Sensor: No fire
+11:44:08:288 -> Temp Sensor: 20.50 deg C
+11:44:08:790 -> IR Sensor: No fire
+11:44:08:790 -> Temp Sensor: 20.50 deg C
+11:44:09:291 -> IR Sensor: No fire
+11:44:09:291 -> Temp Sensor: 20.50 deg C
+11:44:09:793 -> IR Sensor: No fire
+11:44:09:793 -> Temp Sensor: 20.50 deg C
+11:44:10:294 -> IR Sensor: No fire
+11:44:10:294 -> Temp Sensor: 20.50 deg C
+11:44:10:796 -> IR Sensor: No fire
+11:44:10:796 -> Temp Sensor: 20.50 deg C
+11:44:11:297 -> IR Sensor: No fire
+11:44:11:297 -> Temp Sensor: 20.50 deg C
+11:44:11:799 -> IR Sensor: No fire
+11:44:11:799 -> Temp Sensor: 20.50 deg C
+11:44:12:300 -> IR Sensor: No fire
+11:44:12:300 -> Temp Sensor: 20.50 deg C
+11:44:12:801 -> IR Sensor: No fire
+11:44:12:801 -> Temp Sensor: 20.50 deg C
+11:44:13:303 -> IR Sensor: No fire
+11:44:13:303 -> Temp Sensor: 20.50 deg C
+11:44:13:805 -> IR Sensor: No fire
+11:44:13:805 -> Temp Sensor: 20.50 deg C
+11:44:14:306 -> IR Sensor: No fire
+11:44:14:306 -> Temp Sensor: 20.50 deg C
+11:44:14:808 -> IR Sensor: No fire
+11:44:14:808 -> Temp Sensor: 20.50 deg C
+11:44:15:309 -> IR Sensor: No fire
+11:44:15:309 -> Temp Sensor: 20.50 deg C
+11:44:15:811 -> IR Sensor: No fire
+11:44:15:811 -> Temp Sensor: 20.50 deg C
+11:44:16:312 -> IR Sensor: No fire
+11:44:16:312 -> Temp Sensor: 20.50 deg C
+11:44:16:814 -> IR Sensor: No fire
+11:44:16:814 -> Temp Sensor: 20.50 deg C
+11:44:17:315 -> IR Sensor: No fire
+11:44:17:315 -> Temp Sensor: 20.50 deg C
+11:44:17:816 -> IR Sensor: No fire
+11:44:17:816 -> Temp Sensor: 20.50 deg C
+11:44:18:318 -> IR Sensor: No fire
+11:44:18:318 -> Temp Sensor: 20.50 deg C
+11:44:18:820 -> IR Sensor: No fire
+11:44:18:820 -> Temp Sensor: 20.50 deg C
+11:44:19:321 -> IR Sensor: No fire
+11:44:19:321 -> Temp Sensor: 20.50 deg C
+11:44:19:823 -> IR Sensor: No fire
+11:44:19:823 -> Temp Sensor: 20.50 deg C
+11:44:20:324 -> IR Sensor: No fire
+11:44:20:324 -> Temp Sensor: 20.50 deg C
+11:44:20:825 -> IR Sensor: No fire
+11:44:20:825 -> Temp Sensor: 20.50 deg C
+11:44:21:327 -> IR Sensor: No fire
+11:44:21:327 -> Temp Sensor: 20.50 deg C
+11:44:21:828 -> IR Sensor: No fire
+11:44:21:828 -> Temp Sensor: 20.50 deg C
+11:44:22:330 -> IR Sensor: No fire
+11:44:22:330 -> Temp Sensor: 20.50 deg C
+11:44:22:831 -> IR Sensor: No fire
+11:44:22:831 -> Temp Sensor: 20.50 deg C
+11:44:23:333 -> IR Sensor: No fire
+11:44:23:333 -> Temp Sensor: 20.50 deg C
+11:44:23:834 -> IR Sensor: No fire
+11:44:23:834 -> Temp Sensor: 20.50 deg C
+11:44:24:336 -> IR Sensor: No fire
+11:44:24:336 -> Temp Sensor: 20.50 deg C
+11:44:24:838 -> IR Sensor: No fire
+11:44:24:838 -> Temp Sensor: 20.50 deg C
+11:44:25:339 -> IR Sensor: No fire
+11:44:25:339 -> Temp Sensor: 20.50 deg C
+11:44:25:840 -> IR Sensor: No fire
+11:44:25:840 -> Temp Sensor: 20.50 deg C
+11:44:26:342 -> IR Sensor: No fire
+11:44:26:342 -> Temp Sensor: 20.50 deg C
+11:44:26:843 -> IR Sensor: No fire
+11:44:26:843 -> Temp Sensor: 20.50 deg C
+11:44:27:345 -> IR Sensor: No fire
+11:44:27:345 -> Temp Sensor: 20.50 deg C
+11:44:27:846 -> IR Sensor: No fire
+11:44:27:846 -> Temp Sensor: 20.50 deg C
+11:44:28:348 -> IR Sensor: No fire
+11:44:28:348 -> Temp Sensor: 20.50 deg C
+11:44:28:849 -> IR Sensor: No fire
+11:44:28:849 -> Temp Sensor: 20.50 deg C
+11:44:29:351 -> IR Sensor: No fire
+11:44:29:351 -> Temp Sensor: 20.50 deg C
+11:44:29:852 -> IR Sensor: No fire
+11:44:29:852 -> Temp Sensor: 20.50 deg C
+11:44:30:354 -> IR Sensor: No fire
+11:44:30:354 -> Temp Sensor: 20.50 deg C
+11:44:30:855 -> IR Sensor: No fire
+11:44:30:855 -> Temp Sensor: 20.50 deg C
+11:44:31:357 -> IR Sensor: No fire
+11:44:31:357 -> Temp Sensor: 20.50 deg C
+11:44:31:858 -> IR Sensor: No fire
+11:44:31:858 -> Temp Sensor: 20.50 deg C
+11:44:32:360 -> IR Sensor: No fire
+11:44:32:360 -> Temp Sensor: 20.50 deg C
+11:44:32:861 -> IR Sensor: No fire
+11:44:32:861 -> Temp Sensor: 20.50 deg C
+11:44:33:363 -> IR Sensor: No fire
+11:44:33:363 -> Temp Sensor: 20.50 deg C
+11:44:33:864 -> IR Sensor: No fire
+11:44:33:864 -> Temp Sensor: 20.50 deg C
+11:44:34:366 -> IR Sensor: No fire
+11:44:34:366 -> Temp Sensor: 20.50 deg C
+11:44:34:867 -> IR Sensor: No fire
+11:44:34:867 -> Temp Sensor: 20.50 deg C
+11:44:35:369 -> IR Sensor: No fire
+11:44:35:369 -> Temp Sensor: 20.50 deg C
+11:44:35:870 -> IR Sensor: No fire
+11:44:35:870 -> Temp Sensor: 20.50 deg C
+11:44:36:371 -> IR Sensor: No fire
+11:44:36:371 -> Temp Sensor: 20.50 deg C
+11:44:36:873 -> IR Sensor: No fire
+11:44:36:873 -> Temp Sensor: 20.50 deg C
+11:44:37:374 -> IR Sensor: No fire
+11:44:37:374 -> Temp Sensor: 20.50 deg C
+11:44:37:876 -> IR Sensor: No fire
+11:44:37:876 -> Temp Sensor: 20.50 deg C
+11:44:38:377 -> IR Sensor: No fire
+11:44:38:377 -> Temp Sensor: 20.50 deg C
+11:44:38:879 -> IR Sensor: No fire
+11:44:38:879 -> Temp Sensor: 20.50 deg C
+11:44:39:380 -> IR Sensor: No fire
+11:44:39:380 -> Temp Sensor: 20.25 deg C
+11:44:39:882 -> IR Sensor: No fire
+11:44:39:882 -> Temp Sensor: 20.50 deg C
+11:44:40:384 -> IR Sensor: No fire
+11:44:40:384 -> Temp Sensor: 20.50 deg C
+11:44:40:885 -> IR Sensor: No fire
+11:44:40:885 -> Temp Sensor: 20.50 deg C
+11:44:41:387 -> IR Sensor: No fire
+11:44:41:387 -> Temp Sensor: 20.50 deg C
+11:44:41:888 -> IR Sensor: No fire
+11:44:41:888 -> Temp Sensor: 20.50 deg C
+11:44:42:389 -> IR Sensor: No fire
+11:44:42:389 -> Temp Sensor: 20.50 deg C
+11:44:42:891 -> IR Sensor: No fire
+11:44:42:891 -> Temp Sensor: 20.50 deg C
+11:44:43:392 -> IR Sensor: No fire
+11:44:43:392 -> Temp Sensor: 20.50 deg C
+11:44:43:894 -> IR Sensor: No fire
+11:44:43:894 -> Temp Sensor: 20.50 deg C
+11:44:44:395 -> IR Sensor: No fire
+11:44:44:395 -> Temp Sensor: 20.50 deg C
+11:44:44:897 -> IR Sensor: No fire
+11:44:44:897 -> Temp Sensor: 20.50 deg C
+11:44:45:398 -> IR Sensor: No fire
+11:44:45:398 -> Temp Sensor: 20.50 deg C
+11:44:45:900 -> IR Sensor: No fire
+11:44:45:900 -> Temp Sensor: 20.50 deg C
+11:44:46:401 -> IR Sensor: No fire
+11:44:46:401 -> Temp Sensor: 20.50 deg C
+11:44:46:903 -> IR Sensor: No fire
+11:44:46:903 -> Temp Sensor: 20.50 deg C
+11:44:47:405 -> IR Sensor: No fire
+11:44:47:405 -> Temp Sensor: 20.50 deg C
+11:44:47:906 -> IR Sensor: No fire
+11:44:47:906 -> Temp Sensor: 20.50 deg C
+11:44:48:407 -> IR Sensor: No fire
+11:44:48:407 -> Temp Sensor: 20.50 deg C
+11:44:48:909 -> IR Sensor: No fire
+11:44:48:909 -> Temp Sensor: 20.50 deg C
+11:44:49:410 -> IR Sensor: No fire
+11:44:49:410 -> Temp Sensor: 20.50 deg C
+11:44:49:912 -> IR Sensor: No fire
+11:44:49:912 -> Temp Sensor: 20.50 deg C
+11:44:50:413 -> IR Sensor: No fire
+11:44:50:413 -> Temp Sensor: 20.50 deg C
+11:44:50:915 -> IR Sensor: No fire
+11:44:50:915 -> Temp Sensor: 20.50 deg C
+11:44:51:416 -> IR Sensor: No fire
+11:44:51:416 -> Temp Sensor: 20.50 deg C
+11:44:51:918 -> IR Sensor: No fire
+11:44:51:918 -> Temp Sensor: 20.50 deg C
+11:44:52:419 -> IR Sensor: No fire
+11:44:52:419 -> Temp Sensor: 20.50 deg C
+11:44:52:921 -> IR Sensor: No fire
+11:44:52:921 -> Temp Sensor: 20.50 deg C
+11:44:53:422 -> IR Sensor: No fire
+11:44:53:422 -> Temp Sensor: 20.75 deg C
+11:44:53:924 -> IR Sensor: No fire
+11:44:53:924 -> Temp Sensor: 21.75 deg C
+11:44:54:425 -> IR Sensor: No fire
+11:44:54:425 -> Temp Sensor: 23.75 deg C
+11:44:54:927 -> IR Sensor: No fire
+11:44:54:927 -> Temp Sensor: 25.25 deg C
+11:44:55:428 -> IR Sensor: No fire
+11:44:55:428 -> Temp Sensor: 26.75 deg C
+11:44:55:930 -> IR Sensor: No fire
+11:44:55:930 -> Temp Sensor: 27.75 deg C
+11:44:56:431 -> IR Sensor: No fire
+11:44:56:431 -> Temp Sensor: 28.75 deg C
+11:44:56:933 -> IR Sensor: No fire
+11:44:56:933 -> Temp Sensor: 29.50 deg C
+11:44:57:434 -> IR Sensor: No fire
+11:44:57:434 -> Temp Sensor: 30.25 deg C
+11:44:57:936 -> IR Sensor: No fire
+11:44:57:936 -> Temp Sensor: 30.75 deg C
+11:44:58:437 -> IR Sensor: No fire
+11:44:58:437 -> Temp Sensor: 31.25 deg C
+11:44:58:939 -> IR Sensor: No fire
+11:44:58:939 -> Temp Sensor: 31.50 deg C
+11:44:59:440 -> IR Sensor: No fire
+11:44:59:440 -> Temp Sensor: 31.75 deg C
+11:44:59:942 -> IR Sensor: No fire
+11:44:59:942 -> Temp Sensor: 32.00 deg C
+11:45:00:443 -> IR Sensor: No fire
+11:45:00:443 -> Temp Sensor: 32.00 deg C
+11:45:00:944 -> IR Sensor: No fire
+11:45:00:944 -> Temp Sensor: 32.00 deg C
+11:45:01:446 -> IR Sensor: No fire
+11:45:01:446 -> Temp Sensor: 32.25 deg C
+11:45:01:947 -> IR Sensor: No fire
+11:45:01:947 -> Temp Sensor: 32.25 deg C
+11:45:02:449 -> IR Sensor: No fire
+11:45:02:449 -> Temp Sensor: 32.25 deg C
+11:45:02:950 -> IR Sensor: No fire
+11:45:02:950 -> Temp Sensor: 32.25 deg C
+11:45:03:452 -> IR Sensor: No fire
+11:45:03:452 -> Temp Sensor: 32.25 deg C
+11:45:03:954 -> IR Sensor: No fire
+11:45:03:954 -> Temp Sensor: 32.25 deg C
+11:45:04:455 -> IR Sensor: No fire
+11:45:04:455 -> Temp Sensor: 32.25 deg C
+11:45:04:957 -> IR Sensor: No fire
+11:45:04:957 -> Temp Sensor: 32.00 deg C
+11:45:05:458 -> IR Sensor: No fire
+11:45:05:458 -> Temp Sensor: 32.00 deg C
+11:45:05:959 -> IR Sensor: No fire
+11:45:05:959 -> Temp Sensor: 32.00 deg C
+11:45:06:461 -> IR Sensor: No fire
+11:45:06:461 -> Temp Sensor: 31.75 deg C
+11:45:06:962 -> IR Sensor: No fire
+11:45:06:962 -> Temp Sensor: 31.75 deg C
+11:45:07:464 -> IR Sensor: No fire
+11:45:07:464 -> Temp Sensor: 31.75 deg C
+11:45:07:965 -> IR Sensor: No fire
+11:45:07:965 -> Temp Sensor: 31.75 deg C
+11:45:08:467 -> IR Sensor: No fire
+11:45:08:467 -> Temp Sensor: 31.75 deg C
+11:45:08:968 -> IR Sensor: No fire
+11:45:08:968 -> Temp Sensor: 32.25 deg C
+11:45:09:470 -> IR Sensor: No fire
+11:45:09:470 -> Temp Sensor: 32.25 deg C
+11:45:09:972 -> IR Sensor: No fire
+11:45:09:972 -> Temp Sensor: 32.75 deg C
+11:45:10:473 -> IR Sensor: No fire
+11:45:10:473 -> Temp Sensor: 33.00 deg C
+11:45:10:974 -> IR Sensor: No fire
+11:45:10:974 -> Temp Sensor: 33.50 deg C
+11:45:11:476 -> IR Sensor: No fire
+11:45:11:476 -> Temp Sensor: 34.00 deg C
+11:45:11:977 -> IR Sensor: No fire
+11:45:11:977 -> Temp Sensor: 34.25 deg C
+11:45:12:479 -> IR Sensor: No fire
+11:45:12:479 -> Temp Sensor: 34.75 deg C
+11:45:12:980 -> IR Sensor: No fire
+11:45:12:980 -> Temp Sensor: 35.25 deg C
+11:45:13:482 -> IR Sensor: No fire
+11:45:13:482 -> Temp Sensor: 35.50 deg C
+11:45:13:983 -> IR Sensor: No fire
+11:45:13:983 -> Temp Sensor: 35.75 deg C
+11:45:14:485 -> IR Sensor: No fire
+11:45:14:485 -> Temp Sensor: 36.00 deg C
+11:45:14:986 -> IR Sensor: No fire
+11:45:14:986 -> Temp Sensor: 36.25 deg C
+11:45:15:488 -> IR Sensor: No fire
+11:45:15:488 -> Temp Sensor: 36.25 deg C
+11:45:15:989 -> IR Sensor: No fire
+11:45:15:989 -> Temp Sensor: 36.50 deg C
+11:45:16:491 -> IR Sensor: No fire
+11:45:16:491 -> Temp Sensor: 36.50 deg C
+11:45:16:992 -> IR Sensor: No fire
+11:45:16:992 -> Temp Sensor: 36.50 deg C
+11:45:17:494 -> IR Sensor: No fire
+11:45:17:494 -> Temp Sensor: 36.50 deg C
+11:45:17:995 -> IR Sensor: No fire
+11:45:17:995 -> Temp Sensor: 36.50 deg C
+11:45:18:497 -> IR Sensor: No fire
+11:45:18:497 -> Temp Sensor: 36.50 deg C
+11:45:18:998 -> IR Sensor: No fire
+11:45:18:998 -> Temp Sensor: 36.50 deg C
+11:45:19:500 -> IR Sensor: No fire
+11:45:19:500 -> Temp Sensor: 36.50 deg C
+11:45:20:001 -> IR Sensor: No fire
+11:45:20:001 -> Temp Sensor: 36.50 deg C
+11:45:20:503 -> IR Sensor: No fire
+11:45:20:503 -> Temp Sensor: 36.25 deg C
+11:45:21:004 -> IR Sensor: No fire
+11:45:21:004 -> Temp Sensor: 36.25 deg C
+11:45:21:505 -> IR Sensor: No fire
+11:45:21:505 -> Temp Sensor: 36.25 deg C
+11:45:22:007 -> IR Sensor: No fire
+11:45:22:007 -> Temp Sensor: 36.25 deg C
+11:45:22:508 -> IR Sensor: No fire
+11:45:22:508 -> Temp Sensor: 36.00 deg C
+11:45:23:010 -> IR Sensor: No fire
+11:45:23:010 -> Temp Sensor: 35.75 deg C
+11:45:23:511 -> IR Sensor: No fire
+11:45:23:511 -> Temp Sensor: 35.75 deg C
+11:45:24:013 -> IR Sensor: No fire
+11:45:24:013 -> Temp Sensor: 35.50 deg C
+11:45:24:514 -> IR Sensor: No fire
+11:45:24:514 -> Temp Sensor: 35.50 deg C
+11:45:25:016 -> IR Sensor: No fire
+11:45:25:016 -> Temp Sensor: 35.25 deg C
+11:45:25:518 -> IR Sensor: No fire
+11:45:25:518 -> Temp Sensor: 35.25 deg C
+11:45:26:019 -> IR Sensor: No fire
+11:45:26:019 -> Temp Sensor: 35.00 deg C
+11:45:26:520 -> IR Sensor: No fire
+11:45:26:520 -> Temp Sensor: 34.75 deg C
+11:45:27:022 -> IR Sensor: No fire
+11:45:27:022 -> Temp Sensor: 34.75 deg C
+11:45:27:523 -> IR Sensor: No fire
+11:45:27:523 -> Temp Sensor: 34.50 deg C
+11:45:28:025 -> IR Sensor: No fire
+11:45:28:025 -> Temp Sensor: 34.25 deg C
+11:45:28:526 -> IR Sensor: No fire
+11:45:28:526 -> Temp Sensor: 34.25 deg C
+11:45:29:028 -> IR Sensor: No fire
+11:45:29:028 -> Temp Sensor: 34.00 deg C
+11:45:29:529 -> IR Sensor: No fire
+11:45:29:529 -> Temp Sensor: 34.00 deg C
+11:45:30:031 -> IR Sensor: Fire detected
+11:45:30:031 -> Temp Sensor: 33.75 deg C
+11:45:30:532 -> IR Sensor: No fire
+11:45:30:532 -> Temp Sensor: 33.75 deg C
+11:45:31:034 -> IR Sensor: No fire
+11:45:31:034 -> Temp Sensor: 33.50 deg C
+11:45:31:535 -> IR Sensor: No fire
+11:45:31:535 -> Temp Sensor: 33.50 deg C
+11:45:32:037 -> IR Sensor: No fire
+11:45:32:037 -> Temp Sensor: 33.25 deg C
+11:45:32:538 -> IR Sensor: No fire
+11:45:32:538 -> Temp Sensor: 33.75 deg C
+11:45:33:040 -> IR Sensor: No fire
+11:45:33:040 -> Temp Sensor: 35.75 deg C
+11:45:33:541 -> IR Sensor: No fire
+11:45:33:541 -> Temp Sensor: 38.25 deg C
+11:45:34:043 -> IR Sensor: No fire
+11:45:34:043 -> Temp Sensor: 41.25 deg C
+11:45:34:544 -> IR Sensor: No fire
+11:45:34:544 -> Temp Sensor: 44.50 deg C
+11:45:35:046 -> IR Sensor: No fire
+11:45:35:046 -> Temp Sensor: 49.00 deg C
+11:45:35:547 -> IR Sensor: No fire
+11:45:35:547 -> Temp Sensor: 53.50 deg C
+11:45:36:049 -> IR Sensor: No fire
+11:45:36:049 -> Temp Sensor: 58.25 deg C
+11:45:36:550 -> IR Sensor: No fire
+11:45:36:550 -> Temp Sensor: 62.75 deg C
+11:45:37:052 -> IR Sensor: No fire
+11:45:37:052 -> Temp Sensor: 68.00 deg C
+11:45:37:553 -> IR Sensor: No fire
+11:45:37:553 -> Temp Sensor: 73.50 deg C
+11:45:38:055 -> IR Sensor: No fire
+11:45:38:055 -> Temp Sensor: 78.25 deg C
+11:45:38:556 -> IR Sensor: No fire
+11:45:38:556 -> Temp Sensor: 81.50 deg C
+11:45:39:058 -> IR Sensor: No fire
+11:45:39:058 -> Temp Sensor: 86.00 deg C
+11:45:39:559 -> IR Sensor: No fire
+11:45:39:559 -> Temp Sensor: 90.50 deg C
+11:45:40:061 -> IR Sensor: No fire
+11:45:40:061 -> Temp Sensor: 94.25 deg C
+11:45:40:562 -> IR Sensor: No fire
+11:45:40:562 -> Temp Sensor: 98.25 deg C
+11:45:41:064 -> IR Sensor: No fire
+11:45:41:064 -> Temp Sensor: 101.75 deg C
+11:45:41:565 -> IR Sensor: No fire
+11:45:41:565 -> Temp Sensor: 105.25 deg C
+11:45:42:067 -> IR Sensor: No fire
+11:45:42:067 -> Temp Sensor: 107.75 deg C
+11:45:42:568 -> IR Sensor: No fire
+11:45:42:568 -> Temp Sensor: 111.75 deg C
+11:45:43:070 -> IR Sensor: No fire
+11:45:43:070 -> Temp Sensor: 114.50 deg C
+11:45:43:572 -> IR Sensor: No fire
+11:45:43:572 -> Temp Sensor: 117.00 deg C
+11:45:44:073 -> IR Sensor: No fire
+11:45:44:073 -> Temp Sensor: 119.25 deg C
+11:45:44:574 -> IR Sensor: No fire
+11:45:44:574 -> Temp Sensor: 121.50 deg C
+11:45:45:076 -> IR Sensor: No fire
+11:45:45:076 -> Temp Sensor: 124.00 deg C
+11:45:45:577 -> IR Sensor: No fire
+11:45:45:577 -> Temp Sensor: 126.00 deg C
+11:45:46:079 -> IR Sensor: No fire
+11:45:46:079 -> Temp Sensor: 127.50 deg C
+11:45:46:580 -> IR Sensor: No fire
+11:45:46:580 -> Temp Sensor: 129.50 deg C
+11:45:47:082 -> IR Sensor: No fire
+11:45:47:082 -> Temp Sensor: 131.50 deg C
+11:45:47:584 -> IR Sensor: No fire
+11:45:47:584 -> Temp Sensor: 133.75 deg C
+11:45:48:085 -> IR Sensor: No fire
+11:45:48:085 -> Temp Sensor: 135.75 deg C
+11:45:48:587 -> IR Sensor: No fire
+11:45:48:587 -> Temp Sensor: 138.25 deg C
+11:45:49:088 -> IR Sensor: No fire
+11:45:49:088 -> Temp Sensor: 140.75 deg C
+11:45:49:590 -> IR Sensor: No fire
+11:45:49:590 -> Temp Sensor: 143.50 deg C
+11:45:50:091 -> IR Sensor: No fire
+11:45:50:091 -> Temp Sensor: 146.25 deg C
+11:45:50:593 -> IR Sensor: No fire
+11:45:50:593 -> Temp Sensor: 149.50 deg C
+11:45:51:094 -> IR Sensor: No fire
+11:45:51:094 -> Temp Sensor: 153.25 deg C
+11:45:51:596 -> IR Sensor: No fire
+11:45:51:596 -> Temp Sensor: 156.50 deg C
+11:45:52:097 -> IR Sensor: No fire
+11:45:52:097 -> Temp Sensor: 160.00 deg C
+11:45:52:599 -> IR Sensor: No fire
+11:45:52:599 -> Temp Sensor: 163.25 deg C
+11:45:53:100 -> IR Sensor: No fire
+11:45:53:100 -> Temp Sensor: 166.00 deg C
+11:45:53:602 -> IR Sensor: No fire
+11:45:53:602 -> Temp Sensor: 168.00 deg C
+11:45:54:104 -> IR Sensor: No fire
+11:45:54:104 -> Temp Sensor: 170.75 deg C
+11:45:54:605 -> IR Sensor: No fire
+11:45:54:605 -> Temp Sensor: 173.00 deg C
+11:45:55:107 -> IR Sensor: No fire
+11:45:55:107 -> Temp Sensor: 175.50 deg C
+11:45:55:608 -> IR Sensor: No fire
+11:45:55:608 -> Temp Sensor: 177.25 deg C
+11:45:56:110 -> IR Sensor: No fire
+11:45:56:110 -> Temp Sensor: 180.00 deg C
+11:45:56:611 -> IR Sensor: No fire
+11:45:56:611 -> Temp Sensor: 182.50 deg C
+11:45:57:113 -> IR Sensor: No fire
+11:45:57:113 -> Temp Sensor: 185.25 deg C
+11:45:57:614 -> IR Sensor: No fire
+11:45:57:614 -> Temp Sensor: 187.50 deg C
+11:45:58:116 -> IR Sensor: No fire
+11:45:58:116 -> Temp Sensor: 189.75 deg C
+11:45:58:617 -> IR Sensor: No fire
+11:45:58:617 -> Temp Sensor: 191.75 deg C
+11:45:59:119 -> IR Sensor: No fire
+11:45:59:119 -> Temp Sensor: 193.50 deg C
+11:45:59:621 -> IR Sensor: No fire
+11:45:59:621 -> Temp Sensor: 195.00 deg C
+11:46:00:122 -> IR Sensor: No fire
+11:46:00:122 -> Temp Sensor: 197.00 deg C
+11:46:00:623 -> IR Sensor: No fire
+11:46:00:623 -> Temp Sensor: 198.75 deg C
+11:46:01:125 -> IR Sensor: No fire
+11:46:01:125 -> Temp Sensor: 200.50 deg C
+11:46:01:627 -> IR Sensor: No fire
+11:46:01:627 -> Temp Sensor: 202.00 deg C
+11:46:02:128 -> IR Sensor: No fire
+11:46:02:128 -> Temp Sensor: 203.50 deg C
+11:46:02:630 -> IR Sensor: No fire
+11:46:02:630 -> Temp Sensor: 205.00 deg C
+11:46:03:131 -> IR Sensor: No fire
+11:46:03:131 -> Temp Sensor: 206.50 deg C
+11:46:03:633 -> IR Sensor: No fire
+11:46:03:633 -> Temp Sensor: 208.25 deg C
+11:46:04:134 -> IR Sensor: No fire
+11:46:04:134 -> Temp Sensor: 208.75 deg C
+11:46:04:636 -> IR Sensor: No fire
+11:46:04:636 -> Temp Sensor: 208.25 deg C
+11:46:05:137 -> IR Sensor: No fire
+11:46:05:137 -> Temp Sensor: 207.25 deg C
+11:46:05:639 -> IR Sensor: No fire
+11:46:05:639 -> Temp Sensor: 205.75 deg C
+11:46:06:140 -> IR Sensor: No fire
+11:46:06:140 -> Temp Sensor: 203.50 deg C
+11:46:06:642 -> IR Sensor: No fire
+11:46:06:642 -> Temp Sensor: 201.25 deg C
+11:46:07:143 -> IR Sensor: No fire
+11:46:07:143 -> Temp Sensor: 199.25 deg C
+11:46:07:645 -> IR Sensor: No fire
+11:46:07:645 -> Temp Sensor: 197.00 deg C
+11:46:08:146 -> IR Sensor: No fire
+11:46:08:146 -> Temp Sensor: 194.75 deg C
+11:46:08:648 -> IR Sensor: No fire
+11:46:08:648 -> Temp Sensor: 192.25 deg C
+11:46:09:149 -> IR Sensor: No fire
+11:46:09:149 -> Temp Sensor: 190.50 deg C
+11:46:09:651 -> IR Sensor: No fire
+11:46:09:651 -> Temp Sensor: 188.25 deg C
+11:46:10:153 -> IR Sensor: No fire
+11:46:10:153 -> Temp Sensor: 186.25 deg C
+11:46:10:654 -> IR Sensor: No fire
+11:46:10:654 -> Temp Sensor: 184.50 deg C
+11:46:11:156 -> IR Sensor: No fire
+11:46:11:156 -> Temp Sensor: 182.50 deg C
+11:46:11:657 -> IR Sensor: No fire
+11:46:11:657 -> Temp Sensor: 180.25 deg C
+11:46:12:159 -> IR Sensor: No fire
+11:46:12:159 -> Temp Sensor: 178.25 deg C
+11:46:12:660 -> IR Sensor: No fire
+11:46:12:660 -> Temp Sensor: 176.50 deg C
+11:46:13:162 -> IR Sensor: No fire
+11:46:13:162 -> Temp Sensor: 174.50 deg C
+11:46:13:663 -> IR Sensor: No fire
+11:46:13:663 -> Temp Sensor: 172.25 deg C
+11:46:14:165 -> IR Sensor: No fire
+11:46:14:165 -> Temp Sensor: 170.50 deg C
+11:46:14:667 -> IR Sensor: No fire
+11:46:14:667 -> Temp Sensor: 168.75 deg C
+11:46:15:168 -> IR Sensor: No fire
+11:46:15:168 -> Temp Sensor: 167.00 deg C
+11:46:15:670 -> IR Sensor: No fire
+11:46:15:670 -> Temp Sensor: 165.25 deg C
+11:46:16:171 -> IR Sensor: No fire
+11:46:16:171 -> Temp Sensor: 164.00 deg C
+11:46:16:673 -> IR Sensor: No fire
+11:46:16:673 -> Temp Sensor: 162.75 deg C
+11:46:17:174 -> IR Sensor: No fire
+11:46:17:174 -> Temp Sensor: 161.25 deg C
+11:46:17:676 -> IR Sensor: No fire
+11:46:17:676 -> Temp Sensor: 159.75 deg C
+11:46:18:177 -> IR Sensor: No fire
+11:46:18:177 -> Temp Sensor: 158.50 deg C
+11:46:18:679 -> IR Sensor: No fire
+11:46:18:679 -> Temp Sensor: 157.25 deg C
+11:46:19:180 -> IR Sensor: No fire
+11:46:19:180 -> Temp Sensor: 156.00 deg C
+11:46:19:682 -> IR Sensor: No fire
+11:46:19:682 -> Temp Sensor: 154.75 deg C
+11:46:20:183 -> IR Sensor: No fire
+11:46:20:183 -> Temp Sensor: 153.50 deg C
+11:46:20:685 -> IR Sensor: No fire
+11:46:20:685 -> Temp Sensor: 152.50 deg C
+11:46:21:187 -> IR Sensor: No fire
+11:46:21:187 -> Temp Sensor: 151.00 deg C
+11:46:21:688 -> IR Sensor: No fire
+11:46:21:688 -> Temp Sensor: 149.75 deg C
+11:46:22:189 -> IR Sensor: No fire
+11:46:22:189 -> Temp Sensor: 148.75 deg C
+11:46:22:691 -> IR Sensor: No fire
+11:46:22:691 -> Temp Sensor: 147.50 deg C
+11:46:23:193 -> IR Sensor: No fire
+11:46:23:193 -> Temp Sensor: 146.25 deg C
+11:46:23:694 -> IR Sensor: No fire
+11:46:23:694 -> Temp Sensor: 145.00 deg C
+11:46:24:196 -> IR Sensor: No fire
+11:46:24:196 -> Temp Sensor: 144.00 deg C
+11:46:24:697 -> IR Sensor: No fire
+11:46:24:697 -> Temp Sensor: 142.75 deg C
+11:46:25:199 -> IR Sensor: No fire
+11:46:25:199 -> Temp Sensor: 141.75 deg C
+11:46:25:700 -> IR Sensor: No fire
+11:46:25:700 -> Temp Sensor: 140.50 deg C
+11:46:26:202 -> IR Sensor: No fire
+11:46:26:202 -> Temp Sensor: 139.50 deg C
+11:46:26:703 -> IR Sensor: No fire
+11:46:26:703 -> Temp Sensor: 138.50 deg C
+11:46:27:205 -> IR Sensor: No fire
+11:46:27:205 -> Temp Sensor: 137.50 deg C
+11:46:27:706 -> IR Sensor: No fire
+11:46:27:706 -> Temp Sensor: 136.25 deg C
+11:46:28:208 -> IR Sensor: No fire
+11:46:28:208 -> Temp Sensor: 135.50 deg C
+11:46:28:709 -> IR Sensor: No fire
+11:46:28:709 -> Temp Sensor: 134.50 deg C
+11:46:29:211 -> IR Sensor: No fire
+11:46:29:211 -> Temp Sensor: 133.25 deg C
+11:46:29:713 -> IR Sensor: No fire
+11:46:29:713 -> Temp Sensor: 132.25 deg C
+11:46:30:214 -> IR Sensor: No fire
+11:46:30:214 -> Temp Sensor: 131.25 deg C
+11:46:30:716 -> IR Sensor: No fire
+11:46:30:716 -> Temp Sensor: 130.00 deg C
+11:46:31:217 -> IR Sensor: No fire
+11:46:31:217 -> Temp Sensor: 129.25 deg C
+11:46:31:719 -> IR Sensor: No fire
+11:46:31:719 -> Temp Sensor: 128.25 deg C
+11:46:32:221 -> IR Sensor: No fire
+11:46:32:221 -> Temp Sensor: 127.50 deg C
+11:46:32:722 -> IR Sensor: No fire
+11:46:32:722 -> Temp Sensor: 126.50 deg C
+11:46:33:224 -> IR Sensor: No fire
+11:46:33:224 -> Temp Sensor: 125.50 deg C
+11:46:33:725 -> IR Sensor: No fire
+11:46:33:725 -> Temp Sensor: 124.75 deg C
+11:46:34:226 -> IR Sensor: No fire
+11:46:34:226 -> Temp Sensor: 123.75 deg C
+11:46:34:728 -> IR Sensor: No fire
+11:46:34:728 -> Temp Sensor: 123.00 deg C
+11:46:35:229 -> IR Sensor: No fire
+11:46:35:229 -> Temp Sensor: 122.00 deg C
+11:46:35:731 -> IR Sensor: No fire
+11:46:35:731 -> Temp Sensor: 121.25 deg C
+11:46:36:232 -> IR Sensor: No fire
+11:46:36:232 -> Temp Sensor: 120.50 deg C
+11:46:36:734 -> IR Sensor: No fire
+11:46:36:734 -> Temp Sensor: 119.75 deg C
+11:46:37:236 -> IR Sensor: No fire
+11:46:37:236 -> Temp Sensor: 118.75 deg C
+11:46:37:737 -> IR Sensor: No fire
+11:46:37:737 -> Temp Sensor: 118.00 deg C
+11:46:38:239 -> IR Sensor: No fire
+11:46:38:239 -> Temp Sensor: 117.25 deg C
+11:46:38:740 -> IR Sensor: No fire
+11:46:38:740 -> Temp Sensor: 116.50 deg C
+11:46:39:242 -> IR Sensor: No fire
+11:46:39:242 -> Temp Sensor: 115.50 deg C
+11:46:39:743 -> IR Sensor: No fire
+11:46:39:743 -> Temp Sensor: 114.75 deg C
+11:46:40:245 -> IR Sensor: No fire
+11:46:40:245 -> Temp Sensor: 114.00 deg C
+11:46:40:746 -> IR Sensor: No fire
+11:46:40:746 -> Temp Sensor: 113.25 deg C
+11:46:41:248 -> IR Sensor: No fire
+11:46:41:248 -> Temp Sensor: 112.50 deg C
+11:46:41:749 -> IR Sensor: No fire
+11:46:41:749 -> Temp Sensor: 111.75 deg C
+11:46:42:251 -> IR Sensor: No fire
+11:46:42:251 -> Temp Sensor: 111.00 deg C
+---- Closed the serial port /dev/tty.usbserial-110 ----
+---- Opened the serial port /dev/tty.usbserial-110 ----
+11:48:45:468 -> READY
+11:48:50:092 -> FIRE,READ,1000
+11:48:50:092 -> Target=FIRE | Command=READ | Operand=1000
+11:48:50:125 -> RESP,INVALID,FIRE,0.
+11:48:50:309 -> IR Sensor: No fire
+11:48:50:309 -> Temp Sensor: 32.75 deg C
+11:48:50:811 -> IR Sensor: No fire
+11:48:50:811 -> Temp Sensor: 32.75 deg C
+11:48:51:313 -> IR Sensor: No fire
+11:48:51:313 -> Temp Sensor: 32.75 deg C
+11:48:51:814 -> IR Sensor: No fire
+11:48:51:814 -> Temp Sensor: 32.50 deg C
+11:48:52:316 -> IR Sensor: No fire
+11:48:52:316 -> Temp Sensor: 32.50 deg C
+11:48:52:817 -> IR Sensor: No fire
+11:48:52:817 -> Temp Sensor: 32.50 deg C
+11:48:53:319 -> IR Sensor: No fire
+11:48:53:319 -> Temp Sensor: 32.25 deg C
+11:48:53:820 -> IR Sensor: No fire
+11:48:53:820 -> Temp Sensor: 32.25 deg C
+11:48:54:322 -> IR Sensor: No fire
+11:48:54:322 -> Temp Sensor: 32.25 deg C
+11:48:54:823 -> IR Sensor: No fire
+11:48:54:823 -> Temp Sensor: 32.00 deg C
+11:48:55:325 -> IR Sensor: No fire
+11:48:55:325 -> Temp Sensor: 32.00 deg C
+11:48:55:826 -> IR Sensor: No fire
+11:48:55:826 -> Temp Sensor: 32.00 deg C
+11:48:56:327 -> IR Sensor: No fire
+11:48:56:327 -> Temp Sensor: 32.00 deg C
+11:48:56:829 -> IR Sensor: No fire
+11:48:56:829 -> Temp Sensor: 31.75 deg C
+11:48:57:330 -> IR Sensor: No fire
+11:48:57:330 -> Temp Sensor: 31.75 deg C
+11:48:57:832 -> IR Sensor: No fire
+11:48:57:832 -> Temp Sensor: 31.75 deg C
+11:48:58:334 -> IR Sensor: No fire
+11:48:58:334 -> Temp Sensor: 31.75 deg C
+11:48:58:835 -> IR Sensor: No fire
+11:48:58:835 -> Temp Sensor: 31.75 deg C
+11:48:59:337 -> IR Sensor: No fire
+11:48:59:337 -> Temp Sensor: 32.00 deg C
+11:48:59:838 -> IR Sensor: No fire
+11:48:59:838 -> Temp Sensor: 33.25 deg C
+11:49:00:339 -> IR Sensor: No fire
+11:49:00:339 -> Temp Sensor: 35.50 deg C
+11:49:00:841 -> IR Sensor: No fire
+11:49:00:841 -> Temp Sensor: 38.25 deg C
+11:49:01:342 -> IR Sensor: No fire
+11:49:01:342 -> Temp Sensor: 40.50 deg C
+11:49:01:844 -> IR Sensor: No fire
+11:49:01:844 -> Temp Sensor: 43.25 deg C
+11:49:02:345 -> IR Sensor: No fire
+11:49:02:345 -> Temp Sensor: 47.00 deg C
+11:49:02:847 -> IR Sensor: No fire
+11:49:02:847 -> Temp Sensor: 51.00 deg C
+11:49:03:348 -> IR Sensor: No fire
+11:49:03:348 -> Temp Sensor: 55.25 deg C
+11:49:03:850 -> IR Sensor: No fire
+11:49:03:850 -> Temp Sensor: 59.75 deg C
+11:49:04:352 -> IR Sensor: No fire
+11:49:04:352 -> Temp Sensor: 64.25 deg C
+11:49:04:853 -> IR Sensor: No fire
+11:49:04:853 -> Temp Sensor: 69.75 deg C
+11:49:05:355 -> IR Sensor: No fire
+11:49:05:355 -> Temp Sensor: 74.50 deg C
+11:49:05:856 -> IR Sensor: No fire
+11:49:05:856 -> Temp Sensor: 79.50 deg C
+11:49:06:357 -> IR Sensor: No fire
+11:49:06:357 -> Temp Sensor: 85.25 deg C
+11:49:06:859 -> IR Sensor: No fire
+11:49:06:859 -> Temp Sensor: 91.00 deg C
+11:49:07:360 -> IR Sensor: No fire
+11:49:07:360 -> Temp Sensor: 95.25 deg C
+11:49:07:862 -> IR Sensor: No fire
+11:49:07:862 -> Temp Sensor: 100.50 deg C
+11:49:08:363 -> IR Sensor: No fire
+11:49:08:363 -> Temp Sensor: 105.75 deg C
+11:49:08:865 -> IR Sensor: No fire
+11:49:08:865 -> Temp Sensor: 111.00 deg C
+11:49:09:366 -> IR Sensor: No fire
+11:49:09:366 -> Temp Sensor: 115.25 deg C
+11:49:09:868 -> IR Sensor: No fire
+11:49:09:868 -> Temp Sensor: 119.75 deg C
+11:49:10:370 -> IR Sensor: No fire
+11:49:10:370 -> Temp Sensor: 124.00 deg C
+11:49:10:871 -> IR Sensor: No fire
+11:49:10:871 -> Temp Sensor: 128.50 deg C
+11:49:11:373 -> IR Sensor: No fire
+11:49:11:373 -> Temp Sensor: 131.00 deg C
+11:49:11:874 -> IR Sensor: No fire
+11:49:11:874 -> Temp Sensor: 132.50 deg C
+11:49:12:376 -> IR Sensor: No fire
+11:49:12:376 -> Temp Sensor: 133.00 deg C
+11:49:12:877 -> IR Sensor: No fire
+11:49:12:877 -> Temp Sensor: 134.00 deg C
+11:49:13:379 -> IR Sensor: No fire
+11:49:13:379 -> Temp Sensor: 135.50 deg C
+11:49:13:880 -> IR Sensor: No fire
+11:49:13:880 -> Temp Sensor: 136.50 deg C
+11:49:14:382 -> IR Sensor: No fire
+11:49:14:382 -> Temp Sensor: 137.50 deg C
+11:49:14:883 -> IR Sensor: No fire
+11:49:14:883 -> Temp Sensor: 138.00 deg C
+11:49:15:385 -> IR Sensor: No fire
+11:49:15:385 -> Temp Sensor: 138.50 deg C
+11:49:15:887 -> IR Sensor: No fire
+11:49:15:887 -> Temp Sensor: 138.75 deg C
+11:49:16:388 -> IR Sensor: No fire
+11:49:16:388 -> Temp Sensor: 139.00 deg C
+11:49:16:889 -> IR Sensor: No fire
+11:49:16:889 -> Temp Sensor: 139.25 deg C
+11:49:17:391 -> IR Sensor: No fire
+11:49:17:391 -> Temp Sensor: 139.50 deg C
+11:49:17:892 -> IR Sensor: No fire
+11:49:17:892 -> Temp Sensor: 140.25 deg C
+11:49:18:394 -> IR Sensor: No fire
+11:49:18:394 -> Temp Sensor: 142.25 deg C
+11:49:18:895 -> IR Sensor: No fire
+11:49:18:895 -> Temp Sensor: 144.75 deg C
+11:49:19:397 -> IR Sensor: No fire
+11:49:19:397 -> Temp Sensor: 148.25 deg C
+11:49:19:899 -> IR Sensor: No fire
+11:49:19:899 -> Temp Sensor: 151.25 deg C
+11:49:20:400 -> IR Sensor: No fire
+11:49:20:400 -> Temp Sensor: 154.25 deg C
+11:49:20:902 -> IR Sensor: No fire
+11:49:20:902 -> Temp Sensor: 156.50 deg C
+11:49:21:404 -> IR Sensor: No fire
+11:49:21:404 -> Temp Sensor: 160.50 deg C
+11:49:21:905 -> IR Sensor: No fire
+11:49:21:905 -> Temp Sensor: 163.75 deg C
+11:49:22:406 -> IR Sensor: No fire
+11:49:22:406 -> Temp Sensor: 166.50 deg C
+11:49:22:908 -> IR Sensor: No fire
+11:49:22:908 -> Temp Sensor: 168.25 deg C
+11:49:23:409 -> IR Sensor: No fire
+11:49:23:409 -> Temp Sensor: 171.00 deg C
+11:49:23:911 -> IR Sensor: No fire
+11:49:23:911 -> Temp Sensor: 173.75 deg C
+11:49:24:412 -> IR Sensor: No fire
+11:49:24:412 -> Temp Sensor: 176.00 deg C
+11:49:24:914 -> IR Sensor: No fire
+11:49:24:914 -> Temp Sensor: 178.00 deg C
+11:49:25:416 -> IR Sensor: No fire
+11:49:25:416 -> Temp Sensor: 180.50 deg C
+11:49:25:917 -> IR Sensor: No fire
+11:49:25:917 -> Temp Sensor: 183.00 deg C
+11:49:26:419 -> IR Sensor: No fire
+11:49:26:419 -> Temp Sensor: 184.50 deg C
+11:49:26:920 -> IR Sensor: No fire
+11:49:26:920 -> Temp Sensor: 186.75 deg C
+11:49:27:422 -> IR Sensor: No fire
+11:49:27:422 -> Temp Sensor: 189.75 deg C
+11:49:27:923 -> IR Sensor: No fire
+11:49:27:923 -> Temp Sensor: 193.25 deg C
+11:49:28:425 -> IR Sensor: No fire
+11:49:28:425 -> Temp Sensor: 196.25 deg C
+11:49:28:926 -> IR Sensor: No fire
+11:49:28:926 -> Temp Sensor: 199.75 deg C
+11:49:29:428 -> IR Sensor: No fire
+11:49:29:428 -> Temp Sensor: 202.75 deg C
+11:49:29:929 -> IR Sensor: No fire
+11:49:29:929 -> Temp Sensor: 206.75 deg C
+11:49:30:431 -> IR Sensor: No fire
+11:49:30:431 -> Temp Sensor: 210.75 deg C
+11:49:30:932 -> IR Sensor: No fire
+11:49:30:932 -> Temp Sensor: 216.00 deg C
+11:49:31:434 -> IR Sensor: No fire
+11:49:31:434 -> Temp Sensor: 221.25 deg C
+11:49:31:936 -> IR Sensor: No fire
+11:49:31:936 -> Temp Sensor: 226.00 deg C
+11:49:32:437 -> IR Sensor: No fire
+11:49:32:437 -> Temp Sensor: 230.00 deg C
+11:49:32:938 -> IR Sensor: No fire
+11:49:32:938 -> Temp Sensor: 234.00 deg C
+11:49:33:440 -> IR Sensor: No fire
+11:49:33:440 -> Temp Sensor: 237.75 deg C
+11:49:33:942 -> IR Sensor: No fire
+11:49:33:942 -> Temp Sensor: 241.00 deg C
+11:49:34:443 -> IR Sensor: No fire
+11:49:34:443 -> Temp Sensor: 246.00 deg C
+11:49:34:945 -> IR Sensor: No fire
+11:49:34:945 -> Temp Sensor: 250.50 deg C
+11:49:35:446 -> IR Sensor: No fire
+11:49:35:446 -> Temp Sensor: 254.00 deg C
+11:49:35:948 -> IR Sensor: No fire
+11:49:35:948 -> Temp Sensor: 256.75 deg C
+11:49:36:449 -> IR Sensor: No fire
+11:49:36:449 -> Temp Sensor: 259.50 deg C
+11:49:36:951 -> IR Sensor: No fire
+11:49:36:951 -> Temp Sensor: 262.50 deg C
+11:49:37:452 -> IR Sensor: No fire
+11:49:37:452 -> Temp Sensor: 265.75 deg C
+11:49:37:954 -> IR Sensor: No fire
+11:49:37:954 -> Temp Sensor: 268.00 deg C
+11:49:38:455 -> IR Sensor: No fire
+11:49:38:455 -> Temp Sensor: 271.75 deg C
+11:49:38:957 -> IR Sensor: No fire
+11:49:38:957 -> Temp Sensor: 275.75 deg C
+11:49:39:458 -> IR Sensor: No fire
+11:49:39:458 -> Temp Sensor: 279.75 deg C
+11:49:39:960 -> IR Sensor: No fire
+11:49:39:960 -> Temp Sensor: 284.00 deg C
+11:49:40:462 -> IR Sensor: No fire
+11:49:40:462 -> Temp Sensor: 288.00 deg C
+11:49:40:963 -> IR Sensor: No fire
+11:49:40:963 -> Temp Sensor: 292.00 deg C
+11:49:41:465 -> IR Sensor: No fire
+11:49:41:465 -> Temp Sensor: 294.75 deg C
+11:49:41:966 -> IR Sensor: No fire
+11:49:41:966 -> Temp Sensor: 297.50 deg C
+11:49:42:468 -> IR Sensor: No fire
+11:49:42:468 -> Temp Sensor: 300.25 deg C
+11:49:42:969 -> IR Sensor: No fire
+11:49:42:969 -> Temp Sensor: 304.00 deg C
+11:49:43:471 -> IR Sensor: No fire
+11:49:43:471 -> Temp Sensor: 307.50 deg C
+11:49:43:973 -> IR Sensor: No fire
+11:49:43:973 -> Temp Sensor: 310.50 deg C
+11:49:44:474 -> IR Sensor: No fire
+11:49:44:474 -> Temp Sensor: 314.25 deg C
+11:49:44:975 -> IR Sensor: No fire
+11:49:44:975 -> Temp Sensor: 318.75 deg C
+11:49:45:477 -> IR Sensor: No fire
+11:49:45:477 -> Temp Sensor: 322.25 deg C
+11:49:45:979 -> IR Sensor: No fire
+11:49:45:979 -> Temp Sensor: 325.50 deg C
+11:49:46:480 -> IR Sensor: No fire
+11:49:46:480 -> Temp Sensor: 328.50 deg C
+11:49:46:982 -> IR Sensor: No fire
+11:49:46:982 -> Temp Sensor: 329.50 deg C
+11:49:47:483 -> IR Sensor: No fire
+11:49:47:483 -> Temp Sensor: 329.00 deg C
+11:49:47:985 -> IR Sensor: No fire
+11:49:47:985 -> Temp Sensor: 328.00 deg C
+11:49:48:486 -> IR Sensor: No fire
+11:49:48:486 -> Temp Sensor: 328.50 deg C
+11:49:48:988 -> IR Sensor: No fire
+11:49:48:988 -> Temp Sensor: 329.25 deg C
+11:49:49:489 -> IR Sensor: No fire
+11:49:49:489 -> Temp Sensor: 330.75 deg C
+11:49:49:991 -> IR Sensor: No fire
+11:49:49:991 -> Temp Sensor: 333.50 deg C
+11:49:50:492 -> IR Sensor: No fire
+11:49:50:492 -> Temp Sensor: 335.75 deg C
+11:49:50:994 -> IR Sensor: No fire
+11:49:50:994 -> Temp Sensor: 337.00 deg C
+11:49:51:495 -> IR Sensor: No fire
+11:49:51:495 -> Temp Sensor: 336.75 deg C
+11:49:51:997 -> IR Sensor: No fire
+11:49:51:997 -> Temp Sensor: 335.25 deg C
+11:49:52:499 -> IR Sensor: No fire
+11:49:52:499 -> Temp Sensor: 333.25 deg C
+11:49:53:000 -> IR Sensor: No fire
+11:49:53:000 -> Temp Sensor: 330.75 deg C
+11:49:53:502 -> IR Sensor: No fire
+11:49:53:502 -> Temp Sensor: 328.25 deg C
+11:49:54:003 -> IR Sensor: No fire
+11:49:54:003 -> Temp Sensor: 326.75 deg C
+11:49:54:505 -> IR Sensor: No fire
+11:49:54:505 -> Temp Sensor: 324.50 deg C
+11:49:55:006 -> IR Sensor: No fire
+11:49:55:006 -> Temp Sensor: 322.25 deg C
+11:49:55:508 -> IR Sensor: No fire
+11:49:55:508 -> Temp Sensor: 318.75 deg C
+11:49:56:009 -> IR Sensor: No fire
+11:49:56:009 -> Temp Sensor: 315.25 deg C
+11:49:56:511 -> IR Sensor: No fire
+11:49:56:511 -> Temp Sensor: 313.25 deg C
+11:49:57:012 -> IR Sensor: No fire
+11:49:57:012 -> Temp Sensor: 311.50 deg C
+11:49:57:514 -> IR Sensor: No fire
+11:49:57:514 -> Temp Sensor: 309.00 deg C
+11:49:58:016 -> IR Sensor: No fire
+11:49:58:016 -> Temp Sensor: 305.75 deg C
+11:49:58:517 -> IR Sensor: No fire
+11:49:58:517 -> Temp Sensor: 303.00 deg C
+11:49:59:019 -> IR Sensor: No fire
+11:49:59:019 -> Temp Sensor: 301.00 deg C
+11:49:59:520 -> IR Sensor: No fire
+11:49:59:520 -> Temp Sensor: 300.00 deg C
+11:50:00:021 -> IR Sensor: No fire
+11:50:00:021 -> Temp Sensor: 298.50 deg C
+11:50:00:523 -> IR Sensor: No fire
+11:50:00:523 -> Temp Sensor: 296.25 deg C
+11:50:01:025 -> IR Sensor: No fire
+11:50:01:025 -> Temp Sensor: 294.75 deg C
+11:50:01:526 -> IR Sensor: No fire
+11:50:01:526 -> Temp Sensor: 295.00 deg C
+11:50:02:028 -> IR Sensor: No fire
+11:50:02:028 -> Temp Sensor: 297.00 deg C
+11:50:02:529 -> IR Sensor: No fire
+11:50:02:529 -> Temp Sensor: 299.75 deg C
+11:50:03:031 -> IR Sensor: No fire
+11:50:03:031 -> Temp Sensor: 302.25 deg C
+11:50:03:532 -> IR Sensor: No fire
+11:50:03:532 -> Temp Sensor: 305.25 deg C
+11:50:04:034 -> IR Sensor: No fire
+11:50:04:034 -> Temp Sensor: 308.50 deg C
+11:50:04:536 -> IR Sensor: No fire
+11:50:04:536 -> Temp Sensor: 310.75 deg C
+11:50:05:037 -> IR Sensor: No fire
+11:50:05:037 -> Temp Sensor: 312.00 deg C
+11:50:05:538 -> IR Sensor: No fire
+11:50:05:538 -> Temp Sensor: 312.25 deg C
+11:50:06:040 -> IR Sensor: No fire
+11:50:06:040 -> Temp Sensor: 312.25 deg C
+11:50:06:541 -> IR Sensor: No fire
+11:50:06:541 -> Temp Sensor: 313.00 deg C
+11:50:07:043 -> IR Sensor: No fire
+11:50:07:043 -> Temp Sensor: 313.50 deg C
+11:50:07:545 -> IR Sensor: No fire
+11:50:07:545 -> Temp Sensor: 313.75 deg C
+11:50:08:046 -> IR Sensor: No fire
+11:50:08:046 -> Temp Sensor: 314.50 deg C
+11:50:08:548 -> IR Sensor: No fire
+11:50:08:548 -> Temp Sensor: 315.75 deg C
+11:50:09:049 -> IR Sensor: No fire
+11:50:09:049 -> Temp Sensor: 316.75 deg C
+11:50:09:551 -> IR Sensor: No fire
+11:50:09:551 -> Temp Sensor: 317.75 deg C
+11:50:10:053 -> IR Sensor: No fire
+11:50:10:053 -> Temp Sensor: 319.00 deg C
+11:50:10:554 -> IR Sensor: No fire
+11:50:10:554 -> Temp Sensor: 319.75 deg C
+11:50:11:055 -> IR Sensor: No fire
+11:50:11:055 -> Temp Sensor: 319.75 deg C
+11:50:11:557 -> IR Sensor: No fire
+11:50:11:557 -> Temp Sensor: 319.00 deg C
+11:50:12:058 -> IR Sensor: No fire
+11:50:12:058 -> Temp Sensor: 318.50 deg C
+11:50:12:560 -> IR Sensor: No fire
+11:50:12:560 -> Temp Sensor: 317.50 deg C
+11:50:13:062 -> IR Sensor: No fire
+11:50:13:062 -> Temp Sensor: 316.25 deg C
+11:50:13:563 -> IR Sensor: No fire
+11:50:13:563 -> Temp Sensor: 315.75 deg C
+11:50:14:065 -> IR Sensor: No fire
+11:50:14:065 -> Temp Sensor: 315.75 deg C
+11:50:14:566 -> IR Sensor: No fire
+11:50:14:566 -> Temp Sensor: 315.75 deg C
+11:50:15:068 -> IR Sensor: No fire
+11:50:15:068 -> Temp Sensor: 316.00 deg C
+11:50:15:569 -> IR Sensor: No fire
+11:50:15:569 -> Temp Sensor: 316.75 deg C
+11:50:16:071 -> IR Sensor: No fire
+11:50:16:071 -> Temp Sensor: 317.25 deg C
+11:50:16:572 -> IR Sensor: No fire
+11:50:16:572 -> Temp Sensor: 316.25 deg C
+11:50:17:074 -> IR Sensor: No fire
+11:50:17:074 -> Temp Sensor: 314.00 deg C
+11:50:17:575 -> IR Sensor: No fire
+11:50:17:575 -> Temp Sensor: 311.50 deg C
+11:50:18:077 -> IR Sensor: No fire
+11:50:18:077 -> Temp Sensor: 309.00 deg C
+11:50:18:578 -> IR Sensor: No fire
+11:50:18:578 -> Temp Sensor: 306.00 deg C
+11:50:19:080 -> IR Sensor: No fire
+11:50:19:080 -> Temp Sensor: 302.75 deg C
+11:50:19:582 -> IR Sensor: No fire
+11:50:19:582 -> Temp Sensor: 299.50 deg C
+11:50:20:083 -> IR Sensor: No fire
+11:50:20:083 -> Temp Sensor: 296.75 deg C
+11:50:20:585 -> IR Sensor: No fire
+11:50:20:585 -> Temp Sensor: 293.50 deg C
+11:50:21:086 -> IR Sensor: No fire
+11:50:21:086 -> Temp Sensor: 290.25 deg C
+11:50:21:588 -> IR Sensor: No fire
+11:50:21:588 -> Temp Sensor: 287.00 deg C
+11:50:22:089 -> IR Sensor: No fire
+11:50:22:089 -> Temp Sensor: 284.00 deg C
+11:50:22:591 -> IR Sensor: No fire
+11:50:22:591 -> Temp Sensor: 280.75 deg C
+11:50:23:092 -> IR Sensor: No fire
+11:50:23:092 -> Temp Sensor: 277.50 deg C
+11:50:23:594 -> IR Sensor: No fire
+11:50:23:594 -> Temp Sensor: 274.25 deg C
+11:50:24:095 -> IR Sensor: No fire
+11:50:24:095 -> Temp Sensor: 271.50 deg C
+11:50:24:597 -> IR Sensor: No fire
+11:50:24:597 -> Temp Sensor: 268.50 deg C
+11:50:25:098 -> IR Sensor: No fire
+11:50:25:098 -> Temp Sensor: 265.50 deg C
+11:50:25:600 -> IR Sensor: No fire
+11:50:25:600 -> Temp Sensor: 262.75 deg C
+11:50:26:102 -> IR Sensor: No fire
+11:50:26:102 -> Temp Sensor: 259.75 deg C
+11:50:26:603 -> IR Sensor: No fire
+11:50:26:603 -> Temp Sensor: 257.00 deg C
+11:50:27:105 -> IR Sensor: No fire
+11:50:27:105 -> Temp Sensor: 254.00 deg C
+11:50:27:606 -> IR Sensor: No fire
+11:50:27:606 -> Temp Sensor: 251.50 deg C
+11:50:28:108 -> IR Sensor: No fire
+11:50:28:108 -> Temp Sensor: 248.50 deg C
+11:50:28:609 -> IR Sensor: No fire
+11:50:28:609 -> Temp Sensor: 245.75 deg C
+11:50:29:111 -> IR Sensor: No fire
+11:50:29:111 -> Temp Sensor: 243.00 deg C
+11:50:29:612 -> IR Sensor: No fire
+11:50:29:612 -> Temp Sensor: 240.75 deg C
+11:50:30:114 -> IR Sensor: No fire
+11:50:30:114 -> Temp Sensor: 238.25 deg C
+11:50:30:615 -> IR Sensor: No fire
+11:50:30:615 -> Temp Sensor: 235.50 deg C
+11:50:31:117 -> IR Sensor: No fire
+11:50:31:117 -> Temp Sensor: 233.00 deg C
+11:50:31:619 -> IR Sensor: No fire
+11:50:31:619 -> Temp Sensor: 230.75 deg C
+11:50:32:120 -> IR Sensor: No fire
+11:50:32:120 -> Temp Sensor: 228.25 deg C
+11:50:32:622 -> IR Sensor: No fire
+11:50:32:622 -> Temp Sensor: 226.00 deg C
+11:50:33:123 -> IR Sensor: No fire
+11:50:33:123 -> Temp Sensor: 223.75 deg C
+11:50:33:625 -> IR Sensor: No fire
+11:50:33:625 -> Temp Sensor: 221.50 deg C
+11:50:34:126 -> IR Sensor: No fire
+11:50:34:126 -> Temp Sensor: 219.50 deg C
+11:50:34:628 -> IR Sensor: No fire
+11:50:34:628 -> Temp Sensor: 217.25 deg C
+11:50:35:129 -> IR Sensor: No fire
+11:50:35:129 -> Temp Sensor: 215.00 deg C
+11:50:35:631 -> IR Sensor: No fire
+11:50:35:631 -> Temp Sensor: 213.25 deg C
+11:50:36:132 -> IR Sensor: No fire
+11:50:36:132 -> Temp Sensor: 211.00 deg C
+11:50:36:634 -> IR Sensor: No fire
+11:50:36:634 -> Temp Sensor: 209.00 deg C
+11:50:37:136 -> IR Sensor: No fire
+11:50:37:136 -> Temp Sensor: 207.25 deg C
+11:50:37:637 -> IR Sensor: No fire
+11:50:37:637 -> Temp Sensor: 205.00 deg C
+11:50:38:138 -> IR Sensor: No fire
+11:50:38:138 -> Temp Sensor: 203.00 deg C
+11:50:38:640 -> IR Sensor: No fire
+11:50:38:640 -> Temp Sensor: 201.00 deg C
+11:50:39:141 -> IR Sensor: No fire
+11:50:39:141 -> Temp Sensor: 199.25 deg C
+11:50:39:643 -> IR Sensor: No fire
+11:50:39:643 -> Temp Sensor: 197.25 deg C
+11:50:40:145 -> IR Sensor: No fire
+11:50:40:145 -> Temp Sensor: 195.25 deg C
+11:50:40:646 -> IR Sensor: No fire
+11:50:40:646 -> Temp Sensor: 193.25 deg C
+11:50:41:148 -> IR Sensor: No fire
+11:50:41:148 -> Temp Sensor: 191.75 deg C
+11:50:41:649 -> IR Sensor: No fire
+11:50:41:649 -> Temp Sensor: 189.75 deg C
+11:50:42:151 -> IR Sensor: No fire
+11:50:42:151 -> Temp Sensor: 188.00 deg C
+11:50:42:652 -> IR Sensor: No fire
+11:50:42:652 -> Temp Sensor: 186.25 deg C
+11:50:43:154 -> IR Sensor: No fire
+11:50:43:154 -> Temp Sensor: 185.00 deg C
+11:50:43:655 -> IR Sensor: No fire
+11:50:43:655 -> Temp Sensor: 183.25 deg C
+11:50:44:157 -> IR Sensor: No fire
+11:50:44:157 -> Temp Sensor: 181.75 deg C
+11:50:44:658 -> IR Sensor: No fire
+11:50:44:658 -> Temp Sensor: 180.00 deg C
+11:50:45:160 -> IR Sensor: No fire
+11:50:45:160 -> Temp Sensor: 178.50 deg C
+11:50:45:661 -> IR Sensor: No fire
+11:50:45:661 -> Temp Sensor: 177.00 deg C
+11:50:46:163 -> IR Sensor: No fire
+11:50:46:163 -> Temp Sensor: 175.50 deg C
+11:50:46:664 -> IR Sensor: No fire
+11:50:46:664 -> Temp Sensor: 174.00 deg C
+11:50:47:166 -> IR Sensor: No fire
+11:50:47:166 -> Temp Sensor: 172.50 deg C
+11:50:47:668 -> IR Sensor: No fire
+11:50:47:668 -> Temp Sensor: 171.00 deg C
+11:50:48:169 -> IR Sensor: No fire
+11:50:48:169 -> Temp Sensor: 169.50 deg C
+11:50:48:671 -> IR Sensor: No fire
+11:50:48:671 -> Temp Sensor: 168.25 deg C
+11:50:49:172 -> IR Sensor: No fire
+11:50:49:172 -> Temp Sensor: 166.75 deg C
+11:50:49:674 -> IR Sensor: No fire
+11:50:49:674 -> Temp Sensor: 165.25 deg C
+11:50:50:175 -> IR Sensor: No fire
+11:50:50:175 -> Temp Sensor: 163.75 deg C
+11:50:50:677 -> IR Sensor: No fire
+11:50:50:677 -> Temp Sensor: 162.50 deg C
+11:50:51:178 -> IR Sensor: No fire
+11:50:51:178 -> Temp Sensor: 161.00 deg C
+11:50:51:680 -> IR Sensor: No fire
+11:50:51:680 -> Temp Sensor: 159.75 deg C
+11:50:52:181 -> IR Sensor: No fire
+11:50:52:181 -> Temp Sensor: 158.50 deg C
+11:50:52:683 -> IR Sensor: No fire
+11:50:52:683 -> Temp Sensor: 157.25 deg C
+11:50:53:185 -> IR Sensor: No fire
+11:50:53:185 -> Temp Sensor: 156.00 deg C
+11:50:53:686 -> IR Sensor: No fire
+11:50:53:686 -> Temp Sensor: 154.75 deg C
+11:50:54:187 -> IR Sensor: No fire
+11:50:54:187 -> Temp Sensor: 153.50 deg C
+11:50:54:689 -> IR Sensor: No fire
+11:50:54:689 -> Temp Sensor: 152.50 deg C
+11:50:55:191 -> IR Sensor: No fire
+11:50:55:191 -> Temp Sensor: 151.25 deg C
+11:50:55:692 -> IR Sensor: No fire
+11:50:55:692 -> Temp Sensor: 150.00 deg C
+11:50:56:194 -> IR Sensor: No fire
+11:50:56:194 -> Temp Sensor: 148.75 deg C
+11:50:56:695 -> IR Sensor: No fire
+11:50:56:695 -> Temp Sensor: 147.50 deg C
+11:50:57:197 -> IR Sensor: No fire
+11:50:57:197 -> Temp Sensor: 146.25 deg C
+11:50:57:698 -> IR Sensor: No fire
+11:50:57:698 -> Temp Sensor: 145.00 deg C
+11:50:58:200 -> IR Sensor: No fire
+11:50:58:200 -> Temp Sensor: 144.00 deg C
+11:50:58:702 -> IR Sensor: No fire
+11:50:58:702 -> Temp Sensor: 142.75 deg C
+11:50:59:203 -> IR Sensor: No fire
+11:50:59:203 -> Temp Sensor: 141.75 deg C
+11:50:59:704 -> IR Sensor: No fire
+11:50:59:704 -> Temp Sensor: 140.50 deg C
+11:51:00:206 -> IR Sensor: No fire
+11:51:00:206 -> Temp Sensor: 139.50 deg C
+11:51:00:707 -> IR Sensor: No fire
+11:51:00:707 -> Temp Sensor: 138.50 deg C
+11:51:01:209 -> IR Sensor: No fire
+11:51:01:209 -> Temp Sensor: 137.25 deg C
+11:51:01:710 -> IR Sensor: No fire
+11:51:01:710 -> Temp Sensor: 136.25 deg C
+11:51:02:212 -> IR Sensor: No fire
+11:51:02:212 -> Temp Sensor: 135.25 deg C
+11:51:02:713 -> IR Sensor: No fire
+11:51:02:713 -> Temp Sensor: 134.25 deg C
+11:51:03:215 -> IR Sensor: No fire
+11:51:03:215 -> Temp Sensor: 133.25 deg C
+11:51:03:717 -> IR Sensor: No fire
+11:51:03:717 -> Temp Sensor: 132.25 deg C
+11:51:04:218 -> IR Sensor: No fire
+11:51:04:218 -> Temp Sensor: 131.50 deg C
+11:51:04:720 -> IR Sensor: No fire
+11:51:04:720 -> Temp Sensor: 130.25 deg C
+11:51:05:221 -> IR Sensor: No fire
+11:51:05:221 -> Temp Sensor: 129.25 deg C
+11:51:05:723 -> IR Sensor: No fire
+11:51:05:723 -> Temp Sensor: 128.25 deg C
+11:51:06:224 -> IR Sensor: No fire
+11:51:06:224 -> Temp Sensor: 127.50 deg C
+11:51:06:726 -> IR Sensor: No fire
+11:51:06:726 -> Temp Sensor: 126.50 deg C
+11:56:09:627 -> IR Sensor: No fire
+11:56:09:627 -> Temp Sensor: 23.75 deg C
+11:56:10:128 -> IR Sensor: No fire
+11:56:10:128 -> Temp Sensor: 23.75 deg C
+11:56:10:630 -> IR Sensor: No fire
+11:56:10:630 -> Temp Sensor: 23.75 deg C
+11:56:11:132 -> IR Sensor: No fire
+11:56:11:132 -> Temp Sensor: 23.75 deg C
+11:56:11:633 -> IR Sensor: No fire
+11:56:11:633 -> Temp Sensor: 23.75 deg C
+11:56:12:134 -> IR Sensor: No fire
+11:56:12:134 -> Temp Sensor: 23.75 deg C
+11:56:12:636 -> IR Sensor: No fire
+11:56:12:636 -> Temp Sensor: 23.75 deg C
+11:56:13:137 -> IR Sensor: No fire
+11:56:13:137 -> Temp Sensor: 23.75 deg C
+11:56:13:639 -> IR Sensor: No fire
+11:56:13:639 -> Temp Sensor: 23.75 deg C
+11:56:14:140 -> IR Sensor: No fire
+11:56:14:140 -> Temp Sensor: 23.75 deg C
+11:56:14:642 -> IR Sensor: No fire
+11:56:14:642 -> Temp Sensor: 23.75 deg C
+11:56:15:143 -> IR Sensor: No fire
+11:56:15:143 -> Temp Sensor: 23.75 deg C
+11:56:15:645 -> IR Sensor: No fire
+11:56:15:645 -> Temp Sensor: 23.50 deg C
+11:56:16:147 -> IR Sensor: No fire
+11:56:16:147 -> Temp Sensor: 23.50 deg C
+11:56:16:648 -> IR Sensor: No fire
+11:56:16:648 -> Temp Sensor: 23.50 deg C
+11:56:17:150 -> IR Sensor: No fire
+11:56:17:150 -> Temp Sensor: 23.50 deg C
+11:56:17:651 -> IR Sensor: No fire
+11:56:17:651 -> Temp Sensor: 23.50 deg C
+11:56:18:153 -> IR Sensor: No fire
+11:56:18:153 -> Temp Sensor: 23.50 deg C
+11:56:18:654 -> IR Sensor: No fire
+11:56:18:654 -> Temp Sensor: 23.50 deg C
+11:56:19:156 -> IR Sensor: No fire
+11:56:19:156 -> Temp Sensor: 23.50 deg C
+11:56:19:657 -> IR Sensor: No fire
+11:56:19:657 -> Temp Sensor: 23.50 deg C
+11:56:20:158 -> IR Sensor: No fire
+11:56:20:158 -> Temp Sensor: 23.50 deg C
+11:56:20:660 -> IR Sensor: No fire
+11:56:20:660 -> Temp Sensor: 23.25 deg C
+---- Closed serial port /dev/tty.usbserial-110 due to disconnection from the machine ----
