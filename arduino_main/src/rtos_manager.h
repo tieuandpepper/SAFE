@@ -14,10 +14,10 @@
 
 #include <Arduino_FreeRTOS.h>
 #include <semphr.h>
-#include <DebugLog.h>
+#include "logger.h"
 #include "arduino_pinout.h"
-#include "src/pump_masterflex.h"
-#include "src/mixer_generic.h"
+#include "driver/pump_masterflex.h"
+#include "driver/mixer_generic.h"
 #include "task_comm.h"
 
 #define TASK_PRIORITY_COMMUNICATION       2

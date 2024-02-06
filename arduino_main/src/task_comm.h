@@ -2,8 +2,8 @@
 #define TASK_COMM_H
 
 #include "Arduino.h"
-#include "src/pump_masterflex.h"
-#include "src/mixer_generic.h"
+#include "driver/pump_masterflex.h"
+#include "driver/mixer_generic.h"
 #include "str_macros.h"
 
 #define BUFFER_SIZE         64
@@ -35,6 +35,5 @@ int32_t PumpController(PumpMasterflex* pump, cmd_t* command);
 int32_t MixerController(mixer_t * mixer, cmd_t * command);
 uint8_t GetCommand(cmd_t* command);
 uint8_t SendResponse(resp_t response);
-
 
 #endif

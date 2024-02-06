@@ -7,56 +7,52 @@ int32_t PumpController(PumpMasterflex* pump, cmd_t* command)
 {
   uint8_t pump_idx = 0;
   
-  if (command->command_id.equals(PUMP_START))
+  if (command->command_id.equals(CMD_MIX_PUMP_START))
   {
     return pump->Start();
   }
-  if (command->command_id.equals(PUMP_STOP))
+  if (command->command_id.equals(CMD_MIX_PUMP_STOP))
   {
     return pump->Stop();
   }
-  if (command->command_id.equals(PUMP_CW))
+  if (command->command_id.equals(CMD_MIX_PUMP_DIRECTION))
   {
     return pump->SetDirection(DIR_CW);
   }
-  if (command->command_id.equals(PUMP_CCW))
-  {
-    return pump->SetDirection(DIR_CCW);
-  }
-  if (command->command_id.equals(PUMP_GETSPEED))
+  if (command->command_id.equals(CMD_MIX_PUMP_GET_SPEED))
   {
     return pump->GetSpeed();
   }
-  if (command->command_id.equals(PUMP_SETSPEED))
+  if (command->command_id.equals(CMD_MIX_PUMP_SET_SPEED))
   {
     return pump->SetSpeed(command->operand);
   }
-  if (command->command_id.equals(PUMP_DISPENSE))
-  {
-    return pump->Dispense(command->operand);
-  }
-  if (command->command_id.equals(PUMP_GETSPEEDSETTING))
+  if (command->command_id.equals(CMD_MIX_PUMP_GET_SETTING))
   {
     return pump->GetSpeedSetting();
   }
-  if (command->command_id.equals(PUMP_SETMAXSPEED))
+  if (command->command_id.equals(CMD_MIX_PUMP_SET_MAX))
   {
     return pump->SetMaxSpeed(command->operand);
   }
-  if (command->command_id.equals(PUMP_SETMINSPEED))
+  if (command->command_id.equals(CMD_MIX_PUMP_SET_MIN))
   {
     return pump->SetMinSpeed(command->operand);
   }
-  if (command->command_id.equals(PUMP_GETMAXSPEED))
+  if (command->command_id.equals(CMD_MIX_PUMP_GET_MAX))
   {
     return pump->GetMaxSpeed();
   }
-  if (command->command_id.equals(PUMP_GETMINSPEED))
+  if (command->command_id.equals(CMD_MIX_PUMP_GET_MIN))
   {
     return pump->GetMinSpeed();
   }
-    // Serial.println("No matching command");
-    return CMD_INVALID;
+  if (command->command_id.equals(CMD_MIX_PUMP_DISPENSE_UL))
+  {
+    return pump->Dispense(command->operand);
+  }
+  // Serial.println("No matching command");
+  return CMD_INVALID;
 }
 
 /// @brief 
@@ -65,15 +61,15 @@ int32_t PumpController(PumpMasterflex* pump, cmd_t* command)
 /// @return 
 int32_t MixerController(mixer_t * mixer, cmd_t * command)
 {
-  if (command->command_id.equals(MIXER_START))
+  if (command->command_id.equals(CMD_MIXER_START))
   {
     return MixerStart(mixer);
   }
-  if (command->command_id.equals(MIXER_STOP))
+  if (command->command_id.equals(CMD_MIXER_STOP))
   {
     return MixerStop(mixer);
   }
-  if (command->command_id.equals(MIXER_RUN))
+  if (command->command_id.equals(CMD_MIXER_RUN_PERIOD_MS))
   {
     return MixerRun(mixer, command->operand);
   }

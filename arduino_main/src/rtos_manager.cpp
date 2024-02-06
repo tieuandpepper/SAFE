@@ -32,13 +32,14 @@ void TaskMixingPump(void * pvParameters)
     mixing_pump.SetMaxSpeed(37700);
     mixing_pump.SetSpeed(14000);
     mixing_pump.PipeSetVol(1700);
-    LOG_INFO("mixing pump created");
+    LOG_DEBUG(LOG_SERV_USER, "mixing pump created");
 
     while (1)
     {
         // take semaphore/mutex
         // Do task
-        LOG_INFO("mixing pump");
+        LOG_DEBUG(LOG_SERV_USER, "mixing pump");
+        vTaskDelay(500/portTICK_PERIOD_MS);
         // give back semaphore/mutex
     }
 }
@@ -49,13 +50,13 @@ void TaskMixer(void * pvParameters)
     mixer.pin = PIN_MIXER_ENABLE;
     pinMode(mixer.pin,OUTPUT);
     digitalWrite(mixer.pin, LOW);
-    LOG_INFO("mixer created");
+    LOG_DEBUG(LOG_SERV_USER, "mixer created");
     while (1)
     {
         // take semaphore/mutex
         // Do task
-        LOG_INFO("mixer");
-
+        LOG_DEBUG(LOG_SERV_USER, "mixer");
+        vTaskDelay(500/portTICK_PERIOD_MS);
         // give back semaphore/mutex
     }
 }
@@ -125,7 +126,7 @@ void TaskReceiveCommand(void * pvParameters)
         {
             if (xQueueSend(queue_cmd, (void*) &command, (TickType_t) 10) != pdPASS)
             {
-                LOG_ERROR("Fail to send a command to queue");
+                LOG_ERROR(LOG_SERV_RTOS, "Fail to send a command to queue");
             }
         }
         vTaskDelay(50/portTICK_PERIOD_MS);

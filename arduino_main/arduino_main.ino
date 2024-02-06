@@ -10,9 +10,9 @@
  */
 
 #include <Arduino_FreeRTOS.h>
-#include <DebugLog.h>
-#include "arduino_pinout.h"
-#include "rtos_manager.h"
+#include "src/arduino_pinout.h"
+#include "src/rtos_manager.h"
+#include "src/logger.h"
 
 SemaphoreHandle_t mutex_mixing_vessel;
 SemaphoreHandle_t mutex_test_chamber;
@@ -23,12 +23,12 @@ QueueHandle_t queue_cmd;
 void setup() {
   Serial.begin(9600);
   mutex_mixing_vessel = xSemaphoreCreateMutex();
-  if (mutex_mixing_vessel != NULL) {
-    LOG_INFO("Mutex mixing vessel created");
+  if (mutex_mixing_vessel == NULL) {
+    LOG_ERROR(LOG_SERV_RTOS, "Mutex mixing vessel created");
   }
   mutex_test_chamber = xSemaphoreCreateMutex();
-  if (mutex_test_chamber != NULL) {
-    LOG_INFO("Mutex test chamber created");
+  if (mutex_test_chamber == NULL) {
+    LOG_ERROR(LOG_SERV_RTOS, "Mutex test chamber created");
   }
   
   xTaskCreate(TaskMixingPump,                       // Point to TaskMixingPump function
@@ -66,24 +66,24 @@ void setup() {
   //             TASK_PRIORITY_PROCESSING,             // priority number (0 is lowest-idle)
   //             NULL);                                // task's handle
   
-  xTaskCreate(TaskCommandProcess,                   // Point to TaskCommandProcess function
-              "CommandProcess",                     // Task name
-              1024,                                 // number of words (32 bits/ 4 bytes) for the task's stack
-              NULL,                                 // task input parameter
-              TASK_PRIORITY_COMMUNICATION,          // priority number (0 is lowest-idle)
-              NULL);                                // task's handle
+  // xTaskCreate(TaskCommandProcess,                   // Point to TaskCommandProcess function
+  //             "CommandProcess",                     // Task name
+  //             1024,                                 // number of words (32 bits/ 4 bytes) for the task's stack
+  //             NULL,                                 // task input parameter
+  //             TASK_PRIORITY_COMMUNICATION,          // priority number (0 is lowest-idle)
+  //             NULL);                                // task's handle
 
-  xTaskCreate(TaskResponseProcess,                  // Point to TaskResponseProcess function
-              "ResponseProcess",                    // Task name
-              1024,                                 // number of words (32 bits/ 4 bytes) for the task's stack
-              NULL,                                 // task input parameter
-              TASK_PRIORITY_COMMUNICATION,          // priority number (0 is lowest-idle)
-              NULL);                                // task's handle
+  // xTaskCreate(TaskResponseProcess,                  // Point to TaskResponseProcess function
+  //             "ResponseProcess",                    // Task name
+  //             1024,                                 // number of words (32 bits/ 4 bytes) for the task's stack
+  //             NULL,                                 // task input parameter
+  //             TASK_PRIORITY_COMMUNICATION,          // priority number (0 is lowest-idle)
+  //             NULL);                                // task's handle
 
-  LOG_INFO("Finish creating task");
+  LOG_INFO(LOG_SERV_ARDUINO, "System completed initialization");
   // Start the scheduler
   vTaskStartScheduler();
-  LOG_ERROR("Proper scheduler will never come here");
+  LOG_CRITICAL(LOG_SERV_RTOS, "Proper scheduler will never come here");
 }
 
 // int32_t res;

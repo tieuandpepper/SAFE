@@ -34,10 +34,12 @@
 #define CMD_MIX_PUMP_GET_MAX        "GETMAX"
 #define CMD_MIX_PUMP_GET_MIN        "GETMIN"
 #define CMD_MIX_PUMP_SET_PIPE_VOL   "SETPIPE"
+#define CMD_MIX_PUMP_DISPENSE_UL    "DISPENSE"
 
 // Mixer command
 #define CMD_MIXER_STOP              "STOP"
 #define CMD_MIXER_START             "START"
+#define CMD_MIXER_RUN_PERIOD_MS     "RUN_MS"
 
 // Temperature sensor
 #define CMD_TEMP_SENSOR_READ        "READ"
