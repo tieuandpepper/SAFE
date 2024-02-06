@@ -10,90 +10,89 @@
  * DB25_P16: Remote CW/CCW INPUT
  * DB25_P17: Remote START/STOP, CW/CCW, Prime GROUND
  * DB25_P20: Remote prime INPUT
- *                 +-----------------------+
- *                 |    Wiring diagram     |
- *                 |          DB25         |
- *                 +-----------------------+
- *   _____________________________________________________
- *   [ 13  12  11  10  09  08  07  06  05  04  03  02  01 ]
- *   [                                                    ]
- *    \  25  24  23  22  21  20  19  18  17  16  15  14  / 
- *     \________________________________________________/
+ *  
+ *                     +-----------------------+
+ *                     |    Wiring diagram     |
+ *                     |          DB25         |
+ *                     +-----------------------+
+ *      _____________________________________________________
+ *      [ 13  12  11  10  09  08  07  06  05  04  03  02  01 ]
+ *      [                                                    ]
+ *       \  25  24  23  22  21  20  19  18  17  16  15  14  / 
+ *        \________________________________________________/
+ *  
+ *                     +-----------------------+  
+ *                     |    Wiring diagram     |
+ *                     |      Arduino UNO      |
+ *                     +-----------------------+ 
+ *                         _________________
+ *                         |           SCL-|-
+ *                         |           SDA-|-
+ *                         |          AREF-|-
+ *                         |           GND-|- 
+ *                         |           D13-|- 
+ *                        -|-IOREF     D12-|- 
+ *                        -|-RESET     D11-|- 
+ *                        -|-3.3V      D10-|- 
+ *        mixer_relay_Vcc -|-5V        D09-|- 
+ *                        -|-GND       D08-|- mixer_relay_in
+ *                        -|-GND           | 
+ *                        -|-VIN       D07-|- 
+ *                         |           D06-|- 
+ *                        -|-A0        D05-|- DB25_P01
+ *                        -|-A1        D04-|- DB25_P15
+ *                        -|-A2        D03-|- DB25_P16
+ *               DB25_P14 -|-A3        D02-|- DB25_P20
+ *                        -|-A4         TX-|-
+ *                        -|-A5         RX-|-
+ *                         |_______________|
  * 
- *                 +-----------------------+  
- *                 |    Wiring diagram     |
- *                 |      Arduino UNO      |
- *                 +-----------------------+ 
- *                     _________________
- *                     |           SCL-|- temp_clock
- *                     |           SDA-|- temp_data
- *                     |          AREF-|-
- *                     |           GND-|- 
- *                     |           D13-|- mixer_relay_in
- *                    -|-IOREF     D12-|- IRsensor_data
- *                    -|-RESET     D11-|- DB25_P1 - 1
- *                    -|-3.3V      D10-|- DB25_P15 - 1
- *    mixer_relay_Vcc -|-5V        D09-|- DB25_P16 - 1
- *                    -|-GND       D08-|- DB25_P20 - 1
- *                    -|-GND           | 
- *                    -|-VIN       D07-|- DB25_P1 - 2
- *                     |           D06-|- DB25_P15 - 2
- *       DB25_P14 - 1 -|-A0        D05-|- DB25_P16 - 2
- *       DB25_P14 - 2 -|-A1        D04-|- DB25_P20 - 2
- *                    -|-A2        D03-|- lighter_enable
- *                    -|-A3        D02-|- lighter_charging
- *                    -|-A4         TX-|-
- *                    -|-A5         RX-|-
- *                     |_______________|
  * 
- * GND: DB25_P17 (1,2), DB25_P3(1,2), DB25_P5(1,2), mixer_relay_GND
- */
+ *                     +-----------------------+
+ *                     | PINOUT & POWER SUPPLY |
+ *                     |       & GROUND        |
+ *                     +-----------------------+
+ *                 
+ *      COMPONENT        |             PIN             | ARDUINO PIN | POWER SUPPLY 
+ *      -----------------+-----------------------------+-------------+--------------
+ *      MIXING PUMP      |    CONNECTOR-DB25 PIN-01    |    D05      |              
+ *      MIXING PUMP      |    CONNECTOR-DB25 PIN-03    |    GND      |              
+ *      MIXING PUMP      |    CONNECTOR-DB25 PIN-05    |    GND      |              
+ *      MIXING PUMP      |    CONNECTOR-DB25 PIN-14    |    A3       |              
+ *      MIXING PUMP      |    CONNECTOR-DB25 PIN-15    |    D04      |              
+ *      MIXING PUMP      |    CONNECTOR-DB25 PIN-16    |    D03      |              
+ *      MIXING PUMP      |    CONNECTOR-DB25 PIN-17    |    GND      |              
+ *      MIXING PUMP      |    CONNECTOR-DB25 PIN-20    |    D02      |              
+ *      MIXER            |          RELAY - GND        |    GND      |              
+ *      MIXER            |          RELAY - VCC        |     5V      |          
+ *      MIXER            |          RELAY - IN         |    D08      |              
+*/
 
 #include "PumpMasterflex.h"
 #include "Controller.h"
 #include "mixer.h"
 #include <DFRobot_MAX31855.h>
 
-#define PUMP_COUNT                  2
-// Define pinout
-#define PUMP_2_SPEED_CONTROL       11
-#define PUMP_2_REMOTE_CONTROL      10
-#define PUMP_2_CLOCKWISE_CONTROL   9
-#define PUMP_2_PRIME_CONTROL       8
-#define PUMP_2_SPEED_FEEDBACK      A0 // analog pin
+#define PUMP_SPEED_CONTROL       5
+#define PUMP_REMOTE_CONTROL      4
+#define PUMP_CLOCKWISE_CONTROL   3
+#define PUMP_PRIME_CONTROL       2
+#define PUMP_SPEED_FEEDBACK      A3 // analog pin
 
-#define PUMP_1_SPEED_CONTROL       7
-#define PUMP_1_REMOTE_CONTROL      6
-#define PUMP_1_CLOCKWISE_CONTROL   5
-#define PUMP_1_PRIME_CONTROL       4
-#define PUMP_1_SPEED_FEEDBACK      A1 // analog pin
-
-#define MIXER_PIN                      13
+#define MIXER_PIN                  8
 
 /*----------------------------------------------------------------------------------------------------------*/
 
 
-MasterflexDB25Interface_t pump_1_interface {
-  .start_stop_pin  = PUMP_1_REMOTE_CONTROL,
-  .direction_pin   = PUMP_1_CLOCKWISE_CONTROL,
-  .prime_pin       = PUMP_1_PRIME_CONTROL,
-  .voltage_in_pin  = PUMP_1_SPEED_CONTROL,
-  .voltage_out_pin = PUMP_1_SPEED_FEEDBACK,
+MasterflexDB25Interface_t mixing_pump_interface {
+  .start_stop_pin  = PUMP_REMOTE_CONTROL,
+  .direction_pin   = PUMP_CLOCKWISE_CONTROL,
+  .prime_pin       = PUMP_PRIME_CONTROL,
+  .voltage_in_pin  = PUMP_SPEED_CONTROL,
+  .voltage_out_pin = PUMP_SPEED_FEEDBACK,
 };
 
-MasterflexDB25Interface_t pump_2_interface {
-  .start_stop_pin  = PUMP_2_REMOTE_CONTROL,
-  .direction_pin   = PUMP_2_CLOCKWISE_CONTROL,
-  .prime_pin       = PUMP_2_PRIME_CONTROL,
-  .voltage_in_pin  = PUMP_2_SPEED_CONTROL,
-  .voltage_out_pin = PUMP_2_SPEED_FEEDBACK,
-};
-
-PumpMasterflex pump[] = 
-{
-  PumpMasterflex(pump_1_interface),
-  PumpMasterflex(pump_2_interface),
-};
+PumpMasterflex mixing_pump = PumpMasterflex(mixing_pump_interface);
 
 mixer_t mixer;
 DFRobot_MAX31855 max31855;
@@ -104,29 +103,20 @@ void setup() {
   mixer.pin = MIXER_PIN;
   pinMode(mixer.pin,OUTPUT);
   digitalWrite(mixer.pin, LOW);
-  for (int i = 0; i < PUMP_COUNT; i++)
-  {
-    pump[i].Connect();
-    pump[i].Stop();
-    pump[i].PrimeStop();
-    pump[i].SetDirection(DIR_CW);
-    pump[i].SetTubeSize(14);
-    pump[i].SetMaxVoltageLevel(5000);
-    pump[i].SetMinVoltageLevel(100);
-    pump[i].SetMinSpeed(0);
-    pump[i].SetMaxSpeed(37700);
-    pump[i].SetSpeed(14000);
-  }
-  pump[0].PipeSetVol(1600);
-  pump[1].PipeSetVol(1700);
+  mixing_pump.Connect();
+  mixing_pump.Stop();
+  mixing_pump.PrimeStop();
+  mixing_pump.SetDirection(DIR_CW);
+  mixing_pump.SetTubeSize(14);
+  mixing_pump.SetMaxVoltageLevel(5000);
+  mixing_pump.SetMinVoltageLevel(100);
+  mixing_pump.SetMinSpeed(0);
+  mixing_pump.SetMaxSpeed(37700);
+  mixing_pump.SetSpeed(14000);
+  mixing_pump.PipeSetVol(1600);
+  mixing_pump.PipeSetVol(1700);
   // temp sensor
   max31855.begin();
-  pinMode(12, INPUT);
-  pinMode(3, OUTPUT);
-  pinMode(2,OUTPUT);
-  digitalWrite(2,HIGH);
-  delay(5000);
-  digitalWrite(2,LOW);
   Serial.println("READY");
 }
 
@@ -163,9 +153,12 @@ void loop() {
     {
       res = MixerController(&mixer, &command);
     }
-    else
+    else if (command.target.equals(MIXINGPUMP))
     {
-      res = PumpController(pump, &command);
+      res = PumpController(&mixing_pump, &command);
+    }
+    else {
+      res = CMD_INVALID;
     }
     response.source = command.target;
     // Serial.println("READY");

@@ -11,8 +11,7 @@
 #define CMD_INVALID -99
 #define PUMP_COUNT  2
 // define target
-#define PUMP_1              "PUMP1"
-#define PUMP_2              "PUMP2"
+#define MIXINGPUMP          "MIXPUMP"
 #define MIXER               "MIXER"
 
 // define command ID
@@ -52,7 +51,7 @@ typedef struct resp_type {
   int32_t data = 0;
 } resp_t;
 
-int32_t PumpController(PumpMasterflex pumps[PUMP_COUNT], cmd_t* command);
+int32_t PumpController(PumpMasterflex* pump, cmd_t* command);
 int32_t MixerController(mixer_t * mixer, cmd_t * command);
 uint8_t GetCommand(cmd_t* command);
 uint8_t SendResponse(resp_t response);
