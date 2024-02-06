@@ -1,70 +1,59 @@
-#include "task_command.h"
+#include "task_comm.h"
 
 /// @brief 
 /// @param command 
 /// @return 
-int32_t PumpController(PumpMasterflex pumps[PUMP_COUNT], cmd_t* command)
+int32_t PumpController(PumpMasterflex* pump, cmd_t* command)
 {
   uint8_t pump_idx = 0;
-  if (command->target.equals(PUMP_1))
-  {
-    pump_idx = 0;
-  }
-  else if (command->target.equals(PUMP_2))
-  {
-    pump_idx = 1;
-  }
-  else {
-    return CMD_INVALID;
-  }
   
   if (command->command_id.equals(PUMP_START))
   {
-    return pumps[pump_idx].Start();
+    return pump->Start();
   }
   if (command->command_id.equals(PUMP_STOP))
   {
-    return pumps[pump_idx].Stop();
+    return pump->Stop();
   }
   if (command->command_id.equals(PUMP_CW))
   {
-    return pumps[pump_idx].SetDirection(DIR_CW);
+    return pump->SetDirection(DIR_CW);
   }
   if (command->command_id.equals(PUMP_CCW))
   {
-    return pumps[pump_idx].SetDirection(DIR_CCW);
+    return pump->SetDirection(DIR_CCW);
   }
   if (command->command_id.equals(PUMP_GETSPEED))
   {
-    return pumps[pump_idx].GetSpeed();
+    return pump->GetSpeed();
   }
   if (command->command_id.equals(PUMP_SETSPEED))
   {
-    return pumps[pump_idx].SetSpeed(command->operand);
+    return pump->SetSpeed(command->operand);
   }
   if (command->command_id.equals(PUMP_DISPENSE))
   {
-    return pumps[pump_idx].Dispense(command->operand);
+    return pump->Dispense(command->operand);
   }
   if (command->command_id.equals(PUMP_GETSPEEDSETTING))
   {
-    return pumps[pump_idx].GetSpeedSetting();
+    return pump->GetSpeedSetting();
   }
   if (command->command_id.equals(PUMP_SETMAXSPEED))
   {
-    return pumps[pump_idx].SetMaxSpeed(command->operand);
+    return pump->SetMaxSpeed(command->operand);
   }
   if (command->command_id.equals(PUMP_SETMINSPEED))
   {
-    return pumps[pump_idx].SetMinSpeed(command->operand);
+    return pump->SetMinSpeed(command->operand);
   }
   if (command->command_id.equals(PUMP_GETMAXSPEED))
   {
-    return pumps[pump_idx].GetMaxSpeed();
+    return pump->GetMaxSpeed();
   }
   if (command->command_id.equals(PUMP_GETMINSPEED))
   {
-    return pumps[pump_idx].GetMinSpeed();
+    return pump->GetMinSpeed();
   }
     // Serial.println("No matching command");
     return CMD_INVALID;
@@ -154,4 +143,3 @@ uint8_t SendResponse(resp_t response)
   buffer += ".";
   Serial.println(buffer);
 }
-

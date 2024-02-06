@@ -16,7 +16,7 @@
 
 SemaphoreHandle_t mutex_mixing_vessel;
 SemaphoreHandle_t mutex_test_chamber;
-QueueHandle_t queue_pc_cmd;
+QueueHandle_t queue_cmd;
 /*----------------------------------------------------------------------------------------------------------*/
 
 /// @brief Setup/ Initialization. Run first and run ONCE
@@ -65,20 +65,21 @@ void setup() {
   //             NULL,                                 // task input parameter
   //             TASK_PRIORITY_PROCESSING,             // priority number (0 is lowest-idle)
   //             NULL);                                // task's handle
-              
-  // xTaskCreate(TaskCommandProcess,                   // Point to TaskCommandProcess function
-  //             "CommandProcess",                     // Task name
-  //             1024,                                 // number of words (32 bits/ 4 bytes) for the task's stack
-  //             NULL,                                 // task input parameter
-  //             TASK_PRIORITY_COMMUNICATION,          // priority number (0 is lowest-idle)
-  //             NULL);                                // task's handle
+  
+  xTaskCreate(TaskCommandProcess,                   // Point to TaskCommandProcess function
+              "CommandProcess",                     // Task name
+              1024,                                 // number of words (32 bits/ 4 bytes) for the task's stack
+              NULL,                                 // task input parameter
+              TASK_PRIORITY_COMMUNICATION,          // priority number (0 is lowest-idle)
+              NULL);                                // task's handle
 
-  // xTaskCreate(TaskResponseProcess,                  // Point to TaskResponseProcess function
-  //             "ResponseProcess",                    // Task name
-  //             1024,                                 // number of words (32 bits/ 4 bytes) for the task's stack
-  //             NULL,                                 // task input parameter
-  //             TASK_PRIORITY_COMMUNICATION,          // priority number (0 is lowest-idle)
-  //             NULL);                                // task's handle
+  xTaskCreate(TaskResponseProcess,                  // Point to TaskResponseProcess function
+              "ResponseProcess",                    // Task name
+              1024,                                 // number of words (32 bits/ 4 bytes) for the task's stack
+              NULL,                                 // task input parameter
+              TASK_PRIORITY_COMMUNICATION,          // priority number (0 is lowest-idle)
+              NULL);                                // task's handle
+
   LOG_INFO("Finish creating task");
   // Start the scheduler
   vTaskStartScheduler();

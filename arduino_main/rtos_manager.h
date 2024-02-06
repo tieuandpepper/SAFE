@@ -16,9 +16,9 @@
 #include <semphr.h>
 #include <DebugLog.h>
 #include "arduino_pinout.h"
-#include "src/equipment/pump_masterflex.h"
-#include "src/equipment/mixer_generic.h"
-#include "queue_msg.h"
+#include "src/pump_masterflex.h"
+#include "src/mixer_generic.h"
+#include "task_comm.h"
 
 #define TASK_PRIORITY_COMMUNICATION       2
 #define TASK_PRIORITY_PROCESSING          3
@@ -26,7 +26,7 @@
 
 extern SemaphoreHandle_t mutex_mixing_vessel;
 extern SemaphoreHandle_t mutex_test_chamber;
-extern QueueHandle_t queue_pc_cmd;
+extern QueueHandle_t queue_cmd;
 
 void TaskMixingPump(void * pvParameters);
 void TaskMixer(void * pvParameters);

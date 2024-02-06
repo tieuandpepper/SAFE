@@ -115,23 +115,31 @@ void TaskLighter(void * pvParameters)
 void TaskReceiveCommand(void * pvParameters)
 {
     // initialization
+    cmd_t command;
     // xQueueCreate(QueueLength - number of items, ItemSize - number of bytes)
-    queue_pc_cmd = xQueueCreate(10, sizeof(int));
+    queue_cmd = xQueueCreate(50, sizeof(cmd_t));
 
     while (1)
     {
-        // take semaphore/mutex
-        // Do task
-        // give back semaphore/mutex
+        while (GetCommand(&command) != CMD_NOTHING)
+        {
+            if (xQueueSend(queue_cmd, (void*) &command, (TickType_t) 10) != pdPASS)
+            {
+                LOG_ERROR("Fail to send a command to queue");
+            }
+        }
+        vTaskDelay(50/portTICK_PERIOD_MS);
     }
 }
 
 void TaskResponseProcess(void * pvParameters)
 {
     // initialization
+    resp_t response;
 
     while (1)
     {
+
         // take semaphore/mutex
         // Do task
         // give back semaphore/mutex
