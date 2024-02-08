@@ -14,9 +14,10 @@
 #include "src/rtos_manager.h"
 #include "src/logger.h"
 
-SemaphoreHandle_t mutex_mixing_vessel;
-SemaphoreHandle_t mutex_test_chamber;
-QueueHandle_t queue_cmd;
+SemaphoreHandle_t mutex_mixing_vessel, mutex_test_chamber;
+QueueHandle_t queue_cmd_mixing_pump, queue_cmd_mixer;
+QueueHandle_t queue_response;
+TimerHandle_t timer_mixing_pump;
 /*----------------------------------------------------------------------------------------------------------*/
 
 /// @brief Setup/ Initialization. Run first and run ONCE
@@ -33,23 +34,23 @@ void setup() {
   
   xTaskCreate(TaskMixingPump,                       // Point to TaskMixingPump function
               "MixingPumpControl",                  // Task name
-              128,                                  // number of words (32 bits/ 4 bytes) for the task's stack
+              512,                                  // number of words (32 bits/ 4 bytes) for the task's stack
               NULL,                                 // task input parameter
-              TASK_PRIORITY_PROCESSING,             // priority number (0 is lowest-idle)
+              TASK_PRIORITY_COMPONENT,             // priority number (0 is lowest-idle)
               NULL);                                // task's handle  
 
   xTaskCreate(TaskMixer,                            // Point to TaskMixer function
               "MixerControl",                       // Task name
               128,                                  // number of words (32 bits/ 4 bytes) for the task's stack
               NULL,                                 // task input parameter
-              TASK_PRIORITY_PROCESSING,             // priority number (0 is lowest-idle)
+              TASK_PRIORITY_COMPONENT,             // priority number (0 is lowest-idle)
               NULL);                                // task's handle
 
   // xTaskCreate(TaskTransferPump,                     // Point to TaskTransferPump function
   //             "TransferPumpControl",                // Task name
   //             128,                                  // number of words (32 bits/ 4 bytes) for the task's stack
   //             NULL,                                 // task input parameter
-  //             TASK_PRIORITY_PROCESSING,             // priority number (0 is lowest-idle)
+  //             TASK_PRIORITY_COMPONENT,             // priority number (0 is lowest-idle)
   //             NULL);                                // task's handle
 
   // xTaskCreate(TaskTestMonitor,                      // Point to TaskTestMonitor function
@@ -63,7 +64,7 @@ void setup() {
   //             "LighterControl",                     // Task name
   //             128,                                  // number of words (32 bits/ 4 bytes) for the task's stack
   //             NULL,                                 // task input parameter
-  //             TASK_PRIORITY_PROCESSING,             // priority number (0 is lowest-idle)
+  //             TASK_PRIORITY_COMPONENT,             // priority number (0 is lowest-idle)
   //             NULL);                                // task's handle
   
   // xTaskCreate(TaskCommandProcess,                   // Point to TaskCommandProcess function
@@ -111,14 +112,14 @@ void loop() {
   //   // Serial.println("READY");
   //   if (res == CMD_INVALID)
   //   {
-  //     response.resp_id = RESP_INVALID;
+  //     response.resp_id = RESP_ID_INVALID;
   //     // Serial.println("Invalid command");
   //   }
   //   else 
   //   {
   //     // Serial.print("Command return ");
   //     // Serial.println(res);
-  //     response.resp_id = RESP_VALID;
+  //     response.resp_id = RESP_ID_SUCCESS;
   //     response.data = res;
   //   }
   //   SendResponse(response);

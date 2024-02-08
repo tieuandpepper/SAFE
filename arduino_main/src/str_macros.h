@@ -14,6 +14,7 @@
 
 
 // Component
+#define CPNT_ALL                "ALL"
 #define CPNT_MIX_PUMP           "MIXPUMP"
 #define CPNT_MIXER              "MIXER"
 #define CPNT_ROTARY_VALVE       "ROTVALVE"

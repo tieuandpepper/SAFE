@@ -14,19 +14,26 @@
 
 #include <Arduino_FreeRTOS.h>
 #include <semphr.h>
+#include <task.h>
 #include "logger.h"
 #include "arduino_pinout.h"
-#include "driver/pump_masterflex.h"
+#include "task_mixing_pump.h"
 #include "driver/mixer_generic.h"
 #include "task_comm.h"
 
 #define TASK_PRIORITY_COMMUNICATION       2
-#define TASK_PRIORITY_PROCESSING          3
+#define TASK_PRIORITY_COMPONENT           3
 #define TASK_PRIORITY_MONITORING          4
 
-extern SemaphoreHandle_t mutex_mixing_vessel;
-extern SemaphoreHandle_t mutex_test_chamber;
-extern QueueHandle_t queue_cmd;
+extern SemaphoreHandle_t mutex_mixing_vessel, mutex_test_chamber;
+extern QueueHandle_t queue_cmd_mixing_pump, queue_cmd_mixer;
+extern QueueHandle_t queue_response;
+
+typedef struct queue_list_type {
+    String receiver;
+    QueueHandle_t queue;
+} qlist_t;
+
 
 void TaskMixingPump(void * pvParameters);
 void TaskMixer(void * pvParameters);

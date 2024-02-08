@@ -4,7 +4,7 @@
 
 #include "pump_masterflex.h"
 
-#define DELAY_MS (5)
+// #define DELAY_MS (5)
 
 /// @brief PumpMasterflex constructor. Must be initialized first.
 /// @param bd25 contains a struct of input/output pins on Arduino
@@ -15,6 +15,13 @@ PumpMasterflex::PumpMasterflex(MasterflexDB25Interface_t bd25)
     _pins.start_stop_pin = bd25.start_stop_pin;
     _pins.voltage_in_pin = bd25.voltage_in_pin;
     _pins.voltage_out_pin = bd25.voltage_out_pin;
+}
+
+/// @brief PumpMasterflex constructor. Must be initialized first.
+/// @param bd25 contains a struct of input/output pins on Arduino
+PumpMasterflex::PumpMasterflex(void)
+{
+    // do nothing
 }
 
 /// @brief Perform initializations on Arduino for the pump.
@@ -37,11 +44,6 @@ bool PumpMasterflex::Connect()
 bool PumpMasterflex::Start()
 {
     digitalWrite(_pins.start_stop_pin, PUMP_START);
-    delay(DELAY_MS);
-    if (digitalRead(_pins.start_stop_pin) != PUMP_START)
-    {
-        return false;
-    }
     _state_op = PUMP_START;
     return true;
 }
@@ -50,11 +52,6 @@ bool PumpMasterflex::Start()
 bool PumpMasterflex::Stop()
 {
     digitalWrite(_pins.start_stop_pin, PUMP_STOP);
-    delay(DELAY_MS);
-    if (digitalRead(_pins.start_stop_pin) != PUMP_STOP)
-    {
-        return false;
-    }
     _state_op = PUMP_STOP;
     return true;
 }
@@ -73,11 +70,6 @@ uint8_t PumpMasterflex::GetOpState()
 bool PumpMasterflex::SetDirection(int32_t direction)
 {
     digitalWrite(_pins.direction_pin, direction);
-    delay(DELAY_MS);
-    if (digitalRead(_pins.direction_pin) != direction)
-    {
-        return false;
-    }
     _state_dir = direction;
     return true;
 }
@@ -87,12 +79,6 @@ bool PumpMasterflex::ChangeDirection()
 {
     _state_dir = _state_dir ^ HIGH;
     digitalWrite(_pins.direction_pin, _state_dir);
-    delay(DELAY_MS);
-    if (digitalRead(_pins.direction_pin) != _state_dir)
-    {
-        _state_dir = _state_dir ^ HIGH;
-        return false;
-    }
     return true;
 }
 
@@ -109,11 +95,6 @@ uint8_t PumpMasterflex::GetDirection()
 bool PumpMasterflex::PrimeStart()
 {
     digitalWrite(_pins.prime_pin, PRIME_ON);
-    delay(DELAY_MS);
-    if (digitalRead(_pins.direction_pin) != PRIME_ON)
-    {
-        return false;
-    }
     _state_prime = PRIME_ON;
     return true;
 }
@@ -122,11 +103,6 @@ bool PumpMasterflex::PrimeStart()
 bool PumpMasterflex::PrimeStop()
 {
     digitalWrite(_pins.prime_pin, PRIME_OFF);
-    delay(DELAY_MS);
-    if (digitalRead(_pins.direction_pin) != PRIME_OFF)
-    {
-        return false;
-    }
     _state_prime = PRIME_OFF;
     return true;
 }
@@ -134,11 +110,13 @@ bool PumpMasterflex::PrimeStop()
 /// @brief Prime the pump by a predetermined period.
 /// @warning Pump is unavailable during this period.
 /// @param duration_ms priming duration by @c miliseconds (ms)
+/// @note currently doing nothing
 bool PumpMasterflex::Prime(int32_t duration_ms)
 {
-    bool res = this->PrimeStart();
-    delay(duration_ms);
-    res &= this->PrimeStop();
+    // bool res = this->PrimeStart();
+    // delay(duration_ms);
+    // res &= this->PrimeStop();
+    bool res = false;
     return res;
 }
 
@@ -280,25 +258,22 @@ bool PumpMasterflex::SetMinVoltageLevel(int32_t voltage_min)
     return true;
 }
 
-/// @brief Dispense a predetermined amount of liquid
+/// @brief Get the dispense time of a predetermined amount of liquid
 /// @param amount_ul amount of dispensed liquid in uL
 /// @return true/1 if success
-bool PumpMasterflex::Dispense(int32_t amount_ul)
+int32_t PumpMasterflex::GetDispenseTime(int32_t amount_ul)
 {
-    uint64_t time;
+    int32_t time;
     if (_pipe_state == PIPE_EMPTY)
     {
-        time = (uint64_t)((60 * (amount_ul + _pipe_vol + _tuning_vol)) / (_speed_control.speed_ml_min));
+        time = (int32_t)((60000 * (amount_ul + _pipe_vol + _tuning_vol)) / (_speed_control.speed_ml_min));
         _pipe_state = PIPE_PRIMED;
     }
     else
     {
-        time = (uint64_t)((60 * (amount_ul + _tuning_vol)) / (_speed_control.speed_ml_min));
+        time = (int32_t)((60000 * (amount_ul + _tuning_vol)) / (_speed_control.speed_ml_min));
     }
-    bool res = this->Start();
-    delay(time);
-    res &= this->Stop();
-    return res;
+    return time;
 }
 
 /// @brief Set the amount of liquid used to fill pipes (only use the first time for each liquid)

@@ -1,75 +1,20 @@
 #include "task_comm.h"
 
 /// @brief 
-/// @param command 
-/// @return 
-int32_t PumpController(PumpMasterflex* pump, cmd_t* command)
-{
-  uint8_t pump_idx = 0;
-  
-  if (command->command_id.equals(CMD_MIX_PUMP_START))
-  {
-    return pump->Start();
-  }
-  if (command->command_id.equals(CMD_MIX_PUMP_STOP))
-  {
-    return pump->Stop();
-  }
-  if (command->command_id.equals(CMD_MIX_PUMP_DIRECTION))
-  {
-    return pump->SetDirection(DIR_CW);
-  }
-  if (command->command_id.equals(CMD_MIX_PUMP_GET_SPEED))
-  {
-    return pump->GetSpeed();
-  }
-  if (command->command_id.equals(CMD_MIX_PUMP_SET_SPEED))
-  {
-    return pump->SetSpeed(command->operand);
-  }
-  if (command->command_id.equals(CMD_MIX_PUMP_GET_SETTING))
-  {
-    return pump->GetSpeedSetting();
-  }
-  if (command->command_id.equals(CMD_MIX_PUMP_SET_MAX))
-  {
-    return pump->SetMaxSpeed(command->operand);
-  }
-  if (command->command_id.equals(CMD_MIX_PUMP_SET_MIN))
-  {
-    return pump->SetMinSpeed(command->operand);
-  }
-  if (command->command_id.equals(CMD_MIX_PUMP_GET_MAX))
-  {
-    return pump->GetMaxSpeed();
-  }
-  if (command->command_id.equals(CMD_MIX_PUMP_GET_MIN))
-  {
-    return pump->GetMinSpeed();
-  }
-  if (command->command_id.equals(CMD_MIX_PUMP_DISPENSE_UL))
-  {
-    return pump->Dispense(command->operand);
-  }
-  // Serial.println("No matching command");
-  return CMD_INVALID;
-}
-
-/// @brief 
 /// @param mixer 
 /// @param command 
 /// @return 
 int32_t MixerController(mixer_t * mixer, cmd_t * command)
 {
-  if (command->command_id.equals(CMD_MIXER_START))
+  if (command->cmd_id.equals(CMD_MIXER_START))
   {
     return MixerStart(mixer);
   }
-  if (command->command_id.equals(CMD_MIXER_STOP))
+  if (command->cmd_id.equals(CMD_MIXER_STOP))
   {
     return MixerStop(mixer);
   }
-  if (command->command_id.equals(CMD_MIXER_RUN_PERIOD_MS))
+  if (command->cmd_id.equals(CMD_MIXER_RUN_PERIOD_MS))
   {
     return MixerRun(mixer, command->operand);
   }
@@ -91,14 +36,14 @@ uint8_t GetCommand(cmd_t* command)
   buffer.replace(" ", "");
   buffer.toUpperCase();
   Serial.println(buffer);
-  // extract target ID
+  // extract component ID
   uint8_t first_idx = 0;
   uint8_t last_idx = buffer.indexOf(',',first_idx);
   if (first_idx >= last_idx){
     return CMD_NOTHING;
   }
-  command->target = buffer.substring(first_idx,last_idx);
-  Serial.print("Target="); Serial.print(command->target);
+  command->cpnt = buffer.substring(first_idx,last_idx);
+  // Serial.print("cpnt="); Serial.print(command->cpnt);
   // extract command ID
   first_idx = last_idx + 1;
   last_idx = buffer.indexOf(',',first_idx);
@@ -109,11 +54,11 @@ uint8_t GetCommand(cmd_t* command)
   }
 
   if (first_idx >= last_idx){
-    command->target = "";
+    command->cpnt = "";
     return CMD_NOTHING;
   }
-  command->command_id = buffer.substring(first_idx,last_idx);
-  Serial.print(" | Command="); Serial.print(command->command_id);
+  command->cmd_id = buffer.substring(first_idx,last_idx);
+  // Serial.print(" | Command="); Serial.print(command->cmd_id);
   // extract operand ID
   first_idx = last_idx + 1;
   last_idx = buffer.length();
@@ -121,19 +66,21 @@ uint8_t GetCommand(cmd_t* command)
   {
     command->operand = buffer.substring(first_idx, last_idx).toInt();
   }
-  Serial.print(" | Operand="); Serial.println(command->operand);
+  // Serial.print(" | Operand="); Serial.println(command->operand);
   return CMD_RECEIVED;
 }
 
 /// @brief 
 /// @param response 
 /// @return 
-uint8_t SendResponse(resp_t response)
+void SendResponse(resp_t response)
 {
   String buffer = "RESP,";
   buffer += response.resp_id;
   buffer += ",";
-  buffer += response.source;
+  buffer += response.cpnt;
+  buffer += ",";
+  buffer += response.cmd_id;
   buffer += ",";
   buffer += response.data;
   buffer += ".";

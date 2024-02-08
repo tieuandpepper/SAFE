@@ -67,6 +67,7 @@ class PumpMasterflex {
         int32_t _tuning_vol = 0;
         uint8_t _pipe_state = PIPE_EMPTY;
     public:
+        PumpMasterflex(void);
         PumpMasterflex(MasterflexDB25Interface_t pins);
         bool Connect();
         bool Start();
@@ -90,7 +91,7 @@ class PumpMasterflex {
         int32_t GetSpeed();
         bool SetMaxVoltageLevel(int32_t voltage_max);
         bool SetMinVoltageLevel(int32_t voltage_min);
-        bool Dispense(int32_t amount_ul);
+        int32_t GetDispenseTime(int32_t amount_ul);
         bool PipeSetVol(int32_t vol_ul);
         bool PipeSetState(uint8_t state);
         bool SetTuningVol(int32_t amount_ul);

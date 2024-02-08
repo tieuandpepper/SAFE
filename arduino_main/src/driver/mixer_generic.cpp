@@ -4,11 +4,6 @@
 bool MixerStart(mixer_t* mixer)
 {
   digitalWrite(mixer->pin, HIGH);
-  delay(DELAY_MS);
-  if (digitalRead(mixer->pin) != HIGH)
-  {
-    return false;
-  }
   mixer->running = true;
   return true;
 }
@@ -16,11 +11,6 @@ bool MixerStart(mixer_t* mixer)
 bool MixerStop(mixer_t* mixer)
 {
   digitalWrite(mixer->pin, LOW);
-  delay(DELAY_MS);
-  if (digitalRead(mixer->pin) != LOW)
-  {
-    return false;
-  }
   mixer->running = false;
   return true;
 }
