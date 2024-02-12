@@ -147,7 +147,7 @@ void loop() {
         res = CMD_INVALID;
       }
     }
-    if (command.target.equals("LIGHTER"))
+    else if (command.target.equals("LIGHTER"))
     {
       digitalWrite(13, HIGH);
       delay(command.operand);
@@ -183,7 +183,7 @@ void loop() {
     command.operand = 0;
     response.data = 0;
   }
-  if (readTemp  && (--time_sec > 0))
+  if (readTemp  && (time_sec-- > 0))
   {
     TempSensorRead();
   }

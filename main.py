@@ -43,7 +43,7 @@ def main():
   command_list = [
                   "mixpump,clock.",
                   "mixpump,dispense,25000.",
-                  "mixer, run, 10000.",
+                  "mixer, run, 20000.",
                   "mixpump,counterclock.",
                   "mixpump,dispense,25000",
                   # "condmeter, getmeas.",
@@ -51,13 +51,13 @@ def main():
                   # "lighter, ignite, 2000.",
                   # "fire, read, 10.",
                   ]
-  for i in range(2):
+  for i in range(10):
     for cmd in command_list:
       component = cmd[:cmd.find(",")].upper()
       # print(component)
       if component == "CONDMETER":
         # conductivity = cond_meter.getConductivity()
-        conductivity = 1423
+        conductivity = 1434
         print("Conductivity reading: {} uS/cm".format(conductivity))
         continue
       SendCommand(arduino, cmd)
