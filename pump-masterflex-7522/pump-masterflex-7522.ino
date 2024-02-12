@@ -35,10 +35,10 @@
  *                        -|-RESET     D11-|- 
  *                        -|-3.3V      D10-|- 
  *        mixer_relay_Vcc -|-5V        D09-|- 
- *                        -|-GND       D08-|- mixer_relay_in
+ *                        -|-GND       D08-|-
  *                        -|-GND           | 
  *                        -|-VIN       D07-|- 
- *                         |           D06-|- 
+ *                         |           D06-|-  mixer_relay_in
  *                        -|-A0        D05-|- DB25_P01
  *                        -|-A1        D04-|- DB25_P15
  *                        -|-A2        D03-|- DB25_P16
@@ -65,7 +65,7 @@
  *      MIXING PUMP      |    CONNECTOR-DB25 PIN-20    |    D02      |              
  *      MIXER            |          RELAY - GND        |    GND      |              
  *      MIXER            |          RELAY - VCC        |     5V      |          
- *      MIXER            |          RELAY - IN         |    D08      |              
+ *      MIXER            |          RELAY - IN         |    D06      |              
 */
 
 #include "PumpMasterflex.h"
@@ -79,7 +79,7 @@
 #define PUMP_PRIME_CONTROL       2
 #define PUMP_SPEED_FEEDBACK      A3 // analog pin
 
-#define MIXER_PIN                  8
+#define MIXER_PIN                  6
 
 /*----------------------------------------------------------------------------------------------------------*/
 

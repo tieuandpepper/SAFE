@@ -67,7 +67,7 @@ class ConductivityMeter:
 def main():
   # comm port used
   # ARDUINO_PORT = "/dev/tty.usbserial-1420"
-  COND_METER_PORT = "COM20"
+  COND_METER_PORT = "COM21"
   baud_rate = 9600
   # arduino = serial.Serial(port = ARDUINO_PORT,  baudrate=baud_rate, timeout=.5)
   cond_meter = ConductivityMeter(COND_METER_PORT, baud_rate)
