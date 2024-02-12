@@ -290,7 +290,7 @@ bool PumpMasterflex::Dispense(int32_t amount_ul)
     if (_pipe_state == PIPE_EMPTY)
     {
         time = (uint64_t)((60 * (amount_ul + _pipe_vol + _tuning_vol)) / (_speed_control.speed_ml_min));
-        _pipe_state = PIPE_PRIMED;
+        // _pipe_state = PIPE_PRIMED;
     }
     else
     {

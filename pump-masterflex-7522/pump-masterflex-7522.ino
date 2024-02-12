@@ -112,11 +112,16 @@ void setup() {
   mixing_pump.SetMinVoltageLevel(100);
   mixing_pump.SetMinSpeed(0);
   mixing_pump.SetMaxSpeed(37700);
-  mixing_pump.SetSpeed(14000);
-  mixing_pump.PipeSetVol(1600);
+  mixing_pump.SetSpeed(25000);
+  // mixing_pump.PipeSetVol(1600);
   mixing_pump.PipeSetVol(1700);
   // temp sensor
   max31855.begin();
+  // pinMode(13, OUTPUT);
+  // pinMode(12,OUTPUT);
+  // digitalWrite(12,HIGH);
+  // delay(60000);
+  // digitalWrite(12,LOW);
   Serial.println("READY");
 }
 
@@ -144,9 +149,9 @@ void loop() {
     }
     if (command.target.equals("LIGHTER"))
     {
-      digitalWrite(3, HIGH);
+      digitalWrite(13, HIGH);
       delay(command.operand);
-      digitalWrite(3, LOW);
+      digitalWrite(13, LOW);
       res = CMD_RECEIVED;
     }
     else if (command.target.equals(MIXER))
@@ -178,33 +183,32 @@ void loop() {
     command.operand = 0;
     response.data = 0;
   }
-  delay(200);
-  if (readTemp == true)
+  if (readTemp  && (--time_sec > 0))
   {
-    TempSensorRead(time_sec);
+    TempSensorRead();
+  }
+  if (time_sec == 0)
+  {
     readTemp = false;
   }
+  delay(200);
 }
 
-void TempSensorRead(long time_sec)
+void TempSensorRead()
 {
   float temp;
   int IRsensor_data;
-  while (--time_sec > 0)
-  {
-    temp = max31855.readCelsius();
-    IRsensor_data = digitalRead(12);
-    Serial.print("IR Sensor: ");
-    if (IRsensor_data == LOW)
-    {
-      Serial.println("Fire detected");
-    }
-    else {
-      Serial.println("No fire");
-    }
-    Serial.print("Temp Sensor: ");
-    Serial.print(temp);
-    Serial.println(" deg C");
-    delay(500);
-  }
+  temp = max31855.readCelsius();
+  // IRsensor_data = digitalRead(12);
+  // Serial.print("IR Sensor: ");
+  // if (IRsensor_data == LOW)
+  // {
+  //   Serial.println("Fire detected");
+  // }
+  // else {
+  //   Serial.println("No fire");
+  // }
+  Serial.print("Temp Sensor: ");
+  Serial.print(temp);
+  Serial.println(" deg C");
 }

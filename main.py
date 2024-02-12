@@ -26,12 +26,12 @@ def SendCommand(comm_port, command):
 ###################################################################################
 def main():
   # comm port used
-  # ARDUINO_PORT = "/dev/tty.usbserial-1420"
-  ARDUINO_PORT = "COM9"
-  COND_METER_PORT = "COM15"
+  ARDUINO_PORT = "/dev/tty.usbserial-1410"
+  # ARDUINO_PORT = "COM9"
+  # COND_METER_PORT = "COM15"
   baud_rate = 9600
   arduino = serial.Serial(port = ARDUINO_PORT,  baudrate=baud_rate, timeout=.5)
-  cond_meter = cm.ConductivityMeter(COND_METER_PORT, baud_rate)
+  # cond_meter = cm.ConductivityMeter(COND_METER_PORT, baud_rate)
 
   ready_msg = ""
   while ready_msg.find("READY") == -1:
@@ -41,23 +41,28 @@ def main():
       print(ready_msg)
   
   command_list = [
-                  # "pump1,dispense,15000.",
-                  # "mixer, run, 10000.",
+                  "mixpump,clock.",
+                  "mixpump,dispense,25000.",
+                  "mixer, run, 10000.",
+                  "mixpump,counterclock.",
+                  "mixpump,dispense,25000",
                   # "condmeter, getmeas.",
                   # "pump2, dispense, 15000.",
-                  "lighter, ignite, 2000.",
-                  "fire, read, 10.",
+                  # "lighter, ignite, 2000.",
+                  # "fire, read, 10.",
                   ]
-  for cmd in command_list:
-    component = cmd[:cmd.find(",")].upper()
-    # print(component)
-    if component == "CONDMETER":
-      conductivity = cond_meter.getConductivity()
-      print("Conductivity reading: {} uS/cm".format(conductivity))
-      continue
-    SendCommand(arduino, cmd)
-    PrintCommand(arduino)
-    PrintResponse(arduino)
+  for i in range(2):
+    for cmd in command_list:
+      component = cmd[:cmd.find(",")].upper()
+      # print(component)
+      if component == "CONDMETER":
+        # conductivity = cond_meter.getConductivity()
+        conductivity = 1423
+        print("Conductivity reading: {} uS/cm".format(conductivity))
+        continue
+      SendCommand(arduino, cmd)
+      PrintCommand(arduino)
+      PrintResponse(arduino)
 
 
 
