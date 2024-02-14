@@ -68,9 +68,9 @@
  *      MIXER            |          RELAY - IN         |    D06      |              
 */
 
-#include "PumpMasterflex.h"
+#include "src/PumpMasterflex.h"
 #include "Controller.h"
-#include "mixer.h"
+#include "src/mixer.h"
 #include <DFRobot_MAX31855.h>
 
 #define PUMP_SPEED_CONTROL       5
