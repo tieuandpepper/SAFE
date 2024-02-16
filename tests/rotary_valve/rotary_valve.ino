@@ -10,27 +10,67 @@
  */
 
 #include <SoftwareSerial.h>
+#include "rotary_valve.h"
 
 #define ROT_VALVE_RX   10
 #define ROT_VALVE_TX   9
 
-SoftwareSerial rotary_valve(ROT_VALVE_RX, ROT_VALVE_TX, true);
+// SoftwareSerial rotary_valve(ROT_VALVE_RX, ROT_VALVE_TX, true);
+RotaryValve rotary_valve(ROT_VALVE_RX, ROT_VALVE_TX, 9600);
 
+int ret;
 void setup() {
     Serial.begin(9600);
     rotary_valve.begin(9600);
-    // pinMode(ROT_VALVE_RX, OUTPUT);
-    // pinMode(ROT_VALVE_TX,INPUT);
+    ret = rotary_valve.SendCommand(ACT_FUNC_ROTATE_AUTO,0x0001);
+    // Serial.println("Initialization completed");
+    // byte message[] = {0xCC, 0x00, 0x44, 0x07, 0x00 , 0xDD, 0xF4, 0x01};
+
+    // rotary_valve.write(message, sizeof(message));
+    // Serial.println(ret);
 }
+String response;
+byte a; 
 
 void loop() {
-    byte message[] = {0xCC, 0x00, 0x44, 0x07, 0x00 , 0xDD, 0xF4, 0x02};
 
-    rotary_valve.write(message, sizeof(message));
-    
-    // rotary_valve.end();
     while (1)
-    {
-        // do nothing
+    {   
+        // Serial.print("ack");
+        // a = rotary_valve.read();
+        ret = rotary_valve.ReceiveResponse();
+        if (ret == -1) {
+            delay(50);
+            continue;
+        }
+        Serial.println(ret);
+        response = rotary_valve.PrintResponse();
+        delay(100);
+        Serial.println(response);
+        if (ret != -1) {return;}
     }
+
+
+
+    // delay(1000);
+    // while (!rotary_valve.available())
+    // {
+    //     while (rotary_valve.available())
+    //     {
+    //         ret = rotary_valve.ReceiveResponse();
+    //         Serial.print("Reading response: "); Serial.println(ret);
+    //         if (ret == false)
+    //         {
+    //             Serial.println("Failed");
+    //             break;
+    //         }
+    //         response = rotary_valve.PrintResponse();
+    //         Serial.print(response);
+    //         Serial.println("done");
+    //         return;
+    //     }
+    //     delay(50);
+    // }
+    // while(1)
+    // {}
 }

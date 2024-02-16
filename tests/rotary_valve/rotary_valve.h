@@ -27,15 +27,12 @@
 #define COMM_PARITY_BITS  0
 #define COMM_CSUM_BITs    2
 
-/* Communication frame */
-#define COMM_TYPE_COMMON       1
-#define COMM_TYPE_FACTORY      2
+
 // common command, response
-#define COMM_LEN_QUERY        8
-#define COMM_LEN_ACTION       8
-#define COMM_LEN_RESPONSE     8
+#define CMD_LEN_COMMON        8
+#define RESP_LEN              8
 // factory command
-#define COMM_LEN_SETTING      14
+#define CMD_LEN_FACTORY      14
 
 /* Command/reponse macros */
 #define COMM_START_BYTE        0xCC
@@ -100,54 +97,78 @@
 #define ACT_PARAMS_PADDING                   0x0000
 
 /* Response function code B2 */
-#define RESP_FUNC_NORMAL_STATUS              0x00
-#define RESP_FUNC_FRAME_ERROR                0x01
-#define RESP_FUNC_PARAMS_ERROR               0x02
-#define RESP_FUNC_OPTO_ERROR                 0x03
-#define RESP_FUNC_MOTOR_BUSY                 0x04
-#define RESP_FUNC_MOTOR_FAILED               0x05
-#define RESP_FUNC_UNKNOWN_POSITION           0x06
-#define RESP_FUNC_TASK_EXECUTING             0xFE
-#define RESP_FUNC_UNKNOWN_ERROR              0xFF
+#define RESP_STATUS_NORMAL_STATUS              0x00
+#define RESP_STATUS_FRAME_ERROR                0x01
+#define RESP_STATUS_PARAMS_ERROR               0x02
+#define RESP_STATUS_OPTO_ERROR                 0x03
+#define RESP_STATUS_MOTOR_BUSY                 0x04
+#define RESP_STATUS_MOTOR_FAILED               0x05
+#define RESP_STATUS_UNKNOWN_POSITION           0x06
+#define RESP_STATUS_TASK_EXECUTING             0xFE
+#define RESP_STATUS_UNKNOWN_ERROR              0xFF
 
 
-enum comm_speed_setting 
-{   COMM_BAUD_RATE_9600 = 9600,
-    COMM_BAUD_RATE_19200 = 19200,
-    COMM_BAUD_RATE_38400 = 38400,
-    COMM_BAUD_RATE_57600 = 57600,
-    COMM_BAUD_RATE_115200 = 115200,
+enum PORT_ID {
+    PORT_ID_1 = 0x01,
+    PORT_ID_2,
+    PORT_ID_3,
+    PORT_ID_4,
+    PORT_ID_5,
+    PORT_ID_6,
+    PORT_ID_7,
+    PORT_ID_8,
+    PORT_ID_9,
+    PORT_ID_10,
+    PORT_ID_11,
+    PORT_ID_12,
+    PORT_ID_13,
+    PORT_ID_14,
+    PORT_ID_15,
+    PORT_ID_16,
 };
 
-typedef struct RotaryValveMsg {
-    uint8_t func_code;
+typedef struct RotaryValveCmd {
+    uint8_t cmd_len = CMD_LEN_COMMON;
+    uint8_t function;
     uint8_t address;
-    uint32_t params;
-} RotValveMsg_t;
+    uint8_t params[4] = {0};
+    uint16_t check_sum;
+    uint32_t password;
+} RotValveCmd_t;
 
-// class RotaryValve{
-//     private:
-//         uint8_t _rx;
-//         uint8_t _tx;
-//         uint16_t _baud_rate;
-//         uint8_t _home_port;
-//         uint8_t _current_port;
-//         SoftwareSerial _valve_obj;
+typedef struct RotaryValveResp {
+    uint8_t resp_len = RESP_LEN;
+    uint8_t status;
+    uint8_t address;
+    uint8_t params[2] = {0};
+    uint16_t check_sum;
+    uint8_t start_byte;
+    uint8_t stop_byte;
+} RotValveResp_t;
 
-//     public:
-//         RotaryValve(uint8_t valve_tx, uint8_t valve_rx, uint16_t baud_rate = 9600);
-//         void Connect();
-//         void SetUp();
-//         uint32_t GetResponse();
-//         void SendCommand();
+class RotaryValve : public SoftwareSerial {
+    private:
+        uint8_t _rx;
+        uint8_t _tx;
+        uint16_t _baud_rate;
+        uint8_t _address = 0;
+        uint32_t _password = SETTING_PASSWORD;
+        uint8_t _home_port;
+        uint8_t _current_port;
+        RotValveCmd_t _last_command;
+        RotValveResp_t _last_response;
+        // helper
+        uint16_t CheckSum(byte msg[], uint8_t msg_length);
+    public:
+        RotaryValve(uint8_t valve_tx, uint8_t valve_rx, uint16_t baud_rate = 9600);
+        void begin_auto();
+        int ReceiveResponse();
+        bool SendCommand(uint8_t func_code, uint32_t params = 0, uint8_t cmd_len = CMD_LEN_COMMON);
+        RotValveResp_t GetResponse();
+        String PrintResponse();
+
+};
 
 
-
-        
-
-// };
-
-// helper
-static uint16_t CheckSum(uint8_t cmd_type, uint8_t func_code, uint32_t params);
 
 #endif
