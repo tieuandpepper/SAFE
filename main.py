@@ -42,27 +42,30 @@ def main():
   
   command_list = [
                   "mixpump,clock.",
-                  "mixpump,dispense,25000.",
-                  "mixer, run, 20000.",
-                  "mixpump,counterclock.",
-                  "mixpump,dispense,25000",
+                  "rotvalve, port, 12.",
+                  "mixpump,dispense,3000.",
+                  "rotvalve, port, 14.",
+                  "mixpump,dispense,3000.",
+                  # "mixer, run, 20000.",
+                  # "mixpump,counterclock.",
+                  # "mixpump,dispense,25000",
                   # "condmeter, getmeas.",
                   # "pump2, dispense, 15000.",
                   # "lighter, ignite, 2000.",
                   # "fire, read, 10.",
                   ]
-  for i in range(10):
-    for cmd in command_list:
-      component = cmd[:cmd.find(",")].upper()
-      # print(component)
-      if component == "CONDMETER":
-        # conductivity = cond_meter.getConductivity()
-        conductivity = 1434
-        print("Conductivity reading: {} uS/cm".format(conductivity))
-        continue
-      SendCommand(arduino, cmd)
-      PrintCommand(arduino)
-      PrintResponse(arduino)
+
+  for cmd in command_list:
+    component = cmd[:cmd.find(",")].upper()
+    # print(component)
+    if component == "CONDMETER":
+      # conductivity = cond_meter.getConductivity()
+      conductivity = 1434
+      print("Conductivity reading: {} uS/cm".format(conductivity))
+      continue
+    SendCommand(arduino, cmd)
+    PrintCommand(arduino)
+    PrintResponse(arduino)
 
 
 

@@ -14,6 +14,7 @@
 #include "src/mixer.h"
 #include <DFRobot_MAX31855.h>
 #include "arduino_pinout.h"
+#include "src/rotary_valve.h"
 /*----------------------------------------------------------------------------------------------------------*/
 
 
@@ -26,7 +27,7 @@ MasterflexDB25Interface_t mixing_pump_interface {
 };
 
 PumpMasterflex mixing_pump = PumpMasterflex(mixing_pump_interface);
-
+RotaryValve rotary_valve(10, 9, 9600);
 mixer_t mixer;
 DFRobot_MAX31855 max31855;
 
@@ -47,7 +48,7 @@ void setup() {
   mixing_pump.SetMaxSpeed(37700);
   mixing_pump.SetSpeed(25000);
   // mixing_pump.PipeSetVol(1600);
-  mixing_pump.PipeSetVol(1700);
+  mixing_pump.PipeSetVol(2000);
   // temp sensor
   max31855.begin();
   // pinMode(13, OUTPUT);
@@ -55,6 +56,7 @@ void setup() {
   // digitalWrite(12,HIGH);
   // delay(60000);
   // digitalWrite(12,LOW);
+  rotary_valve.begin_auto();
   Serial.println("READY");
 }
 
@@ -94,6 +96,21 @@ void loop() {
     else if (command.target.equals(MIXINGPUMP))
     {
       res = PumpController(&mixing_pump, &command);
+    }
+    else if (command.target.equals("ROTVALVE"))
+    {
+      if (command.command_id.equals("PORT"))
+      {
+        res = rotary_valve.ChangePort(command.operand);
+      }
+      else if (command.command_id.equals("GETVER"))
+      {
+        rotary_valve.SendCommand(QUERY_FUNC_CURRENT_VERSION);
+        res = rotary_valve.ReceiveResponse();
+      }
+      else {
+        res = CMD_INVALID;
+      }
     }
     else {
       res = CMD_INVALID;
