@@ -22,7 +22,7 @@ int ret;
 void setup() {
     Serial.begin(9600);
     rotary_valve.begin(9600);
-    ret = rotary_valve.SendCommand(ACT_FUNC_ROTATE_AUTO,0x0001);
+    ret = rotary_valve.SendCommandTX(ACT_FUNC_ROTATE_AUTO,0x0001);
     // Serial.println("Initialization completed");
     // byte message[] = {0xCC, 0x00, 0x44, 0x07, 0x00 , 0xDD, 0xF4, 0x01};
 
@@ -38,13 +38,13 @@ void loop() {
     {   
         // Serial.print("ack");
         // a = rotary_valve.read();
-        ret = rotary_valve.ReceiveResponse();
+        ret = rotary_valve.GetResponseRX();
         if (ret == -1) {
             delay(50);
             continue;
         }
         Serial.println(ret);
-        response = rotary_valve.PrintResponse();
+        // response = rotary_valve.PrintResponse();
         delay(100);
         Serial.println(response);
         if (ret != -1) {return;}
