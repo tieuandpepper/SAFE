@@ -1,9 +1,9 @@
 /**
  * @file rotary_valve.cpp
- * @author your name (you@domain.com)
- * @brief 
- * @version 0.1
- * @date 2024-02-14
+ * @author Kevin Tieu
+ * @brief driver for Aurora ERV 16-port rotary valve for Arduino
+ * @version 0.2
+ * @date 2024-03-01
  * 
  * @copyright Copyright (c) 2024
  * 
@@ -32,12 +32,13 @@
  * @note: 8 bits, 1 stop bit, no parity, little endian
  * @attention: It seems like the valve using inverted protocol (idle at 0V)
  */
-RotaryValve::RotaryValve(uint8_t valve_rx, uint8_t valve_tx, uint16_t baud_rate)
+RotaryValve::RotaryValve(uint8_t valve_rx, uint8_t valve_tx, int port_count, uint16_t baud_rate)
             : SoftwareSerial(valve_rx, valve_tx, true)
 {
-    _baud_rate_code = GetBaudRateEncoding(baud_rate);
-    _rx = valve_rx;
-    _tx = valve_tx;
+    this->_baud_rate_code = GetBaudRateEncoding(baud_rate);
+    this->_rx = valve_rx;
+    this->_tx = valve_tx;
+    // this->_port_count = (uint8_t)port_count;
 }
 
 /**
@@ -56,11 +57,11 @@ void RotaryValve::initialize()
  */
 
 /**
- * @brief 
+ * @brief Send command by TX line - RS232/485
  * 
- * @param func_code 
- * @param params 
- * @param cmd_len 
+ * @param func_code function code for byte 2 (B2) 
+ * @param params parameters for commands
+ * @param cmd_len command length, in bytes. Either 8 or 14. Default is 8 bytes
  * @struct @common <HEADER><ADDR><FUNC><PARAMS[0]><PARAMS[1]><EOF><CSUM_LOW><CSUM_HIGH>
  * @struct @factory <HEADER><ADDR><FUNC><PASSWORD[0-3]><PARAMS[0-3]><EOF><CSUM_LOW><CSUM_HIGH>
  * @return success/error code 
@@ -206,7 +207,7 @@ uint8_t RotaryValve::GetResponseRX()
  * 00~FF in version below V1.9, the default is 00.
  * @return uint8_t success/error code
  */
-uint8_t RotaryValve::FactorySetAddr(uint8_t addr)
+uint8_t RotaryValve::FactorySetAddr(uint32_t addr)
 {
     uint8_t res = RESP_DRV_ERROR_SEND_FAILED;
     // the version is 0x0109 (V1.9) and above
@@ -242,7 +243,7 @@ uint8_t RotaryValve::FactorySetAddr(uint8_t addr)
  * @param baud_rate 9600, 19200, 38400, 57600, 115200 bps
  * @return uint8_t success/error code
  */
-uint8_t RotaryValve::FactorySetBaudRate(uint16_t baud_rate)
+uint8_t RotaryValve::FactorySetBaudRate(uint32_t baud_rate)
 {
     uint8_t baud_rate_code = GetBaudRateEncoding(baud_rate);
     uint8_t res = RESP_DRV_ERROR_SEND_FAILED;
@@ -351,7 +352,7 @@ uint8_t RotaryValve::FactoryReset()
  * Default: 0x00
  * @return uint8_t success/error code/ status
  */
-uint8_t RotaryValve::QueryAddress(uint8_t * addr)
+uint8_t RotaryValve::QueryAddress(uint32_t * addr)
 {
     uint8_t res = RESP_DRV_ERROR_SEND_FAILED;
     // Send command
@@ -386,7 +387,7 @@ uint8_t RotaryValve::QueryAddress(uint8_t * addr)
  *        0x0004: 115200 bps
  * @return uint8_t success/error code/status
  */
-uint8_t RotaryValve::QueryBaudRate(uint16_t * baud_rate)
+uint8_t RotaryValve::QueryBaudRate(uint32_t * baud_rate)
 {
     uint8_t res = RESP_DRV_ERROR_SEND_FAILED;
     // Send command
@@ -420,7 +421,7 @@ uint8_t RotaryValve::QueryBaudRate(uint16_t * baud_rate)
  * @param status status code
  * @return uint8_t error code/status
  */
-uint8_t RotaryValve::QueryMotorStatus(uint8_t * status)
+uint8_t RotaryValve::QueryMotorStatus(uint32_t * status)
 {
     uint8_t res = RESP_DRV_ERROR_SEND_FAILED;
     // Send command
@@ -452,7 +453,7 @@ uint8_t RotaryValve::QueryMotorStatus(uint8_t * status)
  * @param version pointer value
  * @return uint8_t error code/status
  */
-uint8_t RotaryValve::QueryCurrVersion(uint16_t * version)
+uint8_t RotaryValve::QueryCurrVersion(uint32_t * version)
 {
     uint8_t res = RESP_DRV_ERROR_SEND_FAILED;
     // Send command
@@ -482,7 +483,7 @@ uint8_t RotaryValve::QueryCurrVersion(uint16_t * version)
  * @param power_on_reset pointer value
  * @return uint8_t error code/status
  */
-uint8_t RotaryValve::QueryAutoReset(uint8_t * power_on_reset)
+uint8_t RotaryValve::QueryAutoReset(uint32_t * power_on_reset)
 {
     uint8_t res = RESP_DRV_ERROR_SEND_FAILED;
     // Send command
@@ -581,6 +582,7 @@ uint8_t RotaryValve::ActionResetOrigin()
 uint8_t RotaryValve::ActionMoveAuto(uint8_t port)
 {
     uint8_t res = RESP_DRV_ERROR_SEND_FAILED;
+    // validate port number
     if (port < this->_port_first || port > this->_port_count)
     {
         return RESP_DRV_ERROR_PARAMS;
@@ -623,20 +625,24 @@ uint8_t RotaryValve::ActionMoveAuto(uint8_t port)
 uint8_t RotaryValve::ActionMoveWithDir(uint8_t port, uint8_t direction)
 {
     uint8_t res = RESP_DRV_ERROR_SEND_FAILED;
-    uint8_t adjacent_port = (port + 1 - direction);
-    // find adjacent port from direction
-    if (adjacent_port > this->_port_count)
+    uint8_t adjacent_port;
+    // find adjacent_port
+    if (direction == DIRECTION_CLOCKWISE)
     {
-        adjacent_port = this->_port_first;
+        adjacent_port = port + 1;
+        // adjacent_port is higher than the highest port number
+        if (adjacent_port > this->_port_count)
+        {
+            adjacent_port = this->_port_first;
+        }
     }
-    else if (adjacent_port < this->_port_first)
-    {
-        adjacent_port = this->_port_count;
-    }
-    // parameter processing
-    if (port < this->_port_first || port > this->_port_count)
-    {
-        return RESP_DRV_ERROR_PARAMS;
+    else {
+        adjacent_port = port - 1;
+        // adjacent port is lower than the first port (1)
+        if (adjacent_port < this->_port_first)
+        {
+            adjacent_port = this->_port_count;
+        }
     }
     
     // Send command
@@ -773,10 +779,12 @@ uint16_t RotaryValve::CheckSum(uint8_t msg[], uint8_t msg_length)
  * 
  * @param baud_rate 9600, 19200, 38400, 57600, 115200
  * @return uint8_t (0-4)
+ * @error return 5
  */
 static uint8_t GetBaudRateEncoding(uint16_t baud_rate)
 {
     uint8_t i = 0;
+    // find baud rate from encoding array
     while (i++ < baud_rate_encode_arr_len)
     {
         if (baud_rate_encode_arr[i] == baud_rate)

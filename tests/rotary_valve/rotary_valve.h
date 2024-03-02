@@ -144,7 +144,7 @@ class RotaryValve : public SoftwareSerial {
         uint16_t _version = 0;
         uint8_t _address = 0;
         uint32_t _password = SETTING_PASSWORD;
-        uint8_t _port_count;
+        uint8_t _port_count = 16;
         uint8_t _port_first = 1;
         uint8_t _home_port = 1;
         uint8_t _current_port;
@@ -154,23 +154,23 @@ class RotaryValve : public SoftwareSerial {
         uint16_t CheckSum(uint8_t msg[], uint8_t msg_length = CMD_LEN_COMMON);
     public:
         // constructor and initialization
-        RotaryValve(uint8_t valve_tx, uint8_t valve_rx, uint16_t baud_rate = 9600);
+        RotaryValve(uint8_t valve_tx, uint8_t valve_rx, int port_count, uint16_t baud_rate = 9600);
         void initialize();
         // low-level interface with hardware
         uint8_t SendCommandTX(uint8_t func_code, uint32_t params = 0, uint8_t cmd_len = CMD_LEN_COMMON);
         uint8_t GetResponseRX();
         // high-level interface
         // factory setting command
-        uint8_t FactorySetAddr(uint8_t addr);
-        uint8_t FactorySetBaudRate(uint16_t baud_rate);
+        uint8_t FactorySetAddr(uint32_t addr);
+        uint8_t FactorySetBaudRate(uint32_t baud_rate);
         uint8_t FactorySetAutoReset(uint8_t power_on_reset);
         uint8_t FactoryReset();
         // Query command (Get commands)
-        uint8_t QueryAddress(uint8_t * addr);
-        uint8_t QueryBaudRate(uint16_t * baud_rate);
-        uint8_t QueryMotorStatus(uint8_t * status);
-        uint8_t QueryCurrVersion(uint16_t * version);
-        uint8_t QueryAutoReset(uint8_t * power_on_reset);
+        uint8_t QueryAddress(uint32_t * addr);
+        uint8_t QueryBaudRate(uint32_t * baud_rate);
+        uint8_t QueryMotorStatus(uint32_t * status);
+        uint8_t QueryCurrVersion(uint32_t * version);
+        uint8_t QueryAutoReset(uint32_t * power_on_reset);
         // Action command
         uint8_t ActionReset();
         uint8_t ActionResetOrigin();
