@@ -27,7 +27,7 @@ MasterflexDB25Interface_t mixing_pump_interface {
 };
 
 PumpMasterflex mixing_pump = PumpMasterflex(mixing_pump_interface);
-RotaryValve rotary_valve(10, 9, 9600);
+RotaryValve rotary_valve(9,10, 16, 9600);
 mixer_t mixer;
 DFRobot_MAX31855 max31855;
 
@@ -51,12 +51,12 @@ void setup() {
   mixing_pump.PipeSetVol(2000);
   // temp sensor
   max31855.begin();
-  // pinMode(13, OUTPUT);
-  // pinMode(12,OUTPUT);
-  // digitalWrite(12,HIGH);
-  // delay(60000);
-  // digitalWrite(12,LOW);
-  rotary_valve.begin_auto();
+  pinMode(7, OUTPUT);
+  pinMode(6,OUTPUT);
+  digitalWrite(6,HIGH);
+  delay(200);
+  digitalWrite(6,LOW);
+  rotary_valve.initialize();
   Serial.println("READY");
 }
 
@@ -84,9 +84,9 @@ void loop() {
     }
     else if (command.target.equals("LIGHTER"))
     {
-      digitalWrite(13, HIGH);
+      digitalWrite(7, HIGH);
       delay(command.operand);
-      digitalWrite(13, LOW);
+      digitalWrite(7, LOW);
       res = CMD_RECEIVED;
     }
     else if (command.target.equals(MIXER))
@@ -101,12 +101,16 @@ void loop() {
     {
       if (command.command_id.equals("PORT"))
       {
-        res = rotary_valve.ChangePort(command.operand);
+        res = rotary_valve.ActionMoveAuto((uint8_t)command.operand);
       }
       else if (command.command_id.equals("GETVER"))
       {
-        rotary_valve.SendCommand(QUERY_FUNC_CURRENT_VERSION);
-        res = rotary_valve.ReceiveResponse();
+        uint32_t version;
+        res = rotary_valve.QueryCurrVersion(&version);
+        if (res == RESP_DRV_SUCCESS)
+        {
+          res = version;
+        }
       }
       else {
         res = CMD_INVALID;
