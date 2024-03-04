@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
-df = pd.read_fwf('data_procesor/temp_data.txt')
+df = pd.read_fwf('temp_data_3-4.txt')
 df.drop(df.index[0:200], inplace=True)
 # print(df)
 df["time"] = range(0,len(df["temperature"]))
@@ -23,14 +23,14 @@ fire_ignited = False
 for i in df.index:
     if df['np_gradient'][i] > 2:
         fire_ignited = True
-    if fire_ignited and df['np_gradient'][i] < -2:
+    if fire_ignited and df['np_gradient'][i] < 0:
         fire_ignited = False
     if fire_ignited:
         df['fire'][i] = 1
 
 
 print(df)
-df.to_csv("output.csv")
+df.to_csv("output 3-4.csv")
 # fix, ax = plt.subplots(1, 2)
 # ax[0].scatter(df["time"],df["temperature"],s = 0.5)
 # ax[0].set_title('Time vs. Temperature')

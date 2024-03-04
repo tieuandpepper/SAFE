@@ -1,7 +1,7 @@
 keyword = "Temp Sensor: "
 unit = " deg C"
 temp_reading = []
-with open('log_temp.txt') as file:
+with open('log_temp_3-4.txt') as file:
     while 1:
         # print(file.readline())
         line = file.readline()
@@ -14,7 +14,7 @@ with open('log_temp.txt') as file:
         temp_reading.append(temp)
     
 
-with open("temp_data.txt",'w') as file:
+with open("temp_data_3-4.txt",'w') as file:
     file.write("temperature\n")
     for item in temp_reading:
         file.write(str(item) + "\n")
