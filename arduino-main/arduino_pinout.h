@@ -39,12 +39,12 @@
  *                        -|-GND           | 
  *                        -|-VIN       D07-|- lighter enable pin
  *                         |           D06-|- lighter initialization pin
- *                        -|-A0        D05-|- DB25_P01
- *                        -|-A1        D04-|- DB25_P15
- *                        -|-A2        D03-|- DB25_P16
- *               DB25_P14 -|-A3        D02-|- DB25_P20
- *                        -|-A4         TX-|-
- *                        -|-A5         RX-|-
+ *                        -|-A0        D05-|- mixing_pump DB25_P01
+ *                        -|-A1        D04-|- mixing_pump DB25_P15
+ *                        -|-A2        D03-|- mixing_pump DB25_P16
+ *   mixing_pump DB25_P14 -|-A3        D02-|- mixing_pump DB25_P20
+ *      transfer_pump SDA -|-A4         TX-|-
+ *      transfer_pump SCL -|-A5         RX-|-
  *                         |_______________|
  * 
  * 
@@ -101,6 +101,11 @@
  *      ROTARY VALVE     |           RS232 GND         |     GND     |
  *      ROTARY VALVE     |           DC 24V +          |             |       24V
  *      ROTARY VALVE     |           DC 24V -          |             |       GND
+ *      TRANSFER PUMP    |             VCC             |     5V      |
+ *      TRANSFER PUMP    |             GND             |     GND     |
+ *      TRANSFER PUMP    |             SDA             |     A4      |
+ *      TRANSFER PUMP    |             SCL             |     A5      |
+ *      
  * 
  *      
  *
@@ -115,4 +120,16 @@
 #define PIN_MIXING_PUMP_SPEED_FEEDBACK      A3 // analog pin
 
 // Mixer pin
-#define PIN_MIXER_ENABLE                    6
+#define PIN_MIXER_ENABLE                    8
+
+// Lighter pins
+#define PIN_LIGHTER_INIT                    6
+#define PIN_LIGHTER_ENABLE                  7
+
+// rotary valve
+#define PIN_ROTARY_VALVE_TX                 10
+#define PIN_ROTARY_VALVE_RX                 9
+
+// I2C Address
+#define I2C_ADDR_TEMP_SENSOR                0x10
+#define I2C_ADDR_TRANSFER_PUMP              0x67
