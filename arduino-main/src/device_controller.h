@@ -1,15 +1,12 @@
-#ifndef Controller_h
-#define Controller_h
+#ifndef DEVICE_CONTROLLER_H
+#define DEVICE_CONTROLLER_H
 
 #include "Arduino.h"
-#include "src/PumpMasterflex.h"
-#include "src/mixer.h"
+#include "serial_comm.h"
+#include "device/mixer.h"
+#include "device/pump_masterflex.h"
+#include "device/rotary_valve.h"
 
-#define BUFFER_SIZE         64
-#define CMD_RECEIVED 1
-#define CMD_NOTHING 0
-#define CMD_INVALID -99
-#define PUMP_COUNT  2
 // define target
 #define MIXINGPUMP          "MIXPUMP"
 #define MIXER               "MIXER"
@@ -32,29 +29,9 @@
 #define MIXER_STOP          "STOP"
 #define MIXER_RUN           "RUN"
 
-// define reponse ID
-#define RESP_INVALID        "INVALID"
-#define RESP_VALID           "VALID"
-
-
-// Command structure: <TARGET>,<COMMAND>,<OPERAND>.
-typedef struct cmd_type {
-  String target;
-  String command_id;
-  long operand = 0;
-} cmd_t;
-
-// Response structure: RESP,<RESP_ID>,<SOURCE>,<DATA>.
-typedef struct resp_type {
-  String resp_id;
-  String source;
-  int32_t data = 0;
-} resp_t;
 
 int32_t PumpController(PumpMasterflex* pump, cmd_t* command);
 int32_t MixerController(mixer_t * mixer, cmd_t * command);
-uint8_t GetCommand(cmd_t* command);
-uint8_t SendResponse(resp_t response);
 
 
 #endif

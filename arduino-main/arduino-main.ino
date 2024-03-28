@@ -10,7 +10,7 @@
  */
 
 #include "src/PumpMasterflex.h"
-#include "Controller.h"
+#include "src/device_controller.h"
 #include "src/mixer.h"
 #include <DFRobot_MAX31855.h>
 #include "arduino_pinout.h"
