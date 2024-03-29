@@ -11,6 +11,9 @@
 #ifndef TEMP_SENSOR_H
 #define TEMP_SENSOR_H
 
+#include <DFRobot_MAX31855.h>
+
+
 
 
 #endif
