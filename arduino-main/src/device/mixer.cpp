@@ -1,34 +1,44 @@
+/**
+ * @file mixer.cpp
+ * @author your name (you@domain.com)
+ * @brief 
+ * @version 0.1
+ * @date 2024-03-28
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "mixer.h"
 
-
-bool MixerStart(mixer_t* mixer)
+/**
+ * @brief 
+ * 
+ */
+void Mixer::Start()
 {
-  digitalWrite(mixer->pin, HIGH);
-  delay(DELAY_MS);
-  if (digitalRead(mixer->pin) != HIGH)
-  {
-    return false;
-  }
-  mixer->running = true;
-  return true;
+  digitalWrite(_pin, HIGH);
+  _state = STATE_RUNNING;
 }
 
-bool MixerStop(mixer_t* mixer)
+/**
+ * @brief 
+ * 
+ */
+void Mixer::Stop()
 {
-  digitalWrite(mixer->pin, LOW);
-  delay(DELAY_MS);
-  if (digitalRead(mixer->pin) != LOW)
-  {
-    return false;
-  }
-  mixer->running = false;
-  return true;
+  digitalWrite(_pin, LOW);
+  _state = STATE_IDLE;
 }
 
-bool MixerRun(mixer_t * mixer, int32_t time_ms)
+/**
+ * @brief 
+ * 
+ * @param time_ms 
+ */
+void Mixer::Run(int32_t time_ms)
 {
-  bool res = MixerStart(mixer);
+  this->Start();
+  _state = STATE_RUNNING;
   delay(time_ms);
-  res &= MixerStop(mixer);
-  return res;
+  this->Stop();
 }
