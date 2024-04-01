@@ -6,32 +6,47 @@
 #include "device/mixer.h"
 #include "device/pump_masterflex.h"
 #include "device/rotary_valve.h"
+#include "device/temp_sensor.h"
+#include "device/ezo_pump.h"
 
 // define target
-#define MIXINGPUMP          "MIXPUMP"
+#define MIXPUMP             "MIXPUMP"
 #define MIXER               "MIXER"
+#define ROTARYVALVE         "ROTVALVE"
+#define TEMPSENSOR          "TEMPSENS"
+#define LIGHTER             "LIGHTER"
+#define TRANSFERPUMP        "XFERPUMP"
 
 // define command ID
-#define PUMP_START          "START"
-#define PUMP_STOP           "STOP"
-#define PUMP_CW             "CLOCK"
-#define PUMP_CCW            "COUNTERCLOCK"
-#define PUMP_DISPENSE       "DISPENSE"
-#define PUMP_GETSPEED       "GET"
-#define PUMP_SETSPEED       "SET"
-#define PUMP_GETSPEEDSETTING "GETSETTING"
-#define PUMP_SETMAXSPEED    "SETMAX"
-#define PUMP_SETMINSPEED    "SETMIN"
-#define PUMP_GETMAXSPEED    "GETMAX"
-#define PUMP_GETMINSPEED    "GETMIN"
-#define PUMP_PIPESETVOL     "PIPESET"
+#define MIXPUMP_START          "START"
+#define MIXPUMP_STOP           "STOP"
+#define MIXPUMP_CW             "CLOCK"
+#define MIXPUMP_CCW            "COUNTERCLOCK"
+#define MIXPUMP_DISPENSE       "DISPENSE"
+#define MIXPUMP_GETSPEED       "GET"
+#define MIXPUMP_SETSPEED       "SET"
+#define MIXPUMP_GETSPEEDSETTING "GETSETTING"
+#define MIXPUMP_SETMAXSPEED    "SETMAX"
+#define MIXPUMP_SETMINSPEED    "SETMIN"
+#define MIXPUMP_GETMAXSPEED    "GETMAX"
+#define MIXPUMP_GETMINSPEED    "GETMIN"
+#define MIXPUMP_PIPESETVOL     "PIPESET"
+
 #define MIXER_START         "START"
 #define MIXER_STOP          "STOP"
 #define MIXER_RUN           "RUN"
 
+#define TEMPSENSOR_READ_DURATION_MS   "READMS"
+#define TEMPSENSOR_READ_ONCE          "READ"
 
-int32_t PumpController(PumpMasterflex* pump, cmd_t* command);
-int32_t MixerController(mixer_t * mixer, cmd_t * command);
+#define ROTARYVALVE_GET_VERSION         "GETVER"
+#define ROTARYVALVE_CHANGE_PORT         "PORT"
+#define ROTARYVALVE_GET_VERSION         "GETVER"
 
+uint8_t MixPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond);
+uint8_t MixerController(Mixer * mixer, cmd_t * command, resp_t* respond);
+uint8_t TempSensorController(TempSensorMAX31855 * sensor, cmd_t * command, resp_t* respond);
+uint8_t RotaryValveController(RotaryValve * valve, cmd_t * command, resp_t* respond);
+uint8_t TransferPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond);
 
 #endif

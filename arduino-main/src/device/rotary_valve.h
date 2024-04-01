@@ -155,7 +155,7 @@ class RotaryValve : public SoftwareSerial {
     public:
         // constructor and initialization
         RotaryValve(uint8_t valve_tx, uint8_t valve_rx, int port_count, uint16_t baud_rate = 9600);
-        void initialize();
+        void Initialize();
         // low-level interface with hardware
         uint8_t SendCommandTX(uint8_t func_code, uint32_t params = 0, uint8_t cmd_len = CMD_LEN_COMMON);
         uint8_t GetResponseRX();

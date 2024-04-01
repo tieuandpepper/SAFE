@@ -9,12 +9,8 @@
  * 
  */
 
-#include "src/PumpMasterflex.h"
 #include "src/device_controller.h"
-#include "src/mixer.h"
-#include <DFRobot_MAX31855.h>
 #include "arduino_pinout.h"
-#include "src/rotary_valve.h"
 /*----------------------------------------------------------------------------------------------------------*/
 
 
@@ -56,7 +52,7 @@ void setup() {
   digitalWrite(6,HIGH);
   delay(200);
   digitalWrite(6,LOW);
-  rotary_valve.initialize();
+  rotary_valve.Initialize();
   Serial.println("READY");
 }
 

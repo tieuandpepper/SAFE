@@ -1,11 +1,7 @@
 /**
  * 
 */
-
-#include "Arduino.h"
-#include "PumpMasterflex.h"
-
-#define DELAY_MS (5)
+#include "pump_masterflex.h"
 
 /// @brief PumpMasterflex constructor. Must be initialized first.
 /// @param bd25 contains a struct of input/output pins on Arduino
@@ -38,11 +34,6 @@ bool PumpMasterflex::Connect()
 bool PumpMasterflex::Start()
 {
     digitalWrite(_pins.start_stop_pin, PUMP_START);
-    delay(DELAY_MS);
-    if (digitalRead(_pins.start_stop_pin) != PUMP_START)
-    {
-        return false;
-    }
     _state_op = PUMP_START;
     return true;
 }
@@ -51,11 +42,6 @@ bool PumpMasterflex::Start()
 bool PumpMasterflex::Stop()
 {
     digitalWrite(_pins.start_stop_pin, PUMP_STOP);
-    delay(DELAY_MS);
-    if (digitalRead(_pins.start_stop_pin) != PUMP_STOP)
-    {
-        return false;
-    }
     _state_op = PUMP_STOP;
     return true;
 }
@@ -74,11 +60,6 @@ uint8_t PumpMasterflex::GetOpState()
 bool PumpMasterflex::SetDirection(int32_t direction)
 {
     digitalWrite(_pins.direction_pin, direction);
-    delay(DELAY_MS);
-    if (digitalRead(_pins.direction_pin) != direction)
-    {
-        return false;
-    }
     _state_dir = direction;
     return true;
 }
@@ -88,12 +69,6 @@ bool PumpMasterflex::ChangeDirection()
 {
     _state_dir = _state_dir ^ HIGH;
     digitalWrite(_pins.direction_pin, _state_dir);
-    delay(DELAY_MS);
-    if (digitalRead(_pins.direction_pin) != _state_dir)
-    {
-        _state_dir = _state_dir ^ HIGH;
-        return false;
-    }
     return true;
 }
 
@@ -110,11 +85,6 @@ uint8_t PumpMasterflex::GetDirection()
 bool PumpMasterflex::PrimeStart()
 {
     digitalWrite(_pins.prime_pin, PRIME_ON);
-    delay(DELAY_MS);
-    if (digitalRead(_pins.direction_pin) != PRIME_ON)
-    {
-        return false;
-    }
     _state_prime = PRIME_ON;
     return true;
 }
@@ -123,11 +93,6 @@ bool PumpMasterflex::PrimeStart()
 bool PumpMasterflex::PrimeStop()
 {
     digitalWrite(_pins.prime_pin, PRIME_OFF);
-    delay(DELAY_MS);
-    if (digitalRead(_pins.direction_pin) != PRIME_OFF)
-    {
-        return false;
-    }
     _state_prime = PRIME_OFF;
     return true;
 }

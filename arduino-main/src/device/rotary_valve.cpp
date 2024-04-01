@@ -45,7 +45,7 @@ RotaryValve::RotaryValve(uint8_t valve_rx, uint8_t valve_tx, int port_count, uin
  * @brief connect to valve, can perform some intializing processes
  * @details: get current version, 
  */
-void RotaryValve::initialize()
+void RotaryValve::Initialize()
 {
     this->begin(baud_rate_encode_arr[this->_baud_rate_code]);
 }

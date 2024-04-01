@@ -13,8 +13,8 @@
 
 #define BUFFER_SIZE         64
 #define CMD_RECEIVED 1
-#define CMD_NOTHING 0
-#define CMD_INVALID -99
+#define CMD_NOTHING 3
+#define CMD_INVALID 7
 
 // define reponse ID
 #define RESP_INVALID        "INVALID"

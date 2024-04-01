@@ -1,81 +1,139 @@
 #include "device_controller.h"
 
-/// @brief 
-/// @param command 
-/// @return 
-int32_t PumpController(PumpMasterflex* pump, cmd_t* command)
-{
-  uint8_t pump_idx = 0;
-  
-  if (command->command_id.equals(PUMP_START))
+/**
+ * @brief 
+ * 
+ * @param pump 
+ * @param command 
+ * @return uint8_t 
+ */
+uint8_t MixPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond)
+{  
+  uint8_t ret_val = CMD_RECEIVED;
+  respond->source = MIXPUMP;
+  if (command->command_id.equals(MIXPUMP_START))
   {
-    return pump->Start();
+    pump->Start();
   }
-  if (command->command_id.equals(PUMP_STOP))
+  else if (command->command_id.equals(MIXPUMP_STOP))
   {
-    return pump->Stop();
+    pump->Stop();
   }
-  if (command->command_id.equals(PUMP_CW))
+  else if (command->command_id.equals(MIXPUMP_CW))
   {
-    return pump->SetDirection(DIR_CW);
+    pump->SetDirection(DIR_CW);
   }
-  if (command->command_id.equals(PUMP_CCW))
+  else if (command->command_id.equals(MIXPUMP_CCW))
   {
-    return pump->SetDirection(DIR_CCW);
+    pump->SetDirection(DIR_CCW);
   }
-  if (command->command_id.equals(PUMP_GETSPEED))
+  else if (command->command_id.equals(MIXPUMP_GETSPEED))
   {
-    return pump->GetSpeed();
+    pump->GetSpeed();
   }
-  if (command->command_id.equals(PUMP_SETSPEED))
+  else if (command->command_id.equals(MIXPUMP_SETSPEED))
   {
-    return pump->SetSpeed(command->operand);
+    pump->SetSpeed(command->operand);
   }
-  if (command->command_id.equals(PUMP_DISPENSE))
+  else if (command->command_id.equals(MIXPUMP_DISPENSE))
   {
-    return pump->Dispense(command->operand);
+    pump->Dispense(command->operand);
   }
-  if (command->command_id.equals(PUMP_GETSPEEDSETTING))
+  else if (command->command_id.equals(MIXPUMP_GETSPEEDSETTING))
   {
-    return pump->GetSpeedSetting();
+    pump->GetSpeedSetting();
   }
-  if (command->command_id.equals(PUMP_SETMAXSPEED))
+  else if (command->command_id.equals(MIXPUMP_SETMAXSPEED))
   {
-    return pump->SetMaxSpeed(command->operand);
+    pump->SetMaxSpeed(command->operand);
   }
-  if (command->command_id.equals(PUMP_SETMINSPEED))
+  else if (command->command_id.equals(MIXPUMP_SETMINSPEED))
   {
-    return pump->SetMinSpeed(command->operand);
+    pump->SetMinSpeed(command->operand);
   }
-  if (command->command_id.equals(PUMP_GETMAXSPEED))
+  else if (command->command_id.equals(MIXPUMP_GETMAXSPEED))
   {
-    return pump->GetMaxSpeed();
+    pump->GetMaxSpeed();
   }
-  if (command->command_id.equals(PUMP_GETMINSPEED))
+  else if (command->command_id.equals(MIXPUMP_GETMINSPEED))
   {
-    return pump->GetMinSpeed();
+    pump->GetMinSpeed();
   }
-    // Serial.println("No matching command");
-    return CMD_INVALID;
+  else if (command->command_id.equals(MIXPUMP_PIPESETVOL))
+  {
+    pump->PipeSetVol(command->operand);
+  }
+  else {
+    ret_val = CMD_INVALID;
+  }
+  // Serial.println("No matching command");
+  return ret_val;
 }
 
-/// @brief 
-/// @param mixer 
-/// @param command 
-/// @return 
-int32_t MixerController(mixer_t * mixer, cmd_t * command)
+/**
+ * @brief 
+ * 
+ * @param mixer 
+ * @param command 
+ * @return uint8_t 
+ */
+uint8_t MixerController(Mixer * mixer, cmd_t * command, resp_t* respond)
 {
   if (command->command_id.equals(MIXER_START))
   {
-    return MixerStart(mixer);
+    mixer->Start();
+    return CMD_RECEIVED;
   }
   if (command->command_id.equals(MIXER_STOP))
   {
-    return MixerStop(mixer);
+    mixer->Stop();
+    return CMD_RECEIVED;
   }
   if (command->command_id.equals(MIXER_RUN))
   {
-    return MixerRun(mixer, command->operand);
+    mixer->Run(command->operand);
+    return CMD_RECEIVED;
   }
   return CMD_INVALID;
+}
+
+/**
+ * @brief 
+ * 
+ * @param sensor 
+ * @param command 
+ * @return uint8_t 
+ */
+uint8_t TempSensorController(TempSensorMAX31855 * sensor, cmd_t * command, resp_t* respond)
+{
+  if (command->command_id.equals(TEMPSENSOR_READ_ONCE))
+  {
+
+  }
+  
+  return CMD_INVALID;
+}
+
+/**
+ * @brief 
+ * 
+ * @param valve 
+ * @param command 
+ * @return uint8_t 
+ */
+uint8_t RotaryValveController(RotaryValve * valve, cmd_t * command, resp_t* respond)
+{
+  return 0;
+}
+
+/**
+ * @brief 
+ * 
+ * @param pump 
+ * @param command 
+ * @return uint8_t 
+ */
+uint8_t TransferPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond)
+{
+  return 0;
 }
