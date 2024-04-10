@@ -24,7 +24,7 @@ MasterflexDB25Interface_t mixing_pump_interface {
 
 PumpMasterflex mixing_pump = PumpMasterflex(mixing_pump_interface);
 RotaryValve rotary_valve(9,10, 16, 9600);
-mixer_t mixer;
+Mixer mixer;
 DFRobot_MAX31855 max31855;
 
 /// @brief Setup/ Initialization. Run first and run ONCE
@@ -57,8 +57,8 @@ void setup() {
 }
 
 int32_t res;
-cmd_t command;
-resp_t response;
+command_t command;
+respond_t response;
 bool readTemp = false;
 long time_sec = 0;
 /// @brief Run after setup(). Will run in loop repeatedly
@@ -68,7 +68,7 @@ void loop() {
   {
     if (command.target.equals("FIRE"))
     {
-      if (command.command_id.equals("READ"))
+      if (command.id.equals("READ"))
       {
         readTemp = true;
         time_sec = command.operand;
@@ -95,11 +95,11 @@ void loop() {
     }
     else if (command.target.equals("ROTVALVE"))
     {
-      if (command.command_id.equals("PORT"))
+      if (command.id.equals("PORT"))
       {
         res = rotary_valve.ActionMoveAuto((uint8_t)command.operand);
       }
-      else if (command.command_id.equals("GETVER"))
+      else if (command.id.equals("GETVER"))
       {
         uint32_t version;
         res = rotary_valve.QueryCurrVersion(&version);
@@ -119,14 +119,14 @@ void loop() {
     // Serial.println("READY");
     if (res == CMD_INVALID)
     {
-      response.resp_id = RESP_INVALID;
+      response.feedback = RESP_FB_INVALID;
       // Serial.println("Invalid command");
     }
     else 
     {
       // Serial.print("Command return ");
       // Serial.println(res);
-      response.resp_id = RESP_VALID;
+      response.feedback = RESP_FB_VALID;
       response.data = res;
     }
     SendResponse(response);

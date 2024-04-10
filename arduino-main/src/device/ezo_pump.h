@@ -11,5 +11,11 @@
 #ifndef EZO_PUMP_H
 #define EZO_PUMP_H
 
+class EZOPump {
+    private:
+
+    public:
+
+};
 
 #endif

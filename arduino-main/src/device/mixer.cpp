@@ -13,6 +13,19 @@
 /**
  * @brief 
  * 
+ * @param pin 
+ */
+void Mixer::Connect(uint8_t pin)
+{
+  _pin = pin;
+  pinMode(_pin,OUTPUT);
+  digitalWrite(_pin, LOW);
+  _state = STATE_IDLE;
+}
+
+/**
+ * @brief 
+ * 
  */
 void Mixer::Start()
 {
@@ -38,7 +51,6 @@ void Mixer::Stop()
 void Mixer::Run(int32_t time_ms)
 {
   this->Start();
-  _state = STATE_RUNNING;
   delay(time_ms);
   this->Stop();
 }

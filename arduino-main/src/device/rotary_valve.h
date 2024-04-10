@@ -123,7 +123,7 @@ typedef struct RotaryValveCmd {
     uint8_t address;
     uint8_t params[4] = {0};
     uint16_t check_sum;
-} RotValveCmd_t;
+} RotValvecommand_t;
 
 typedef struct RotaryValveResp {
     uint8_t resp_len = RESP_LEN;
@@ -134,7 +134,7 @@ typedef struct RotaryValveResp {
     uint8_t start_byte;
     uint8_t stop_byte;
     
-} RotValveResp_t;
+} RotValverespond_t;
 
 class RotaryValve : public SoftwareSerial {
     private:
@@ -148,8 +148,8 @@ class RotaryValve : public SoftwareSerial {
         uint8_t _port_first = 1;
         uint8_t _home_port = 1;
         uint8_t _current_port;
-        RotValveCmd_t _last_command;
-        RotValveResp_t _last_response;
+        RotValvecommand_t _last_command;
+        RotValverespond_t _last_response;
         // helper
         uint16_t CheckSum(uint8_t msg[], uint8_t msg_length = CMD_LEN_COMMON);
     public:

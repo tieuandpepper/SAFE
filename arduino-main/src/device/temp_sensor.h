@@ -39,7 +39,7 @@ class TempSensorMAX31855{
         uint8_t ReadSensorToBuffer(float * data);
         uint8_t InitializeReadContinuous(unsigned long duration_ms);
         uint8_t CheckEndTime();
-}
+};
 
 
 #endif

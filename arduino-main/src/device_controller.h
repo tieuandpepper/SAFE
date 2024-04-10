@@ -1,7 +1,7 @@
 #ifndef DEVICE_CONTROLLER_H
 #define DEVICE_CONTROLLER_H
 
-#include "Arduino.h"
+#include <Arduino.h>
 #include "serial_comm.h"
 #include "device/mixer.h"
 #include "device/pump_masterflex.h"
@@ -43,10 +43,10 @@
 #define ROTARYVALVE_CHANGE_PORT         "PORT"
 #define ROTARYVALVE_GET_VERSION         "GETVER"
 
-uint8_t MixPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond);
-uint8_t MixerController(Mixer * mixer, cmd_t * command, resp_t* respond);
-uint8_t TempSensorController(TempSensorMAX31855 * sensor, cmd_t * command, resp_t* respond);
-uint8_t RotaryValveController(RotaryValve * valve, cmd_t * command, resp_t* respond);
-uint8_t TransferPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond);
+uint8_t MixPumpController(PumpMasterflex* pump, command_t* command, respond_t* respond);
+uint8_t MixerController(Mixer * mixer, command_t * command, respond_t* respond);
+uint8_t TempSensorController(TempSensorMAX31855 * sensor, command_t * command, respond_t* respond);
+uint8_t RotaryValveController(RotaryValve * valve, command_t * command, respond_t* respond);
+uint8_t TransferPumpController(PumpMasterflex* pump, command_t* command, respond_t* respond);
 
 #endif

@@ -78,7 +78,7 @@ uint8_t TempSensorMAX31855::ReadSensorToBuffer(float * data)
 uint8_t TempSensorMAX31855::InitializeReadContinuous(unsigned long duration_ms)
 {
     _start_time = millis();
-    _end_time = _start_time + duration;
+    _end_time = _start_time + duration_ms;
     return ERROR_OKAY;
 }
 

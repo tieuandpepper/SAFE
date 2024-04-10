@@ -17,25 +17,26 @@
 #define CMD_INVALID 7
 
 // define reponse ID
-#define RESP_INVALID        "INVALID"
-#define RESP_VALID           "VALID"
+#define RESP_FB_INVALID        "INVALID"
+#define RESP_FB_VALID           "VALID"
+#define RESP_FB_VOID            "VOID"
 
 
-// Command structure: <TARGET>,<COMMAND>,<OPERAND>.
-typedef struct cmd_type {
+// Command structure: <TARGET>,<INSTRUCTION>,<OPERAND>.
+typedef struct command_type {
   String target;
-  String command_id;
+  String instruction;
   long operand = 0;
-} cmd_t;
+} command_t;
 
-// Response structure: RESP,<RESP_ID>,<SOURCE>,<DATA>.
-typedef struct resp_type {
-  String resp_id;
+// Response structure: RESP,<FEEDBACK>,<SOURCE>,<DATA>.
+typedef struct respond_type {
+  String feedback;
   String source;
-  int32_t data = 0;
-} resp_t;
+  String data;
+} respond_t;
 
-uint8_t GetCommand(cmd_t* command);
-uint8_t SendResponse(resp_t response);
+uint8_t GetCommand(command_t* command);
+uint8_t SendResponse(respond_t response);
 
 #endif

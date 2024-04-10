@@ -14,7 +14,7 @@
 /// @brief get data from buffer and parse it into command struct
 /// @param command 
 /// @return 0 if no command and 1 for valid command
-uint8_t GetCommand(cmd_t* command)
+uint8_t GetCommand(command_t* command)
 {
   if (!Serial.available())
   {
@@ -47,8 +47,8 @@ uint8_t GetCommand(cmd_t* command)
     command->target = "";
     return CMD_NOTHING;
   }
-  command->command_id = buffer.substring(first_idx,last_idx);
-  Serial.print(" | Command="); Serial.print(command->command_id);
+  command->instruction = buffer.substring(first_idx,last_idx);
+  Serial.print(" | Command="); Serial.print(command->instruction);
   // extract operand ID
   first_idx = last_idx + 1;
   last_idx = buffer.length();
@@ -63,10 +63,10 @@ uint8_t GetCommand(cmd_t* command)
 /// @brief 
 /// @param response 
 /// @return 
-uint8_t SendResponse(resp_t response)
+uint8_t SendResponse(respond_t response)
 {
   String buffer = "RESP,";
-  buffer += response.resp_id;
+  buffer += response.feedback;
   buffer += ",";
   buffer += response.source;
   buffer += ",";

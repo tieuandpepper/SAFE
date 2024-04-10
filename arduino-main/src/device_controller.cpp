@@ -7,59 +7,59 @@
  * @param command 
  * @return uint8_t 
  */
-uint8_t MixPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond)
+uint8_t MixPumpController(PumpMasterflex* pump, command_t* command, respond_t* respond)
 {  
   uint8_t ret_val = CMD_RECEIVED;
   respond->source = MIXPUMP;
-  if (command->command_id.equals(MIXPUMP_START))
+  if (command->id.equals(MIXPUMP_START))
   {
     pump->Start();
   }
-  else if (command->command_id.equals(MIXPUMP_STOP))
+  else if (command->id.equals(MIXPUMP_STOP))
   {
     pump->Stop();
   }
-  else if (command->command_id.equals(MIXPUMP_CW))
+  else if (command->id.equals(MIXPUMP_CW))
   {
     pump->SetDirection(DIR_CW);
   }
-  else if (command->command_id.equals(MIXPUMP_CCW))
+  else if (command->id.equals(MIXPUMP_CCW))
   {
     pump->SetDirection(DIR_CCW);
   }
-  else if (command->command_id.equals(MIXPUMP_GETSPEED))
+  else if (command->id.equals(MIXPUMP_GETSPEED))
   {
     pump->GetSpeed();
   }
-  else if (command->command_id.equals(MIXPUMP_SETSPEED))
+  else if (command->id.equals(MIXPUMP_SETSPEED))
   {
     pump->SetSpeed(command->operand);
   }
-  else if (command->command_id.equals(MIXPUMP_DISPENSE))
+  else if (command->id.equals(MIXPUMP_DISPENSE))
   {
     pump->Dispense(command->operand);
   }
-  else if (command->command_id.equals(MIXPUMP_GETSPEEDSETTING))
+  else if (command->id.equals(MIXPUMP_GETSPEEDSETTING))
   {
     pump->GetSpeedSetting();
   }
-  else if (command->command_id.equals(MIXPUMP_SETMAXSPEED))
+  else if (command->id.equals(MIXPUMP_SETMAXSPEED))
   {
     pump->SetMaxSpeed(command->operand);
   }
-  else if (command->command_id.equals(MIXPUMP_SETMINSPEED))
+  else if (command->id.equals(MIXPUMP_SETMINSPEED))
   {
     pump->SetMinSpeed(command->operand);
   }
-  else if (command->command_id.equals(MIXPUMP_GETMAXSPEED))
+  else if (command->id.equals(MIXPUMP_GETMAXSPEED))
   {
     pump->GetMaxSpeed();
   }
-  else if (command->command_id.equals(MIXPUMP_GETMINSPEED))
+  else if (command->id.equals(MIXPUMP_GETMINSPEED))
   {
     pump->GetMinSpeed();
   }
-  else if (command->command_id.equals(MIXPUMP_PIPESETVOL))
+  else if (command->id.equals(MIXPUMP_PIPESETVOL))
   {
     pump->PipeSetVol(command->operand);
   }
@@ -77,24 +77,25 @@ uint8_t MixPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond)
  * @param command 
  * @return uint8_t 
  */
-uint8_t MixerController(Mixer * mixer, cmd_t * command, resp_t* respond)
+uint8_t MixerController(Mixer * mixer, command_t * command, respond_t* respond)
 {
-  if (command->command_id.equals(MIXER_START))
+  uint8_t ret_val = CMD_RECEIVED;
+  if (command->id.equals(MIXER_START))
   {
     mixer->Start();
-    return CMD_RECEIVED;
   }
-  if (command->command_id.equals(MIXER_STOP))
+  else if (command->id.equals(MIXER_STOP))
   {
     mixer->Stop();
-    return CMD_RECEIVED;
   }
-  if (command->command_id.equals(MIXER_RUN))
+  else if (command->id.equals(MIXER_RUN))
   {
     mixer->Run(command->operand);
-    return CMD_RECEIVED;
   }
-  return CMD_INVALID;
+  else {
+    ret_val = CMD_INVALID;
+  }
+  return ret_val;
 }
 
 /**
@@ -104,14 +105,17 @@ uint8_t MixerController(Mixer * mixer, cmd_t * command, resp_t* respond)
  * @param command 
  * @return uint8_t 
  */
-uint8_t TempSensorController(TempSensorMAX31855 * sensor, cmd_t * command, resp_t* respond)
+uint8_t TempSensorController(TempSensorMAX31855 * sensor, command_t * command, respond_t* respond)
 {
-  if (command->command_id.equals(TEMPSENSOR_READ_ONCE))
+  uint8_t ret_val = CMD_RECEIVED;
+  if (command->id.equals(TEMPSENSOR_READ_ONCE))
   {
-
+    sensor->ReadSensor()
   }
-  
-  return CMD_INVALID;
+  else {
+    ret_val = CMD_INVALID;
+  }
+  return ret_val;
 }
 
 /**
@@ -121,7 +125,7 @@ uint8_t TempSensorController(TempSensorMAX31855 * sensor, cmd_t * command, resp_
  * @param command 
  * @return uint8_t 
  */
-uint8_t RotaryValveController(RotaryValve * valve, cmd_t * command, resp_t* respond)
+uint8_t RotaryValveController(RotaryValve * valve, command_t * command, respond_t* respond)
 {
   return 0;
 }
@@ -133,7 +137,7 @@ uint8_t RotaryValveController(RotaryValve * valve, cmd_t * command, resp_t* resp
  * @param command 
  * @return uint8_t 
  */
-uint8_t TransferPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond)
+uint8_t TransferPumpController(PumpMasterflex* pump, command_t* command, respond_t* respond)
 {
   return 0;
 }
