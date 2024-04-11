@@ -15,15 +15,15 @@
 #ifndef RESPONSE_CODE_H
 #define RESPONSE_CODE_H
 
-/* Universal */
-#define RESP_FEEDBACK_VOID                      0xDF00
+/* Universal 0xDF0_ or OxDE0_ */ 
+#define RESP_FEEDBACK_VOID                      0xDF00 //nothing to return
 #define RESP_FEEDBACK_SUCCESS                   0xDF01
-#define RESP_FEEDBACK_ERR_INVALID               0xDF02
+#define RESP_FEEDBACK_ERR_INVALID               0xDE02
 
 /* TEMPERATURE SENSOR */
-#define RESP_TEMPSENSOR_READ_CONT_DONE          0xDF02
-#define RESP_TEMPSENSOR_CONT_READ_FLAG_OFF      0xDE01
-#define RESP_TEMPSENSOR_ERR_SENSOR              0xDEA2
+#define RESP_TEMPSENSOR_READ_DURATION_DONE      0xDF11
+#define RESP_TEMPSENSOR_READ_PERIOD_WAITING     0xDF12
+#define RESP_TEMPSENSOR_ERR_SENSOR              0xDE13
 
 /* Response from ROTARY VALVE software driver */
 // Error in INPUT parameters

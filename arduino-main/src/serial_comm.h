@@ -17,7 +17,7 @@
 #define CMD_INVALID         0xCDE3
 
 // define reponse type
-#define RESP_TYPE_VALID "VALID"
+#define RESP_TYPE_VALID    "VALID"
 #define RESP_TYPE_INVALID  "INVALID"
 #define RESP_TYPE_FEEDBACK "FEEDBACK"
 

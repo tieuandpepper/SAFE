@@ -115,29 +115,44 @@ void MixerController(Mixer * mixer, cmd_t * command, resp_t* response)
 void TempSensorController(TempSensorMAX31855 * sensor, cmd_t * command, resp_t* response)
 {
   float data;
-  bool read_cont_flag_on = sensor->ContinuousFlagOn();
   response->source = TEMPSENSOR;
   response->data = 0;
-  if (command->instruction.equals(TEMPSENSOR_READ_ONCE))
+  if (sensor->DurationFlagOn())
+  {
+    response->error_code = sensor->ReadSensorbyDuration(&data);
+    response->data = data;
+    response->type = RESP_TYPE_FEEDBACK;
+  }
+  else if (sensor->PeriodFlagOn())
+  {
+    response->error_code = sensor->ReadSensorbyPeriod(&data);
+    response->data = data;
+    response->type = RESP_TYPE_FEEDBACK;
+  }
+  else if (command->instruction.equals(TEMPSENSOR_READ_ONCE))
   {
     response->error_code = sensor->ReadSensor(&data);
     response->data = data;
     response->type = RESP_TYPE_FEEDBACK;
   }
-  else if (command->instruction.equals(TEMPSENSOR_READ_DURATION_MS) && !read_cont_flag_on)
+  else if (command->instruction.equals(TEMPSENSOR_READ_DURATION_MS))
   {
-    response->error_code = sensor->InitializeReadContinuous(command->parameter);
+    response->error_code = sensor->ReadSensorbyDuration(command->parameter);
     response->type = RESP_TYPE_VALID;
   }
-  else if (read_cont_flag_on)
+  else if (command->instruction.equals(TEMPSENSOR_READ_PERIOD_MS))
   {
-    response->error_code = sensor->ReadSensorContinous(&data);
-    response->data = data;
-    response->type = RESP_TYPE_FEEDBACK;
+    response->error_code = sensor->ReadSensorbyPeriod(command->parameter);
+    response->type = RESP_TYPE_VALID;
+  }
+  else if (command->instruction.equals(TEMPSENSOR_READ_STOP))
+  {
+    response->error_code = sensor->StopRead();
+    response->type = RESP_TYPE_VALID;
   }
   else {
     response->type = RESP_TYPE_INVALID;
-    response->error_code = RESP_FEEDBACK_ERR_INVALID;    
+    response->error_code = RESP_FEEDBACK_ERR_INVALID;
   }
 }
 
@@ -146,11 +161,66 @@ void TempSensorController(TempSensorMAX31855 * sensor, cmd_t * command, resp_t* 
  * 
  * @param valve 
  * @param command 
- * @return int 
+ * @param response 
  */
-int RotaryValveController(RotaryValve * valve, cmd_t * command, resp_t* respond)
+void RotaryValveController(RotaryValve * valve, cmd_t * command, resp_t* response)
 {
-  return 0;
+  int data; 
+  response->source = ROTARYVALVE;
+  response->type = RESP_TYPE_VALID;
+  response->data = 0;
+  if (command->instruction.equals(ROTARYVALVE_SET_ADDR))
+  {
+    response->error_code = valve->FactorySetAddr(command->parameter);
+  }
+  else if (command->instruction.equals(ROTARYVALVE_SET_BAUD_RATE))
+  {
+    response->error_code = valve->FactorySetBaudRate(command->parameter);
+  }
+  else if (command->instruction.equals(ROTARYVALVE_FACTORY_RESET))
+  {
+    response->error_code = valve->FactorySetAutoReset(command->parameter);
+  }
+  else if (command->instruction.equals(ROTARYVALVE_GET_ADDR))
+  {
+    response->error_code = valve->QueryAddress(&data);
+    response->data = data;
+    response->type = RESP_TYPE_FEEDBACK;
+  }
+  else if (command->instruction.equals(ROTARYVALVE_GET_BAUD_RATE))
+  {
+    response->error_code = valve->QueryBaudRate(&data);
+    response->data = data;
+    response->type = RESP_TYPE_FEEDBACK;
+  }
+  else if (command->instruction.equals(ROTARYVALVE_GET_MOTOR_STATUS))
+  {
+    response->error_code = valve->QueryMotorStatus(&data);
+    response->data = data;
+    response->type = RESP_TYPE_FEEDBACK;
+  }
+  else if (command->instruction.equals(ROTARYVALVE_GET_VERSION))
+  {
+    response->error_code = valve->QueryCurrVersion(&data);
+    response->data = data;
+    response->type = RESP_TYPE_FEEDBACK;
+  }
+  else if (command->instruction.equals(ROTARYVALVE_RESET_ORIGIN))
+  {
+    response->error_code = valve->ActionResetOrigin();
+  }
+  else if (command->instruction.equals(ROTARYVALVE_MOVE_AUTO))
+  {
+    response->error_code = valve->ActionMoveAuto(command->parameter);
+  }
+  else if (command->instruction.equals(ROTARYVALVE_STOP))
+  {
+    response->error_code = valve->ActionStop();
+  }
+  else {
+    response->type = RESP_TYPE_INVALID;
+    response->error_code = RESP_FEEDBACK_ERR_INVALID;
+  }
 }
 
 /**
@@ -158,9 +228,19 @@ int RotaryValveController(RotaryValve * valve, cmd_t * command, resp_t* respond)
  * 
  * @param pump 
  * @param command 
- * @return int 
+ * @param response 
  */
-int TransferPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond)
+void LighterController(Lighter * lighter, cmd_t* command, resp_t* response)
 {
-  return 0;
+  response->source = LIGHTER;
+  response->data = 0;
+  response->type = RESP_TYPE_VALID;
+  if (command->instruction.equals(LIGHTER_IGNITE))
+  {
+    response->error_code = lighter->Ignite();
+  }
+  else {
+    response->type = RESP_TYPE_INVALID;
+    response->error_code = RESP_FEEDBACK_ERR_INVALID;
+  }
 }

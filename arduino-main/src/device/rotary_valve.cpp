@@ -352,7 +352,7 @@ int RotaryValve::FactoryReset()
  * Default: 0x00
  * @return int success/error code/ status
  */
-int RotaryValve::QueryAddress(uint32_t * addr)
+int RotaryValve::QueryAddress(int * addr)
 {
     int res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // Send command
@@ -387,7 +387,7 @@ int RotaryValve::QueryAddress(uint32_t * addr)
  *        0x0004: 115200 bps
  * @return int success/error code/status
  */
-int RotaryValve::QueryBaudRate(uint32_t * baud_rate)
+int RotaryValve::QueryBaudRate(int * baud_rate)
 {
     int res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // Send command
@@ -421,7 +421,7 @@ int RotaryValve::QueryBaudRate(uint32_t * baud_rate)
  * @param status status code
  * @return int error code/status
  */
-int RotaryValve::QueryMotorStatus(uint32_t * status)
+int RotaryValve::QueryMotorStatus(int * status)
 {
     int res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // Send command
@@ -453,7 +453,7 @@ int RotaryValve::QueryMotorStatus(uint32_t * status)
  * @param version pointer value
  * @return int error code/status
  */
-int RotaryValve::QueryCurrVersion(uint32_t * version)
+int RotaryValve::QueryCurrVersion(int * version)
 {
     int res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // Send command
@@ -483,7 +483,7 @@ int RotaryValve::QueryCurrVersion(uint32_t * version)
  * @param power_on_reset pointer value
  * @return int error code/status
  */
-int RotaryValve::QueryAutoReset(uint32_t * power_on_reset)
+int RotaryValve::QueryAutoReset(int * power_on_reset)
 {
     int res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // Send command

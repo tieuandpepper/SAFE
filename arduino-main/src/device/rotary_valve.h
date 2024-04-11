@@ -149,11 +149,11 @@ class RotaryValve : public SoftwareSerial {
         int FactorySetAutoReset(uint8_t power_on_reset);
         int FactoryReset();
         // Query command (Get commands)
-        int QueryAddress(uint32_t * addr);
-        int QueryBaudRate(uint32_t * baud_rate);
-        int QueryMotorStatus(uint32_t * status);
-        int QueryCurrVersion(uint32_t * version);
-        int QueryAutoReset(uint32_t * power_on_reset);
+        int QueryAddress(int * addr);
+        int QueryBaudRate(int * baud_rate);
+        int QueryMotorStatus(int * status);
+        int QueryCurrVersion(int * version);
+        int QueryAutoReset(int * power_on_reset);
         // Action command
         int ActionReset();
         int ActionResetOrigin();

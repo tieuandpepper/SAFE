@@ -21,12 +21,14 @@
 #define TIME_AVAILABLE       0xAAAA
 
 #define FLAG_READ_ONCE       0x1111
-#define FLAG_READ_CONT       0xCCCC
+#define FLAG_READ_DURATION   0xCCCC
+#define FLAG_READ_PERIOD     0xDDDD
 
 class TempSensorMAX31855{
     private:
         DFRobot_MAX31855 _sensor_obj;
         unsigned long _start_time;
+        unsigned long _period_time;
         unsigned long _end_time;
         int _read_flag;
         int CheckEndTime();
@@ -34,9 +36,13 @@ class TempSensorMAX31855{
     public:
         TempSensorMAX31855();
         int ReadSensor(float * data);
-        int InitializeReadContinuous(unsigned long duration_ms);
-        int ReadSensorContinous(float *data);
-        bool ContinuousFlagOn();
+        int InitializeReadPeriod(unsigned long period_ms);
+        int InitializeReadDuration(unsigned long duration_ms);
+        int ReadSensorbyDuration(float *data);
+        int ReadSensorbyPeriod(float *data);
+        int StopRead();
+        bool DurationFlagOn();
+        bool PeriodFlagOn();
 };
 
 
