@@ -5,11 +5,11 @@
  * 
  * @param pump 
  * @param command 
- * @return uint8_t 
+ * @return int 
  */
-uint8_t MixPumpController(PumpMasterflex* pump, command_t* command, respond_t* respond)
+int MixPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond)
 {  
-  uint8_t ret_val = CMD_RECEIVED;
+  int ret_val = RESP_ACK_VOID;
   respond->source = MIXPUMP;
   if (command->id.equals(MIXPUMP_START))
   {
@@ -75,9 +75,9 @@ uint8_t MixPumpController(PumpMasterflex* pump, command_t* command, respond_t* r
  * 
  * @param mixer 
  * @param command 
- * @return uint8_t 
+ * @return int 
  */
-uint8_t MixerController(Mixer * mixer, command_t * command, respond_t* respond)
+int MixerController(Mixer * mixer, cmd_t * command, resp_t* respond)
 {
   uint8_t ret_val = CMD_RECEIVED;
   if (command->id.equals(MIXER_START))
@@ -103,9 +103,9 @@ uint8_t MixerController(Mixer * mixer, command_t * command, respond_t* respond)
  * 
  * @param sensor 
  * @param command 
- * @return uint8_t 
+ * @return int 
  */
-uint8_t TempSensorController(TempSensorMAX31855 * sensor, command_t * command, respond_t* respond)
+int TempSensorController(TempSensorMAX31855 * sensor, cmd_t * command, resp_t* respond)
 {
   uint8_t ret_val = CMD_RECEIVED;
   if (command->id.equals(TEMPSENSOR_READ_ONCE))
@@ -123,9 +123,9 @@ uint8_t TempSensorController(TempSensorMAX31855 * sensor, command_t * command, r
  * 
  * @param valve 
  * @param command 
- * @return uint8_t 
+ * @return int 
  */
-uint8_t RotaryValveController(RotaryValve * valve, command_t * command, respond_t* respond)
+int RotaryValveController(RotaryValve * valve, cmd_t * command, resp_t* respond)
 {
   return 0;
 }
@@ -135,9 +135,9 @@ uint8_t RotaryValveController(RotaryValve * valve, command_t * command, respond_
  * 
  * @param pump 
  * @param command 
- * @return uint8_t 
+ * @return int 
  */
-uint8_t TransferPumpController(PumpMasterflex* pump, command_t* command, respond_t* respond)
+int TransferPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond)
 {
   return 0;
 }

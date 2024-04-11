@@ -23,16 +23,16 @@ MasterflexDB25Interface_t mixing_pump_interface {
 };
 
 PumpMasterflex mixing_pump = PumpMasterflex(mixing_pump_interface);
-RotaryValve rotary_valve(9,10, 16, 9600);
-Mixer mixer;
+// RotaryValve rotary_valve(9,10, 16, 9600);
+// mixer_t mixer;
 DFRobot_MAX31855 max31855;
 
 /// @brief Setup/ Initialization. Run first and run ONCE
 void setup() {
   Serial.begin(9600);
-  mixer.pin = PIN_MIXER_ENABLE;
-  pinMode(mixer.pin,OUTPUT);
-  digitalWrite(mixer.pin, LOW);
+  // mixer.pin = PIN_MIXER_ENABLE;
+  // pinMode(mixer.pin,OUTPUT);
+  // digitalWrite(mixer.pin, LOW);
   mixing_pump.Connect();
   mixing_pump.Stop();
   mixing_pump.PrimeStop();
@@ -52,13 +52,13 @@ void setup() {
   digitalWrite(6,HIGH);
   delay(200);
   digitalWrite(6,LOW);
-  rotary_valve.Initialize();
+  // rotary_valve.Initialize();
   Serial.println("READY");
 }
 
-int32_t res;
-command_t command;
-respond_t response;
+int res;
+cmd_t command;
+resp_t response;
 bool readTemp = false;
 long time_sec = 0;
 /// @brief Run after setup(). Will run in loop repeatedly
@@ -85,33 +85,33 @@ void loop() {
       digitalWrite(7, LOW);
       res = CMD_RECEIVED;
     }
-    else if (command.target.equals(MIXER))
-    {
-      res = MixerController(&mixer, &command);
-    }
-    else if (command.target.equals(MIXINGPUMP))
-    {
-      res = PumpController(&mixing_pump, &command);
-    }
-    else if (command.target.equals("ROTVALVE"))
-    {
-      if (command.id.equals("PORT"))
-      {
-        res = rotary_valve.ActionMoveAuto((uint8_t)command.operand);
-      }
-      else if (command.id.equals("GETVER"))
-      {
-        uint32_t version;
-        res = rotary_valve.QueryCurrVersion(&version);
-        if (res == RESP_DRV_SUCCESS)
-        {
-          res = version;
-        }
-      }
-      else {
-        res = CMD_INVALID;
-      }
-    }
+    // else if (command.target.equals(MIXER))
+    // {
+    //   res = MixerController(&mixer, &command);
+    // }
+    // else if (command.target.equals(MIXINGPUMP))
+    // {
+    //   res = PumpController(&mixing_pump, &command);
+    // }
+    // else if (command.target.equals("ROTVALVE"))
+    // {
+    //   if (command.command_id.equals("PORT"))
+    //   {
+    //     res = rotary_valve.ActionMoveAuto((uint8_t)command.operand);
+    //   }
+    //   else if (command.command_id.equals("GETVER"))
+    //   {
+    //     uint32_t version;
+    //     res = rotary_valve.QueryCurrVersion(&version);
+    //     if (res == RESP_DRV_SUCCESS)
+    //     {
+    //       res = version;
+    //     }
+    //   }
+    //   else {
+    //     res = CMD_INVALID;
+    //   }
+    // }
     else {
       res = CMD_INVALID;
     }
@@ -119,14 +119,14 @@ void loop() {
     // Serial.println("READY");
     if (res == CMD_INVALID)
     {
-      response.feedback = RESP_FB_INVALID;
+      response.type = RESP_TYPE_NACK;
       // Serial.println("Invalid command");
     }
     else 
     {
       // Serial.print("Command return ");
       // Serial.println(res);
-      response.feedback = RESP_FB_VALID;
+      response.type = RESP_TYPE_ACK;
       response.data = res;
     }
     SendResponse(response);

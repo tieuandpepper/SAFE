@@ -16,27 +16,38 @@
 #define CMD_NOTHING 3
 #define CMD_INVALID 7
 
-// define reponse ID
-#define RESP_FB_INVALID        "INVALID"
-#define RESP_FB_VALID           "VALID"
-#define RESP_FB_VOID            "VOID"
+// define reponse type
+#define RESP_TYPE_NACK "NACK"
+#define RESP_TYPE_ACK  "ACK"
+#define RESP_TYPE_FEEDBACK "FEEDBACK"
+
+// define response data (for ACK)
+#define RESP_ACK_VOID     0
+// #define RESP_ACK_RECEIVED 1
+// #define RESP_ACK_
+
+// define response data (for NACK)
+#define RESP_NACK_VOID    0
+
+// define response data for FEEDBACK
+#define RESP_FB_VOID      0
 
 
 // Command structure: <TARGET>,<INSTRUCTION>,<OPERAND>.
 typedef struct command_type {
   String target;
-  String instruction;
-  long operand = 0;
-} command_t;
+  String command_id;
+  int operand = 0;
+} cmd_t;
 
-// Response structure: RESP,<FEEDBACK>,<SOURCE>,<DATA>.
-typedef struct respond_type {
-  String feedback;
+// Response structure: RESP,<TYPE>,<SOURCE>,<DATA>.
+typedef struct resp_type {
+  String type;
   String source;
-  String data;
-} respond_t;
+  int data = 0;
+} resp_t;
 
-uint8_t GetCommand(command_t* command);
-uint8_t SendResponse(respond_t response);
+int GetCommand(cmd_t* command);
+int SendResponse(resp_t response);
 
 #endif

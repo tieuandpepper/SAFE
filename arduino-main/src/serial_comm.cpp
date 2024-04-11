@@ -14,7 +14,7 @@
 /// @brief get data from buffer and parse it into command struct
 /// @param command 
 /// @return 0 if no command and 1 for valid command
-uint8_t GetCommand(command_t* command)
+int GetCommand(cmd_t* command)
 {
   if (!Serial.available())
   {
@@ -27,8 +27,8 @@ uint8_t GetCommand(command_t* command)
   buffer.toUpperCase();
   Serial.println(buffer);
   // extract target ID
-  uint8_t first_idx = 0;
-  uint8_t last_idx = buffer.indexOf(',',first_idx);
+  int first_idx = 0;
+  int last_idx = buffer.indexOf(',',first_idx);
   if (first_idx >= last_idx){
     return CMD_NOTHING;
   }
@@ -63,7 +63,7 @@ uint8_t GetCommand(command_t* command)
 /// @brief 
 /// @param response 
 /// @return 
-uint8_t SendResponse(respond_t response)
+int SendResponse(resp_t response)
 {
   String buffer = "RESP,";
   buffer += response.feedback;

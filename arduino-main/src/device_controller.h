@@ -10,12 +10,12 @@
 #include "device/ezo_pump.h"
 
 // define target
-#define MIXPUMP             "MIXPUMP"
+#define MIXPUMP             "PUMP1"
 #define MIXER               "MIXER"
-#define ROTARYVALVE         "ROTVALVE"
-#define TEMPSENSOR          "TEMPSENS"
+#define ROTARYVALVE         "VALVE"
+#define TEMPSENSOR          "TEMP"
 #define LIGHTER             "LIGHTER"
-#define TRANSFERPUMP        "XFERPUMP"
+#define TRANSFERPUMP        "PUMP2"
 
 // define command ID
 #define MIXPUMP_START          "START"
@@ -41,12 +41,11 @@
 
 #define ROTARYVALVE_GET_VERSION         "GETVER"
 #define ROTARYVALVE_CHANGE_PORT         "PORT"
-#define ROTARYVALVE_GET_VERSION         "GETVER"
 
-uint8_t MixPumpController(PumpMasterflex* pump, command_t* command, respond_t* respond);
-uint8_t MixerController(Mixer * mixer, command_t * command, respond_t* respond);
-uint8_t TempSensorController(TempSensorMAX31855 * sensor, command_t * command, respond_t* respond);
-uint8_t RotaryValveController(RotaryValve * valve, command_t * command, respond_t* respond);
-uint8_t TransferPumpController(PumpMasterflex* pump, command_t* command, respond_t* respond);
+int MixPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond);
+int MixerController(Mixer * mixer, cmd_t * command, resp_t* respond);
+int TempSensorController(TempSensorMAX31855 * sensor, cmd_t * command, resp_t* respond);
+int RotaryValveController(RotaryValve * valve, cmd_t * command, resp_t* respond);
+int TransferPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond);
 
 #endif
