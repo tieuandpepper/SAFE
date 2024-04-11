@@ -16,7 +16,7 @@
 
 #include <Arduino.h>
 #include <SoftwareSerial.h>
-
+#include "response_code.h"
 
 /* Communication properties */
 #define COMM_DATA_BITS    8
@@ -77,9 +77,9 @@
 /* Action command function code */
 #define ACT_FUNC_ROTATE_AUTO                 0x44 // get to the desired port automatically
 #define ACT_FUNC_RESET                       0x45
-#define ACT_FUNC_ORIGIN_RESET                  0x4F // run to the origin position
+#define ACT_FUNC_ORIGIN_RESET                0x4F // run to the origin position
 #define ACT_FUNC_SWITCH_PORT_IN_DIR          0xA4
-#define ACT_FUNC_SWITCH_BETWEEN_PORT_IN_DIR         0xB4
+#define ACT_FUNC_SWITCH_BETWEEN_PORT_IN_DIR  0xB4
 #define ACT_FUNC_FORCE_STOP                  0x49
 
 /* Action command parameter for driver */
@@ -96,23 +96,6 @@
 #define RESP_VALVE_MOTOR_FAILED               0x05
 #define RESP_VALVE_POSITION_UNKNOWN           0x06
 #define RESP_VALVE_TASK_EXECUTING             0xFE
-
-/* Response from software driver */
-#define RESP_DRV_SUCCESS                      0x00
-// Error in INPUT parameters
-#define RESP_DRV_ERROR_PARAMS                 0xE0
-// Error in connecting to the valve (no response)
-#define RESP_DRV_ERROR_CONNECTION             0xE1
-// Error in sending command
-#define RESP_DRV_ERROR_SEND_FAILED            0xE2
-#define RESP_DRV_ERROR_SEND_OVERFLOW          0xE3
-// Error in receiving response
-#define RESP_DRV_ERROR_BUFFER_EMPTY           0xE4
-#define RESP_DRV_ERROR_BUFFER_MISSING         0xE5
-#define RESP_DRV_ERROR_FRAME                  0xE6
-#define RESP_DRV_ERROR_CHECKSUM               0xE7
-#define RESP_DRV_ERROR_INVALID                0xE8
-
 
 static uint16_t baud_rate_encode_arr[] = {9600, 19200, 38400, 57600, 115200};
 static uint8_t baud_rate_encode_arr_len = sizeof(baud_rate_encode_arr) / sizeof(uint16_t);
@@ -157,27 +140,27 @@ class RotaryValve : public SoftwareSerial {
         RotaryValve(uint8_t valve_tx, uint8_t valve_rx, int port_count, uint16_t baud_rate = 9600);
         void Initialize();
         // low-level interface with hardware
-        uint8_t SendCommandTX(uint8_t func_code, uint32_t params = 0, uint8_t cmd_len = CMD_LEN_COMMON);
-        uint8_t GetResponseRX();
+        int SendCommandTX(uint8_t func_code, uint32_t params = 0, uint8_t cmd_len = CMD_LEN_COMMON);
+        int GetResponseRX();
         // high-level interface
         // factory setting command
-        uint8_t FactorySetAddr(uint32_t addr);
-        uint8_t FactorySetBaudRate(uint32_t baud_rate);
-        uint8_t FactorySetAutoReset(uint8_t power_on_reset);
-        uint8_t FactoryReset();
+        int FactorySetAddr(uint32_t addr);
+        int FactorySetBaudRate(uint32_t baud_rate);
+        int FactorySetAutoReset(uint8_t power_on_reset);
+        int FactoryReset();
         // Query command (Get commands)
-        uint8_t QueryAddress(uint32_t * addr);
-        uint8_t QueryBaudRate(uint32_t * baud_rate);
-        uint8_t QueryMotorStatus(uint32_t * status);
-        uint8_t QueryCurrVersion(uint32_t * version);
-        uint8_t QueryAutoReset(uint32_t * power_on_reset);
+        int QueryAddress(uint32_t * addr);
+        int QueryBaudRate(uint32_t * baud_rate);
+        int QueryMotorStatus(uint32_t * status);
+        int QueryCurrVersion(uint32_t * version);
+        int QueryAutoReset(uint32_t * power_on_reset);
         // Action command
-        uint8_t ActionReset();
-        uint8_t ActionResetOrigin();
-        uint8_t ActionMoveAuto(uint8_t port);
-        uint8_t ActionMoveWithDir(uint8_t port, uint8_t direction = DIRECTION_CLOCKWISE);
-        uint8_t ActionMoveBetween(uint8_t port1, uint8_t port2);
-        uint8_t ActionStop();
+        int ActionReset();
+        int ActionResetOrigin();
+        int ActionMoveAuto(uint8_t port);
+        int ActionMoveWithDir(uint8_t port, uint8_t direction = DIRECTION_CLOCKWISE);
+        int ActionMoveBetween(uint8_t port1, uint8_t port2);
+        int ActionStop();
 };
 
 // static helpers

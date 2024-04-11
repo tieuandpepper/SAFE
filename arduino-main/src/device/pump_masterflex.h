@@ -7,6 +7,7 @@
 #define PumpMasterflex_h
 
 #include "Arduino.h"
+#include "response_code.h"
 // arduino constant
 #define ARDUINO_PWM 255
 #define ARDUINO_ANALOG 1023
@@ -58,7 +59,6 @@ class PumpMasterflex {
         MasterflexDB25Interface_t _pins;
         uint8_t _state_op = PUMP_STOP;
         uint8_t _state_dir = DIR_CW;
-        uint8_t _state_prime = PRIME_OFF;
         Tube_t _tube;
         PumpSpeed_t _speed_control;
         float _max_voltage;
@@ -68,32 +68,28 @@ class PumpMasterflex {
         uint8_t _pipe_state = PIPE_EMPTY;
     public:
         PumpMasterflex(MasterflexDB25Interface_t pins);
-        bool Connect();
-        bool Start();
-        bool Stop();
-        uint8_t GetOpState();
-        bool SetDirection(int32_t direction);
-        bool ChangeDirection();
-        uint8_t GetDirection();
-        bool PrimeStart();
-        bool PrimeStop();
-        bool Prime(int32_t duration_ms);
-        uint8_t GetPrimeState();
-        bool SetTubeSize(int32_t size);
-        uint8_t GetTubeSize();
-        bool SetMaxSpeed(int32_t speed);
-        bool SetMinSpeed(int32_t speed);
-        int32_t GetMaxSpeed();
-        int32_t GetMinSpeed();
-        bool SetSpeed(int32_t speed_ul_min);
-        int32_t GetSpeedSetting();
-        int32_t GetSpeed();
-        bool SetMaxVoltageLevel(int32_t voltage_max);
-        bool SetMinVoltageLevel(int32_t voltage_min);
-        bool Dispense(int32_t amount_ul);
-        bool PipeSetVol(int32_t vol_ul);
-        bool PipeSetState(uint8_t state);
-        bool SetTuningVol(int32_t amount_ul);
+        int Connect();
+        int Start();
+        int Stop();
+        int GetOpState();
+        int SetDirection(int direction);
+        int ChangeDirection();
+        int GetDirection();
+        int SetTubeSize(int size);
+        int GetTubeSize();
+        int SetMaxSpeed(int speed);
+        int SetMinSpeed(int speed);
+        int GetMaxSpeed();
+        int GetMinSpeed();
+        int SetSpeed(int speed_ul_min);
+        int GetSpeedSetting();
+        int GetSpeed();
+        int SetMaxVoltageLevel(int voltage_max);
+        int SetMinVoltageLevel(int voltage_min);
+        int Dispense(int amount_ul);
+        int PipeSetVol(int vol_ul);
+        int PipeSetState(int state);
+        int SetTuningVol(int amount_ul);
 };
 
 #endif

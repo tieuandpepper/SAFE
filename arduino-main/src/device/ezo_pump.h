@@ -11,11 +11,13 @@
 #ifndef EZO_PUMP_H
 #define EZO_PUMP_H
 
-class EZOPump {
-    private:
+#define DEFAULT_I2C_ADDR      0x67
 
-    public:
+// class EZOPump {
+//     private:
 
-};
+//     public:
+
+// };
 
 #endif

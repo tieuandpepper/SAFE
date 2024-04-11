@@ -17,81 +17,85 @@
 TempSensorMAX31855::TempSensorMAX31855()
 {
     _sensor_obj.begin();
-    _data_count = 0;
-    _current_idx = 0;
+    _read_flag = FLAG_READ_ONCE;
 }
 
 /**
  * @brief read sensor, return the reading and update the data buffer
  * 
  * @param data 
- * @return uint8_t 
+ * @return int 
  */
-uint8_t TempSensorMAX31855::ReadSensor(float * data)
+int TempSensorMAX31855::ReadSensor(float * data)
 {
     (*data) = _sensor_obj.readCelsius();
     if ((*data) == NAN)
     {
-        return ERROR_SENSOR;
+        return RESP_TEMPSENSOR_ERR_SENSOR;
     }
-    return ERROR_OKAY;
-}
-
-/**
- * @brief 
- * 
- * @param data 
- * @return uint8_t 
- */
-uint8_t TempSensorMAX31855::GetLastData(float * data)
-{
-    if (_data_count == 0) {return ERROR_NO_BUFFER_DATA;}
-    (*data) = _data_buffer[_current_idx];
-    return ERROR_OKAY;
-}
-
-/**
- * @brief 
- * 
- * @param data 
- * @return uint8_t 
- */
-uint8_t TempSensorMAX31855::ReadSensorToBuffer(float * data)
-{
-    (*data) = _sensor_obj.readCelsius();
-    if ((*data) == NAN)
-    {
-        return ERROR_SENSOR;
-    }
-    _current_idx = (_current_idx+1) % BUFFER_SIZE;
-    _data_buffer[_current_idx] = (*data);
-    _data_count++;
-    return ERROR_OKAY;
+    return RESP_FEEDBACK_SUCCESS;
 }
 
 /**
  * @brief initialize continuous read mode until time run out
+ * @note this will overflow after about 49.7 days 
  * 
  * @param duration
- * @return uint8_t 
+ * @return int 
  */
-uint8_t TempSensorMAX31855::InitializeReadContinuous(unsigned long duration_ms)
+int TempSensorMAX31855::InitializeReadContinuous(unsigned long duration_ms)
 {
     _start_time = millis();
     _end_time = _start_time + duration_ms;
-    return ERROR_OKAY;
+    _read_flag = FLAG_READ_CONT;
+    return RESP_FEEDBACK_VOID;
 }
 
 /**
  * @brief check if end time is reached
  * 
- * @return uint8_t 
+ * @return int 
  */
-uint8_t TempSensorMAX31855::CheckEndTime()
+int TempSensorMAX31855::CheckEndTime()
 {
     if (millis() >= _end_time)
     {
         return TIME_EXPIRED;
     }
     return TIME_AVAILABLE;
+}
+
+/**
+ * @brief 
+ * 
+ * @param data 
+ * @return int 
+ */
+int TempSensorMAX31855::ReadSensorContinous(float* data)
+{
+    if (_read_flag == FLAG_READ_ONCE)
+    {
+        return RESP_TEMPSENSOR_CONT_READ_FLAG_OFF;
+    }
+    if (this->CheckEndTime() == TIME_EXPIRED)
+    {
+        _read_flag = FLAG_READ_ONCE;
+        return RESP_TEMPSENSOR_READ_CONT_DONE;
+    }
+    return this->ReadSensor(data);
+}
+
+/**
+ * @brief 
+ * 
+ * @return true 
+ * @return false 
+ */
+bool TempSensorMAX31855::ContinuousFlagOn()
+{
+    if (_read_flag == FLAG_READ_CONT)
+    {
+        return true;
+    }
+    return false;
 }

@@ -12,38 +12,27 @@
 #define SERAIL_COMM_H
 
 #define BUFFER_SIZE         64
-#define CMD_RECEIVED 1
-#define CMD_NOTHING 3
-#define CMD_INVALID 7
+#define CMD_RECEIVED        0xCD01
+#define CMD_UNAVAILABLE     0xCDE2
+#define CMD_INVALID         0xCDE3
 
 // define reponse type
-#define RESP_TYPE_NACK "NACK"
-#define RESP_TYPE_ACK  "ACK"
+#define RESP_TYPE_VALID "VALID"
+#define RESP_TYPE_INVALID  "INVALID"
 #define RESP_TYPE_FEEDBACK "FEEDBACK"
-
-// define response data (for ACK)
-#define RESP_ACK_VOID     0
-// #define RESP_ACK_RECEIVED 1
-// #define RESP_ACK_
-
-// define response data (for NACK)
-#define RESP_NACK_VOID    0
-
-// define response data for FEEDBACK
-#define RESP_FB_VOID      0
-
 
 // Command structure: <TARGET>,<INSTRUCTION>,<OPERAND>.
 typedef struct command_type {
   String target;
-  String command_id;
-  int operand = 0;
+  String instruction;
+  int parameter = 0;
 } cmd_t;
 
-// Response structure: RESP,<TYPE>,<SOURCE>,<DATA>.
+// Response structure: RESP,<SOURCE>,<TYPE>,<ERROR_CODE>,<DATA>.
 typedef struct resp_type {
-  String type;
   String source;
+  String type;
+  int error_code;
   int data = 0;
 } resp_t;
 

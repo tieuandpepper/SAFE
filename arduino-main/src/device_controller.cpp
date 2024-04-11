@@ -5,69 +5,74 @@
  * 
  * @param pump 
  * @param command 
- * @return int 
+ * @param response 
  */
-int MixPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond)
-{  
-  int ret_val = RESP_ACK_VOID;
-  respond->source = MIXPUMP;
-  if (command->id.equals(MIXPUMP_START))
+void MixPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* response)
+{
+  response->source = MIXPUMP;
+  response->type = RESP_TYPE_VALID;
+  response->data = 0;
+  response->error_code = RESP_FEEDBACK_VOID;
+  if (command->instruction.equals(MIXPUMP_START))
   {
-    pump->Start();
+    response->error_code = pump->Start();
   }
-  else if (command->id.equals(MIXPUMP_STOP))
+  else if (command->instruction.equals(MIXPUMP_STOP))
   {
-    pump->Stop();
+    response->error_code = pump->Stop();
   }
-  else if (command->id.equals(MIXPUMP_CW))
+  else if (command->instruction.equals(MIXPUMP_CW))
   {
-    pump->SetDirection(DIR_CW);
+    response->error_code = pump->SetDirection(DIR_CW);
   }
-  else if (command->id.equals(MIXPUMP_CCW))
+  else if (command->instruction.equals(MIXPUMP_CCW))
   {
-    pump->SetDirection(DIR_CCW);
+    response->error_code = pump->SetDirection(DIR_CCW);
   }
-  else if (command->id.equals(MIXPUMP_GETSPEED))
+  else if (command->instruction.equals(MIXPUMP_SETSPEED))
   {
-    pump->GetSpeed();
+    response->error_code = pump->SetSpeed(command->operand);
   }
-  else if (command->id.equals(MIXPUMP_SETSPEED))
+  else if (command->instruction.equals(MIXPUMP_DISPENSE))
   {
-    pump->SetSpeed(command->operand);
+    response->error_code = pump->Dispense(command->operand);
   }
-  else if (command->id.equals(MIXPUMP_DISPENSE))
+  else if (command->instruction.equals(MIXPUMP_SETMAXSPEED))
   {
-    pump->Dispense(command->operand);
+    response->error_code = pump->SetMaxSpeed(command->operand);
   }
-  else if (command->id.equals(MIXPUMP_GETSPEEDSETTING))
+  else if (command->instruction.equals(MIXPUMP_SETMINSPEED))
   {
-    pump->GetSpeedSetting();
+    response->error_code = pump->SetMinSpeed(command->operand);
   }
-  else if (command->id.equals(MIXPUMP_SETMAXSPEED))
+  else if (command->instruction.equals(MIXPUMP_PIPESETVOL))
   {
-    pump->SetMaxSpeed(command->operand);
+    response->error_code = pump->PipeSetVol(command->operand);
   }
-  else if (command->id.equals(MIXPUMP_SETMINSPEED))
+  else if (command->instruction.equals(MIXPUMP_GETSPEED))
   {
-    pump->SetMinSpeed(command->operand);
+    response->data = pump->GetSpeed();
+    response->type = RESP_TYPE_FEEDBACK;
   }
-  else if (command->id.equals(MIXPUMP_GETMAXSPEED))
+  else if (command->instruction.equals(MIXPUMP_GETMAXSPEED))
   {
-    pump->GetMaxSpeed();
+    response->data = pump->GetMaxSpeed();
+    response->type = RESP_TYPE_FEEDBACK;
   }
-  else if (command->id.equals(MIXPUMP_GETMINSPEED))
+  else if (command->instruction.equals(MIXPUMP_GETMINSPEED))
   {
-    pump->GetMinSpeed();
+    response->data = pump->GetMinSpeed();
+    response->type = RESP_TYPE_FEEDBACK;
   }
-  else if (command->id.equals(MIXPUMP_PIPESETVOL))
+  else if (command->instruction.equals(MIXPUMP_GETSPEEDSETTING))
   {
-    pump->PipeSetVol(command->operand);
+    response->data = pump->GetSpeedSetting();
+    response->type = RESP_TYPE_FEEDBACK;
   }
   else {
-    ret_val = CMD_INVALID;
+    response->type = RESP_TYPE_INVALID;
+    response->error_code = RESP_FEEDBACK_ERR_INVALID;
   }
-  // Serial.println("No matching command");
-  return ret_val;
 }
 
 /**
@@ -75,27 +80,29 @@ int MixPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* respond)
  * 
  * @param mixer 
  * @param command 
- * @return int 
+ * @param response 
  */
-int MixerController(Mixer * mixer, cmd_t * command, resp_t* respond)
+void MixerController(Mixer * mixer, cmd_t * command, resp_t* response)
 {
-  uint8_t ret_val = CMD_RECEIVED;
-  if (command->id.equals(MIXER_START))
+  response->source = MIXER;
+  response->type = RESP_TYPE_VALID;
+  response->data = 0;
+  if (command->instruction.equals(MIXER_START))
   {
-    mixer->Start();
+    response->error_code = mixer->Start();
   }
-  else if (command->id.equals(MIXER_STOP))
+  else if (command->instruction.equals(MIXER_STOP))
   {
-    mixer->Stop();
+    response->error_code = mixer->Stop();
   }
-  else if (command->id.equals(MIXER_RUN))
+  else if (command->instruction.equals(MIXER_RUN))
   {
-    mixer->Run(command->operand);
+    response->error_code = mixer->Run(command->operand);
   }
   else {
-    ret_val = CMD_INVALID;
+    response->type = RESP_TYPE_INVALID;
+    response->error_code = RESP_FEEDBACK_ERR_INVALID;
   }
-  return ret_val;
 }
 
 /**
@@ -103,19 +110,35 @@ int MixerController(Mixer * mixer, cmd_t * command, resp_t* respond)
  * 
  * @param sensor 
  * @param command 
- * @return int 
+ * @param response 
  */
-int TempSensorController(TempSensorMAX31855 * sensor, cmd_t * command, resp_t* respond)
+void TempSensorController(TempSensorMAX31855 * sensor, cmd_t * command, resp_t* response)
 {
-  uint8_t ret_val = CMD_RECEIVED;
-  if (command->id.equals(TEMPSENSOR_READ_ONCE))
+  float data;
+  bool read_cont_flag_on = sensor->ContinuousFlagOn();
+  response->source = TEMPSENSOR;
+  response->data = 0;
+  if (command->instruction.equals(TEMPSENSOR_READ_ONCE))
   {
-    sensor->ReadSensor()
+    response->error_code = sensor->ReadSensor(&data);
+    response->data = data;
+    response->type = RESP_TYPE_FEEDBACK;
+  }
+  else if (command->instruction.equals(TEMPSENSOR_READ_DURATION_MS) && !read_cont_flag_on)
+  {
+    response->error_code = sensor->InitializeReadContinuous(command->parameter);
+    response->type = RESP_TYPE_VALID;
+  }
+  else if (read_cont_flag_on)
+  {
+    response->error_code = sensor->ReadSensorContinous(&data);
+    response->data = data;
+    response->type = RESP_TYPE_FEEDBACK;
   }
   else {
-    ret_val = CMD_INVALID;
+    response->type = RESP_TYPE_INVALID;
+    response->error_code = RESP_FEEDBACK_ERR_INVALID;    
   }
-  return ret_val;
 }
 
 /**

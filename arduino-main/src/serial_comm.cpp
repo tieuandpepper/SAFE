@@ -18,7 +18,7 @@ int GetCommand(cmd_t* command)
 {
   if (!Serial.available())
   {
-    return CMD_NOTHING;
+    return CMD_UNAVAILABLE;
   }
   String buffer = Serial.readStringUntil('.');
   // trim whitespace and turn all characters uppercase
@@ -30,7 +30,7 @@ int GetCommand(cmd_t* command)
   int first_idx = 0;
   int last_idx = buffer.indexOf(',',first_idx);
   if (first_idx >= last_idx){
-    return CMD_NOTHING;
+    return CMD_UNAVAILABLE;
   }
   command->target = buffer.substring(first_idx,last_idx);
   Serial.print("Target="); Serial.print(command->target);
@@ -45,7 +45,7 @@ int GetCommand(cmd_t* command)
 
   if (first_idx >= last_idx){
     command->target = "";
-    return CMD_NOTHING;
+    return CMD_UNAVAILABLE;
   }
   command->instruction = buffer.substring(first_idx,last_idx);
   Serial.print(" | Command="); Serial.print(command->instruction);
@@ -54,9 +54,9 @@ int GetCommand(cmd_t* command)
   last_idx = buffer.length();
   if (first_idx < last_idx)
   {
-    command->operand = buffer.substring(first_idx, last_idx).toInt();
+    command->parameter = buffer.substring(first_idx, last_idx).toInt();
   }
-  Serial.print(" | Operand="); Serial.println(command->operand);
+  Serial.print(" | Parameter="); Serial.println(command->parameter);
   return CMD_RECEIVED;
 }
 
@@ -66,9 +66,11 @@ int GetCommand(cmd_t* command)
 int SendResponse(resp_t response)
 {
   String buffer = "RESP,";
-  buffer += response.feedback;
-  buffer += ",";
   buffer += response.source;
+  buffer += ",";
+  buffer += response.type;
+  buffer += ",";
+  buffer += response.error_code;
   buffer += ",";
   buffer += response.data;
   buffer += ".";
