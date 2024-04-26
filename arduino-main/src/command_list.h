@@ -13,13 +13,15 @@
 #define COMMAND_LIST_H
 
 
-// define target
-#define MIXPUMP             "PUMP1"
-#define MIXER               "MIXER"
-#define ROTARYVALVE         "VALVE"
-#define TEMPSENSOR          "TEMP"
-#define LIGHTER             "LIGHTER"
-#define TRANSFERPUMP        "PUMP2"
+// define target/source for command/response
+#define DEVICE_MIXPUMP             "PUMP1"
+#define DEVICE_MIXER               "MIXER"
+#define DEVICE_ROTARYVALVE         "VALVE"
+#define DEVICE_TEMPSENSOR          "TEMP"
+#define DEVICE_LIGHTER             "LIGHTER"
+#define DEVICE_TRANSFERPUMP        "PUMP2"
+#define DEVICE_NONE                "NONE"
+#define DEVICE_SYSTEM              "SYSTEM"
 
 // define command instruction
 #define MIXPUMP_START          "START"
@@ -41,8 +43,8 @@
 #define MIXER_RUN           "RUN"
 
 #define TEMPSENSOR_READ_DURATION_MS   "READTIME"
-#define TEMPSENSOR_READ_PERIOD_MS     "READCONT"
-#define TEMPSENSOR_READ_ONCE          "READONCE"
+#define TEMPSENSOR_READ_PERIOD_MS     "PERIODIC"
+#define TEMPSENSOR_READ_ONCE          "READ"
 #define TEMPSENSOR_READ_STOP          "STOP"
 
 #define LIGHTER_IGNITE                  "IGNITE"

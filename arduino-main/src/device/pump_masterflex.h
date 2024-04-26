@@ -7,7 +7,7 @@
 #define PumpMasterflex_h
 
 #include "Arduino.h"
-#include "response_code.h"
+#include "response_error_code.h"
 // arduino constant
 #define ARDUINO_PWM 255
 #define ARDUINO_ANALOG 1023
@@ -63,33 +63,33 @@ class PumpMasterflex {
         PumpSpeed_t _speed_control;
         float _max_voltage;
         float _min_voltage;
-        int32_t _pipe_vol = 0;
-        int32_t _tuning_vol = 0;
+        uint32_t _pipe_vol = 0;
+        uint32_t _tuning_vol = 0;
         uint8_t _pipe_state = PIPE_EMPTY;
     public:
         PumpMasterflex(MasterflexDB25Interface_t pins);
-        int Connect();
-        int Start();
-        int Stop();
-        int GetOpState();
-        int SetDirection(int direction);
-        int ChangeDirection();
-        int GetDirection();
-        int SetTubeSize(int size);
-        int GetTubeSize();
-        int SetMaxSpeed(int speed);
-        int SetMinSpeed(int speed);
-        int GetMaxSpeed();
-        int GetMinSpeed();
-        int SetSpeed(int speed_ul_min);
-        int GetSpeedSetting();
-        int GetSpeed();
-        int SetMaxVoltageLevel(int voltage_max);
-        int SetMinVoltageLevel(int voltage_min);
-        int Dispense(int amount_ul);
-        int PipeSetVol(int vol_ul);
-        int PipeSetState(int state);
-        int SetTuningVol(int amount_ul);
+        uint16_t Connect();
+        uint16_t Start();
+        uint16_t Stop();
+        uint16_t GetOpState();
+        uint16_t SetDirection(uint32_t direction);
+        uint16_t ChangeDirection();
+        uint16_t GetDirection();
+        uint16_t SetTubeSize(uint32_t size);
+        uint16_t GetTubeSize();
+        uint16_t SetMaxSpeed(uint32_t speed);
+        uint16_t SetMinSpeed(uint32_t speed);
+        uint16_t GetMaxSpeed(uint32_t * speed);
+        uint16_t GetMinSpeed(uint32_t * speed);
+        uint16_t SetSpeed(uint32_t speed_ul_min);
+        uint16_t GetSpeedSetting(uint32_t * speed);
+        uint16_t GetSpeed(uint32_t * speed);
+        uint16_t SetMaxVoltageLevel(uint32_t voltage_max);
+        uint16_t SetMinVoltageLevel(uint32_t voltage_min);
+        uint16_t Dispense(uint32_t amount_ul);
+        uint16_t PipeSetVol(uint32_t vol_ul);
+        uint16_t PipeSetState(uint32_t state);
+        uint16_t SetTuningVol(uint32_t amount_ul);
 };
 
 #endif

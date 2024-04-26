@@ -11,10 +11,11 @@
 #include "device/ezo_pump.h"
 #include "device/lighter.h"
 
-void MixPumpController(PumpMasterflex* pump, cmd_t* command, resp_t* response);
-void MixerController(Mixer * mixer, cmd_t * command, resp_t* response);
-void TempSensorController(TempSensorMAX31855 * sensor, cmd_t * command, resp_t* response);
-void RotaryValveController(RotaryValve * valve, cmd_t * command, resp_t* response);
-void LighterController(Lighter * lighter, cmd_t* command, resp_t* response);
+resp_t AllDeviceController(cmd_t command);
+resp_t MasterflexPumpController(PumpMasterflex* pump, cmd_t command);
+resp_t MixerController(Mixer * mixer, cmd_t command);
+resp_t TempSensorController(TempSensorMAX31855 * sensor, cmd_t command);
+resp_t RotaryValveController(RotaryValve * valve, cmd_t command);
+resp_t LighterController(Lighter * lighter, cmd_t command);
 
 #endif

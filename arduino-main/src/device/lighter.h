@@ -13,7 +13,7 @@
 #define LIGHTER_H
 
 #include "Arduino.h"
-#include "response_code.h"
+#include "response_error_code.h"
 
 #define DEFAULT_IGNITION_TIME_MS 1000
 
@@ -23,8 +23,8 @@ class Lighter {
         uint8_t _enable_pin;
     public:
         Lighter(uint8_t init_pin, uint8_t enable_pin);
-        int Connect();
-        int Ignite(int time_ms = DEFAULT_IGNITION_TIME_MS);
+        uint16_t Connect();
+        uint16_t Ignite(uint32_t time_ms = DEFAULT_IGNITION_TIME_MS);
 };
 
 

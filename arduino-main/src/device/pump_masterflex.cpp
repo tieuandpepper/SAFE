@@ -17,9 +17,9 @@ PumpMasterflex::PumpMasterflex(MasterflexDB25Interface_t bd25)
 /**
  * @brief Perform initializations on Arduino for the pump.
  * @brief Set initial state parameters read from the pump
- * @return int 
+ * @return uint16_t 
  */
-int PumpMasterflex::Connect()
+uint16_t PumpMasterflex::Connect()
 {
     pinMode(_pins.voltage_in_pin, OUTPUT);
     pinMode(_pins.start_stop_pin, OUTPUT);
@@ -27,31 +27,32 @@ int PumpMasterflex::Connect()
     pinMode(_pins.prime_pin, OUTPUT);
     _state_op = this->GetOpState();
     _state_dir = this->GetDirection();
-    _speed_control.speed_ml_min = this->GetSpeed();
-    return RESP_FEEDBACK_VOID;
+    _speed_control.speed_ml_min = 0.0;
+    this->SetSpeed(0.0);
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /// @brief Start the pump by pulling the START/STOP pin to LOW
 /// @note The pump wil run at the set speed in the system
-int PumpMasterflex::Start()
+uint16_t PumpMasterflex::Start()
 {
     digitalWrite(_pins.start_stop_pin, PUMP_START);
     _state_op = PUMP_START;
-    return RESP_FEEDBACK_VOID;
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /// @brief Stop the pump by pulling the START/STOP pin to HIGH
-int PumpMasterflex::Stop()
+uint16_t PumpMasterflex::Stop()
 {
     digitalWrite(_pins.start_stop_pin, PUMP_STOP);
     _state_op = PUMP_STOP;
-    return RESP_FEEDBACK_VOID;
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /// @brief Retrieve the current state of START/STOP pin of the pump
 /// @return @c 0/LOW  the pump is running
 ///         @c 1/HIGH the pump is idle
-int PumpMasterflex::GetOpState()
+uint16_t PumpMasterflex::GetOpState()
 {
     _state_op = digitalRead(_pins.start_stop_pin);
     return _state_op;
@@ -59,25 +60,29 @@ int PumpMasterflex::GetOpState()
 
 /// @brief Set the direction (clockwise/counterclockwise) by the CW/CCW pin
 /// @param direction @c 1/HIGH CW  @c 0/LOW CCW
-int PumpMasterflex::SetDirection(int direction)
+uint16_t PumpMasterflex::SetDirection(uint32_t direction)
 {
-    digitalWrite(_pins.direction_pin, direction);
-    _state_dir = direction;
-    return RESP_FEEDBACK_VOID;
+    if (direction != DIR_CW && direction != DIR_CCW)
+    {
+        return RESP_GENERAL_ERROR_INVALID_PARAMS;
+    }
+    _state_dir = (uint8_t)direction;
+    digitalWrite(_pins.direction_pin, _state_dir);
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /// @brief Toggle the direction (clockwise/counterclockwise) by the CW/CCW pin
-int PumpMasterflex::ChangeDirection()
+uint16_t PumpMasterflex::ChangeDirection()
 {
     _state_dir = _state_dir ^ HIGH;
     digitalWrite(_pins.direction_pin, _state_dir);
-    return RESP_FEEDBACK_VOID;
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /// @brief Retrieve the current state of CW/CCW pin of the pump
 /// @return @c 0/LOW  the pump is set counterclockwise
 ///         @c 1/HIGH the pump is set clockwise
-int PumpMasterflex::GetDirection()
+uint16_t PumpMasterflex::GetDirection()
 {
     _state_dir = digitalRead(_pins.direction_pin);
     return _state_dir;
@@ -85,16 +90,16 @@ int PumpMasterflex::GetDirection()
 
 /// @brief Retrieve the setup tube size
 /// @return tube_size: 13, 14, 16, ...
-int PumpMasterflex::GetTubeSize(void)
+uint16_t PumpMasterflex::GetTubeSize(void)
 {
     return _tube.size;
 }
 
 /// @brief Update @c speed_control (max_speed and min_speed) by the size of tube
 /// @param size tube size (13, 14, 16, etc)
-int PumpMasterflex::SetTubeSize(int size)
+uint16_t PumpMasterflex::SetTubeSize(uint32_t size)
 {
-    _tube.size = size;
+    _tube.size = (uint8_t)size;
     switch (size){
         case TUBE_SIZE_13:
         {
@@ -118,48 +123,62 @@ int PumpMasterflex::SetTubeSize(int size)
     }
     _speed_control.max_speed = _tube.max_speed;
     _speed_control.min_speed = _tube.min_speed;
-    return RESP_FEEDBACK_VOID;
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /// @brief Set the pump max speed manually
 /// @attention This is used to overwrite the default tube size setting
 /// @param speed maximum speed by @c ul/min
 /// @note converted to @c ml/min
-int PumpMasterflex::SetMaxSpeed(int32_t speed)
+uint16_t PumpMasterflex::SetMaxSpeed(uint32_t speed)
 {
-    _speed_control.max_speed = (float)speed / 1000;
-    return RESP_FEEDBACK_VOID;
+    _speed_control.max_speed = ((float)speed / 1000);
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /// @brief Set the pump min speed manually
 /// @attention This is used to overwrite the default tube size setting
 /// @param speed minimum speed by @c ul/min
 /// @note converted to @c ml/min
-int PumpMasterflex::SetMinSpeed(int speed)
+uint16_t PumpMasterflex::SetMinSpeed(uint32_t speed)
 {
-    _speed_control.min_speed = (float)speed / 1000;
-    return RESP_FEEDBACK_VOID;
+    _speed_control.min_speed =  ((float)speed / 1000);
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
-int PumpMasterflex::GetMaxSpeed(void)
+/**
+ * @brief 
+ * 
+ * @param speed 
+ * @return uint16_t 
+ */
+uint16_t PumpMasterflex::GetMaxSpeed(uint32_t * speed)
 {
-    return (int)(_speed_control.max_speed * 1000);
+    (*speed) =  (uint32_t)(_speed_control.max_speed * 1000);
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
-int PumpMasterflex::GetMinSpeed(void)
+/**
+ * @brief 
+ * 
+ * @param speed 
+ * @return uint16_t 
+ */
+uint16_t PumpMasterflex::GetMinSpeed(uint32_t * speed)
 {
-    return (int)(_speed_control.min_speed * 1000);
+    (*speed) =  (uint32_t)(_speed_control.min_speed * 1000);
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /// @brief Set the pump speed by ml/min value
 /// @attention the pump speed ml/min values are both updated
 /// @note The continuous mode is not accurate due to fluctuating voltage signals
 /// @param speed_ul_min from min_speed to max_speed (ul/min)
-int PumpMasterflex::SetSpeed(int speed_ul_min)
+uint16_t PumpMasterflex::SetSpeed(uint32_t speed_ul_min)
 {
     float min_speed = _speed_control.min_speed;
     float max_speed = _speed_control.max_speed;
-    _speed_control.speed_ml_min = (float)speed_ul_min / 1000;
+    _speed_control.speed_ml_min = ((float)speed_ul_min / 1000);
     if (_speed_control.speed_ml_min < min_speed)
     {
         _speed_control.speed_ml_min = min_speed;
@@ -167,12 +186,12 @@ int PumpMasterflex::SetSpeed(int speed_ul_min)
     float speed_percent = (_speed_control.speed_ml_min - min_speed) / (max_speed - min_speed);
     int pwm_val = (int)(speed_percent * ARDUINO_PWM);
     analogWrite(_pins.voltage_in_pin, pwm_val);
-    return RESP_FEEDBACK_VOID;
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /// @brief Read the INPUT_VOLTAGE analog pin and calculate the current pump speed (by ml/min)
 /// @return pump speed by ul/min
-int PumpMasterflex::GetSpeed(void)
+uint16_t PumpMasterflex::GetSpeed(uint32_t * speed)
 {
     // analog read range 0-1023. operating voltage is 5V
     float voltage = ((float)analogRead(_pins.voltage_out_pin)*5) / 1023;
@@ -183,39 +202,40 @@ int PumpMasterflex::GetSpeed(void)
     }
     float percent   = (voltage - _min_voltage)/(_max_voltage-_min_voltage);
     // Serial.println(percent);
-    int speed = (int)(1000 * (percent * (_speed_control.max_speed-_speed_control.min_speed) + _speed_control.min_speed));
+    (*speed) = (uint32_t)(1000 * (percent * (_speed_control.max_speed-_speed_control.min_speed) + _speed_control.min_speed));
     // Serial.println(speed);
-    return speed;
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /// @brief Get the speed in software setting
 /// @return speed in ul/min
-int PumpMasterflex::GetSpeedSetting(void)
+uint16_t PumpMasterflex::GetSpeedSetting(uint32_t * speed)
 {
-    return (int)(_speed_control.speed_ml_min * 1000);
+    (*speed) =  (uint32_t)(_speed_control.speed_ml_min * 1000);
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /// @brief Set the voltage threshold for the pump @c VOLTAGE_OUTPUT 
 /// @param voltage_max highest voltage for the OUTPUT_PIN, in @c mV
 /// @warning Must be updated manually following the setting on the pump
-int PumpMasterflex::SetMaxVoltageLevel(int voltage_max)
+uint16_t PumpMasterflex::SetMaxVoltageLevel(uint32_t voltage_max)
 {
-    _max_voltage = (float)voltage_max / 1000;
-    return RESP_FEEDBACK_VOID;
+    _max_voltage = ((float)voltage_max / 1000);
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 /// @brief Set the voltage threshold for the pump @c VOLTAGE_OUTPUT
 /// @param voltage_min lowest voltage for the OUTPUT_PIN, in @c mV
 /// @warning Must be updated manually following the setting on the pump
-int PumpMasterflex::SetMinVoltageLevel(int voltage_min)
+uint16_t PumpMasterflex::SetMinVoltageLevel(uint32_t voltage_min)
 {
-    _min_voltage = (float)voltage_min / 1000;
-    return RESP_FEEDBACK_VOID;
+    _min_voltage = ((float)voltage_min / 1000);
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /// @brief Dispense a predetermined amount of liquid
 /// @param amount_ul amount of dispensed liquid in uL
 /// @return true/1 if success
-int PumpMasterflex::Dispense(int amount_ul)
+uint16_t PumpMasterflex::Dispense(uint32_t amount_ul)
 {
     uint64_t time;
     if (_pipe_state == PIPE_EMPTY)
@@ -227,35 +247,35 @@ int PumpMasterflex::Dispense(int amount_ul)
     {
         time = (uint64_t)((60 * (amount_ul + _tuning_vol)) / (_speed_control.speed_ml_min));
     }
-    bool res = this->Start();
+    int res = this->Start();
     delay(time);
-    res &= this->Stop();
+    res = this->Stop();
     return res;
 }
 
 /// @brief Set the amount of liquid used to fill pipes (only use the first time for each liquid)
 /// @param vol_ul volume in uL
 /// @return 1/true
-int PumpMasterflex::PipeSetVol(int vol_ul)
+uint16_t PumpMasterflex::PipeSetVol(uint32_t vol_ul)
 {
     _pipe_vol = vol_ul;
-    return RESP_FEEDBACK_VOID;
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /// @brief Set the amount of liquid used to fill pipes (only use the first time for each liquid)
 /// @param vol_ul volume in uL
 /// @return 1/true
-int PumpMasterflex::PipeSetState(int state)
+uint16_t PumpMasterflex::PipeSetState(uint32_t state)
 {
-    _pipe_state = state;
-    return RESP_FEEDBACK_VOID;
+    _pipe_state = (uint8_t)state;
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /// @brief Set the tuning volume for the pump (after calibration)
 /// @param amount_ul amount in uL
 /// @return true
-int PumpMasterflex::SetTuningVol(int amount_ul)
+uint16_t PumpMasterflex::SetTuningVol(uint32_t amount_ul)
 {
     _tuning_vol = amount_ul;
-    return RESP_FEEDBACK_VOID;
+    return RESP_GENERAL_FEEDBACK_VOID;
 }

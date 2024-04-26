@@ -20,20 +20,27 @@ int GetCommand(cmd_t* command)
   {
     return CMD_UNAVAILABLE;
   }
-  String buffer = Serial.readStringUntil('.');
+  Serial.println("serial data received");
+  String buffer = Serial.readStringUntil('>');
+  if (buffer.indexOf('<') != 0)
+  {
+    return CMD_INVALID;
+  }
+  buffer = buffer.substring(buffer.indexOf('<')+1);
+  Serial.println(buffer);
   // trim whitespace and turn all characters uppercase
   buffer.trim();
   buffer.replace(" ", "");
   buffer.toUpperCase();
-  Serial.println(buffer);
   // extract target ID
-  int first_idx = 0;
-  int last_idx = buffer.indexOf(',',first_idx);
+  uint16_t first_idx = 0;
+  uint16_t last_idx = buffer.indexOf(',',first_idx);
   if (first_idx >= last_idx){
-    return CMD_UNAVAILABLE;
+    command->target = DEVICE_NONE;
+    return CMD_INVALID;
   }
   command->target = buffer.substring(first_idx,last_idx);
-  Serial.print("Target="); Serial.print(command->target);
+  Serial.println(command->target);
   // extract command ID
   first_idx = last_idx + 1;
   last_idx = buffer.indexOf(',',first_idx);
@@ -44,19 +51,20 @@ int GetCommand(cmd_t* command)
   }
 
   if (first_idx >= last_idx){
-    command->target = "";
-    return CMD_UNAVAILABLE;
+    command->target = DEVICE_NONE;
+    return CMD_INVALID;
   }
   command->instruction = buffer.substring(first_idx,last_idx);
-  Serial.print(" | Command="); Serial.print(command->instruction);
-  // extract operand ID
+  Serial.println(command->instruction);
+  // extract parameter
   first_idx = last_idx + 1;
   last_idx = buffer.length();
+  command->parameter = 0;
   if (first_idx < last_idx)
   {
-    command->parameter = buffer.substring(first_idx, last_idx).toInt();
+    command->parameter = (int)(buffer.substring(first_idx, last_idx).toInt());
   }
-  Serial.print(" | Parameter="); Serial.println(command->parameter);
+  PrintCommand(*command);
   return CMD_RECEIVED;
 }
 
@@ -65,15 +73,25 @@ int GetCommand(cmd_t* command)
 /// @return 
 int SendResponse(resp_t response)
 {
-  String buffer = "RESP,";
+  String buffer = "<RESP,";
+  String error = "";
   buffer += response.source;
   buffer += ",";
   buffer += response.type;
   buffer += ",";
-  buffer += response.error_code;
+  error = String(response.error_code,HEX);
+  error.toUpperCase();
+  buffer += ("0x" + error);
   buffer += ",";
-  buffer += response.data;
-  buffer += ".";
+  buffer += String(response.data,DEC);
+  buffer += ">";
   Serial.println(buffer);
 }
 
+void PrintCommand(cmd_t command)
+{
+  Serial.print("<CMD,"); Serial.print(command.target);
+  Serial.print(","); Serial.print(command.instruction);
+  Serial.print(","); Serial.print(command.parameter);
+  Serial.println(">");
+}

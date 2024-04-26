@@ -127,8 +127,8 @@
 #define PIN_LIGHTER_ENABLE                  7
 
 // rotary valve
-#define PIN_ROTARY_VALVE_TX                 10
 #define PIN_ROTARY_VALVE_RX                 9
+#define PIN_ROTARY_VALVE_TX                 10
 
 // I2C Address
 #define I2C_ADDR_TEMP_SENSOR                0x10

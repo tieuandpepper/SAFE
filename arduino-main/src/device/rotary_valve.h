@@ -16,7 +16,7 @@
 
 #include <Arduino.h>
 #include <SoftwareSerial.h>
-#include "response_code.h"
+#include "response_error_code.h"
 
 /* Communication properties */
 #define COMM_DATA_BITS    8
@@ -86,17 +86,6 @@
 #define DIRECTION_CLOCKWISE                  0x01
 #define DIRECTION_COUNTERCLOCKWISE           0x02
 
-/* Response function code B2 from valve */
-#define RESP_VALVE_NORMAL_STATUS              0x00
-#define RESP_VALVE_ERROR_FRAME                0x01
-#define RESP_VALVE_ERROR_PARAMS               0x02
-#define RESP_VALVE_ERROR_OPTO                 0x03
-#define RESP_VALVE_ERROR_UNKNOWN              0xFF
-#define RESP_VALVE_MOTOR_BUSY                 0x04
-#define RESP_VALVE_MOTOR_FAILED               0x05
-#define RESP_VALVE_POSITION_UNKNOWN           0x06
-#define RESP_VALVE_TASK_EXECUTING             0xFE
-
 static uint16_t baud_rate_encode_arr[] = {9600, 19200, 38400, 57600, 115200};
 static uint8_t baud_rate_encode_arr_len = sizeof(baud_rate_encode_arr) / sizeof(uint16_t);
 
@@ -137,30 +126,30 @@ class RotaryValve : public SoftwareSerial {
         uint16_t CheckSum(uint8_t msg[], uint8_t msg_length = CMD_LEN_COMMON);
     public:
         // constructor and initialization
-        RotaryValve(uint8_t valve_tx, uint8_t valve_rx, int port_count, uint16_t baud_rate = 9600);
-        void Initialize();
+        RotaryValve(uint8_t valve_tx, uint8_t valve_rx, uint8_t port_count, uint16_t baud_rate = 9600);
+        void Connect();
         // low-level interface with hardware
-        int SendCommandTX(uint8_t func_code, uint32_t params = 0, uint8_t cmd_len = CMD_LEN_COMMON);
-        int GetResponseRX();
+        uint16_t SendCommandTX(uint8_t func_code, uint32_t params = 0, uint8_t cmd_len = CMD_LEN_COMMON);
+        uint16_t GetResponseRX();
         // high-level interface
         // factory setting command
-        int FactorySetAddr(uint32_t addr);
-        int FactorySetBaudRate(uint32_t baud_rate);
-        int FactorySetAutoReset(uint8_t power_on_reset);
-        int FactoryReset();
+        uint16_t FactorySetAddr(uint32_t addr);
+        uint16_t FactorySetBaudRate(uint32_t baud_rate);
+        uint16_t FactorySetAutoReset(uint8_t power_on_reset);
+        uint16_t FactoryReset();
         // Query command (Get commands)
-        int QueryAddress(int * addr);
-        int QueryBaudRate(int * baud_rate);
-        int QueryMotorStatus(int * status);
-        int QueryCurrVersion(int * version);
-        int QueryAutoReset(int * power_on_reset);
+        uint16_t QueryAddress(uint32_t * addr);
+        uint16_t QueryBaudRate(uint32_t * baud_rate);
+        uint16_t QueryMotorStatus(uint32_t * status);
+        uint16_t QueryCurrVersion(uint32_t * version);
+        uint16_t QueryAutoReset(uint32_t * power_on_reset);
         // Action command
-        int ActionReset();
-        int ActionResetOrigin();
-        int ActionMoveAuto(uint8_t port);
-        int ActionMoveWithDir(uint8_t port, uint8_t direction = DIRECTION_CLOCKWISE);
-        int ActionMoveBetween(uint8_t port1, uint8_t port2);
-        int ActionStop();
+        uint16_t ActionReset();
+        uint16_t ActionResetOrigin();
+        uint16_t ActionMoveAuto(uint8_t port);
+        uint16_t ActionMoveWithDir(uint8_t port, uint8_t direction = DIRECTION_CLOCKWISE);
+        uint16_t ActionMoveBetween(uint8_t port1, uint8_t port2);
+        uint16_t ActionStop();
 };
 
 // static helpers

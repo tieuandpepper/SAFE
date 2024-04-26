@@ -12,7 +12,7 @@
 #define Mixer_h
 
 #include "Arduino.h"
-#include "response_code.h"
+#include "response_error_code.h"
 
 #define STATE_OFF     1
 #define STATE_RUNNING 2
@@ -24,10 +24,10 @@ class Mixer {
     uint8_t _pin;
   public:
     Mixer(uint8_t pin);
-    int Connect();
-    int Start();
-    int Stop();
-    int Run(int32_t time_ms);
+    uint16_t Connect();
+    uint16_t Start();
+    uint16_t Stop();
+    uint16_t Run(uint32_t time_ms);
 };
 
 #endif

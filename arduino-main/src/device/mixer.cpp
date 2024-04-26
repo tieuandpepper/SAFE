@@ -24,52 +24,52 @@ Mixer::Mixer(uint8_t pin)
  * @brief 
  * 
  * @param pin 
- * @return int 
+ * @return uint16_t 
  */
-int Mixer::Connect()
+uint16_t Mixer::Connect()
 {
   pinMode(_pin,OUTPUT);
   digitalWrite(_pin, LOW);
   _state = STATE_IDLE;
-  return RESP_FEEDBACK_VOID;
+  return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /**
  * @brief 
  * 
  * @param pin 
- * @return int 
+ * @return uint16_t 
  */
-int Mixer::Start()
+uint16_t Mixer::Start()
 {
   digitalWrite(_pin, HIGH);
   _state = STATE_RUNNING;
-  return RESP_FEEDBACK_VOID;
+  return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /**
  * @brief 
  * 
  * @param pin 
- * @return int 
+ * @return uint16_t 
  */
-int Mixer::Stop()
+uint16_t Mixer::Stop()
 {
   digitalWrite(_pin, LOW);
   _state = STATE_IDLE;
-  return RESP_FEEDBACK_VOID;
+  return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /**
  * @brief 
  * 
  * @param pin 
- * @return int 
+ * @return uint16_t 
  */
-int Mixer::Run(int32_t time_ms)
+uint16_t Mixer::Run(uint32_t time_ms)
 {
   this->Start();
   delay(time_ms);
   this->Stop();
-  return RESP_FEEDBACK_VOID;
+  return RESP_GENERAL_FEEDBACK_VOID;
 }

@@ -16,24 +16,39 @@
  */
 TempSensorMAX31855::TempSensorMAX31855()
 {
-    _sensor_obj.begin();
+    _start_time = 0;
+    _end_time = 0;
+    _period_time = 0;
     _read_flag = FLAG_READ_ONCE;
+}
+
+/**
+ * @brief 
+ * 
+ * @return uint16_t 
+ */
+uint16_t TempSensorMAX31855::Connect()
+{
+    this->begin();
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /**
  * @brief read sensor, return the reading and update the data buffer
  * 
  * @param data 
- * @return int 
+ * @return uint16_t 
  */
-int TempSensorMAX31855::ReadSensor(float * data)
+uint16_t TempSensorMAX31855::ReadSensor(float * data)
 {
-    (*data) = _sensor_obj.readCelsius();
+    (*data) = this->readCelsius();
+    // Serial.print("ReadTemp="); Serial.println(*data);
     if ((*data) == NAN)
     {
+        // Serial.print("ReadTemp="); Serial.println(*data);
         return RESP_TEMPSENSOR_ERR_SENSOR;
     }
-    return RESP_FEEDBACK_SUCCESS;
+    return RESP_GENERAL_FEEDBACK_SUCCESS;
 }
 
 /**
@@ -41,37 +56,37 @@ int TempSensorMAX31855::ReadSensor(float * data)
  * @note this will overflow after about 49.7 days 
  * 
  * @param duration
- * @return int 
+ * @return uint16_t 
  */
-int TempSensorMAX31855::InitializeReadDuration(unsigned long duration_ms)
+uint16_t TempSensorMAX31855::InitializeReadDuration(uint32_t duration_ms)
 {
     _start_time = millis();
     _end_time = _start_time + duration_ms;
     _read_flag = FLAG_READ_DURATION;
-    return RESP_FEEDBACK_VOID;
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /**
  * @brief 
  * 
  * @param period_ms 
- * @return int 
+ * @return uint16_t 
  */
-int TempSensorMAX31855::InitializeReadPeriod(unsigned long period_ms)
+uint16_t TempSensorMAX31855::InitializeReadPeriod(uint32_t period_ms)
 {
     _start_time = millis();
     _period_time = period_ms;
     _end_time = _start_time + _period_time;
     _read_flag = FLAG_READ_PERIOD;
-    return RESP_FEEDBACK_VOID;
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /**
  * @brief check if end time is reached
  * 
- * @return int 
+ * @return uint16_t 
  */
-int TempSensorMAX31855::CheckEndTime()
+uint16_t TempSensorMAX31855::CheckEndTime()
 {
     if (millis() >= _end_time)
     {
@@ -84,51 +99,51 @@ int TempSensorMAX31855::CheckEndTime()
  * @brief read by a duration (no repeat)
  * 
  * @param data 
- * @return int 
+ * @return uint16_t 
  */
-int TempSensorMAX31855::ReadSensorbyDuration(float* data)
+uint16_t TempSensorMAX31855::ReadSensorbyDuration(float* data)
 {
     if (_read_flag != FLAG_READ_DURATION)
     {
-        return RESP_FEEDBACK_VOID;
+        return RESP_GENERAL_FEEDBACK_VOID;
     }
     if (this->CheckEndTime() == TIME_EXPIRED)
     {
         _read_flag = FLAG_READ_ONCE;
-        return RESP_TEMPSENSOR_READ_DURATION_DONE;
+        return this->ReadSensor(data);
     }
-    return this->ReadSensor(data);
+    return RESP_TEMPSENSOR_READ_TIMER_WAITING;
 }
 
 /**
  * @brief read for every period of time (repeatedly)
  * 
  * @param data 
- * @return int 
+ * @return uint16_t 
  */
-int TempSensorMAX31855::ReadSensorbyPeriod(float* data)
+uint16_t TempSensorMAX31855::ReadSensorbyPeriod(float* data)
 {
     if (_read_flag != FLAG_READ_PERIOD)
     {
-        return RESP_FEEDBACK_VOID;
+        return RESP_GENERAL_FEEDBACK_VOID;
     }
     if (this->CheckEndTime() == TIME_EXPIRED)
     {
         _end_time = millis() + _period_time;
         return this->ReadSensor(data);
     }
-    return RESP_TEMPSENSOR_READ_PERIOD_WAITING;
+    return RESP_TEMPSENSOR_READ_TIMER_WAITING;
 }
 
 /**
  * @brief Stop read by duration/period
  * 
- * @return int 
+ * @return uint16_t 
  */
-int TempSensorMAX31855::StopRead()
+uint16_t TempSensorMAX31855::StopRead()
 {
     _read_flag = FLAG_READ_ONCE;
-    return RESP_FEEDBACK_VOID;
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /**

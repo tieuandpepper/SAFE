@@ -13,7 +13,7 @@
 
 #include <DFRobot_MAX31855.h>
 #include <Arduino.h>
-#include "response_code.h"
+#include "response_error_code.h"
 
 #define BUFFER_SIZE  100
 
@@ -24,23 +24,23 @@
 #define FLAG_READ_DURATION   0xCCCC
 #define FLAG_READ_PERIOD     0xDDDD
 
-class TempSensorMAX31855{
+class TempSensorMAX31855: public DFRobot_MAX31855 {
     private:
-        DFRobot_MAX31855 _sensor_obj;
-        unsigned long _start_time;
-        unsigned long _period_time;
-        unsigned long _end_time;
-        int _read_flag;
-        int CheckEndTime();
+        uint32_t _start_time;
+        uint32_t _period_time;
+        uint32_t _end_time;
+        uint16_t _read_flag;
+        uint16_t CheckEndTime();
         
     public:
         TempSensorMAX31855();
-        int ReadSensor(float * data);
-        int InitializeReadPeriod(unsigned long period_ms);
-        int InitializeReadDuration(unsigned long duration_ms);
-        int ReadSensorbyDuration(float *data);
-        int ReadSensorbyPeriod(float *data);
-        int StopRead();
+        uint16_t Connect();
+        uint16_t ReadSensor(float * data);
+        uint16_t InitializeReadPeriod(uint32_t period_ms);
+        uint16_t InitializeReadDuration(uint32_t duration_ms);
+        uint16_t ReadSensorbyDuration(float *data);
+        uint16_t ReadSensorbyPeriod(float *data);
+        uint16_t StopRead();
         bool DurationFlagOn();
         bool PeriodFlagOn();
 };

@@ -11,6 +11,9 @@
 #ifndef SERIAL_COMM_H
 #define SERAIL_COMM_H
 
+#include "Arduino.h"
+#include "command_list.h"
+
 #define BUFFER_SIZE         64
 #define CMD_RECEIVED        0xCD01
 #define CMD_UNAVAILABLE     0xCDE2
@@ -20,23 +23,25 @@
 #define RESP_TYPE_VALID    "VALID"
 #define RESP_TYPE_INVALID  "INVALID"
 #define RESP_TYPE_FEEDBACK "FEEDBACK"
+#define RESP_TYPE_NOTHING  "NOTHING" // use to signal there is no meaningful response to send
 
 // Command structure: <TARGET>,<INSTRUCTION>,<OPERAND>.
 typedef struct command_type {
   String target;
   String instruction;
-  int parameter = 0;
+  uint32_t parameter = 0;
 } cmd_t;
 
 // Response structure: RESP,<SOURCE>,<TYPE>,<ERROR_CODE>,<DATA>.
 typedef struct resp_type {
   String source;
   String type;
-  int error_code;
-  int data = 0;
+  uint16_t error_code;
+  uint32_t data = 0;
 } resp_t;
 
 int GetCommand(cmd_t* command);
 int SendResponse(resp_t response);
+void PrintCommand(cmd_t command);
 
 #endif

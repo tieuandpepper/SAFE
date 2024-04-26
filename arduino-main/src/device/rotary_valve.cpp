@@ -32,20 +32,20 @@
  * @note: 8 bits, 1 stop bit, no parity, little endian
  * @attention: It seems like the valve using inverted protocol (idle at 0V)
  */
-RotaryValve::RotaryValve(uint8_t valve_rx, uint8_t valve_tx, int port_count, uint16_t baud_rate)
+RotaryValve::RotaryValve(uint8_t valve_rx, uint8_t valve_tx, uint8_t port_count, uint16_t baud_rate)
             : SoftwareSerial(valve_rx, valve_tx, true)
 {
     this->_baud_rate_code = GetBaudRateEncoding(baud_rate);
     this->_rx = valve_rx;
     this->_tx = valve_tx;
-    this->_port_count = (uint8_t)port_count;
+    this->_port_count = port_count;
 }
 
 /**
  * @brief connect to valve, can perform some intializing processes
  * @details: get current version, 
  */
-void RotaryValve::Initialize()
+void RotaryValve::Connect()
 {
     this->begin(baud_rate_encode_arr[this->_baud_rate_code]);
 }
@@ -66,10 +66,10 @@ void RotaryValve::Initialize()
  * @struct @factory <HEADER><ADDR><FUNC><PASSWORD[0-3]><PARAMS[0-3]><EOF><CSUM_LOW><CSUM_HIGH>
  * @return success/error code 
  */
-int RotaryValve::SendCommandTX(uint8_t func_code, uint32_t params, uint8_t cmd_len = CMD_LEN_COMMON)
+uint16_t RotaryValve::SendCommandTX(uint8_t func_code, uint32_t params, uint8_t cmd_len = CMD_LEN_COMMON)
 {
     uint8_t command_tx[CMD_LEN_FACTORY];
-    unsigned int byte_overwritten = 0;
+    uint16_t byte_overwritten = 0;
     _last_command.address = _address;
     _last_command.cmd_len = cmd_len;
     _last_command.function = func_code;
@@ -119,7 +119,7 @@ int RotaryValve::SendCommandTX(uint8_t func_code, uint32_t params, uint8_t cmd_l
     {
         return RESP_ROTVALVE_ERR_SEND_OVERFLOW;
     }
-    return RESP_FEEDBACK_SUCCESS;
+    return RESP_GENERAL_FEEDBACK_SUCCESS;
 }
 
 /**
@@ -132,10 +132,10 @@ int RotaryValve::SendCommandTX(uint8_t func_code, uint32_t params, uint8_t cmd_l
  *  failure from valve: 0x01-0x06, 0xFE, 0xFF
  *  failure from Arduino/driver: 0xE1 - 0xEF
  */
-int RotaryValve::GetResponseRX()
+uint16_t RotaryValve::GetResponseRX()
 {
     uint8_t response_rx[CMD_LEN_COMMON] = {0};
-    uint8_t read_count = 10;
+    uint8_t read_count = 20;
     bool data_available = false;
     uint8_t i = 0;
     // wait for response to arrive
@@ -158,7 +158,9 @@ int RotaryValve::GetResponseRX()
     while (this->available() && i < CMD_LEN_COMMON)
     {
         response_rx[i++] = this->read();
+        // Serial.print(response_rx[i-1]);
     }
+    // Serial.println();
     // missing bytes
     if (i < CMD_LEN_COMMON)
     {
@@ -185,7 +187,7 @@ int RotaryValve::GetResponseRX()
     {
         return RESP_ROTVALVE_ERR_CHECKSUM;
     }
-    return RESP_FEEDBACK_SUCCESS;
+    return RESP_GENERAL_FEEDBACK_SUCCESS;
 }
 
 /**
@@ -205,11 +207,11 @@ int RotaryValve::GetResponseRX()
  * B7=0xXX (B8=0x00 B9=0x00 B10=0x00)
  * The value range of XX is 00~7F in V1.9 & above version.
  * 00~FF in version below V1.9, the default is 00.
- * @return int success/error code
+ * @return uint16_t success/error code
  */
-int RotaryValve::FactorySetAddr(uint32_t addr)
+uint16_t RotaryValve::FactorySetAddr(uint32_t addr)
 {
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // the version is 0x0109 (V1.9) and above
     if (this->_version > 0x0109 && addr > 0x7F)
     {
@@ -217,18 +219,18 @@ int RotaryValve::FactorySetAddr(uint32_t addr)
     }
     // Send command
     res = this->SendCommandTX(SETTING_FUNC_SET_ADDRESS, addr, CMD_LEN_FACTORY);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -241,31 +243,31 @@ int RotaryValve::FactorySetAddr(uint32_t addr)
  * @brief Set baud rate for RS232 protocol
  * @ default 9600 bps
  * @param baud_rate 9600, 19200, 38400, 57600, 115200 bps
- * @return int success/error code
+ * @return uint16_t success/error code
  */
-int RotaryValve::FactorySetBaudRate(uint32_t baud_rate)
+uint16_t RotaryValve::FactorySetBaudRate(uint32_t baud_rate)
 {
     uint8_t baud_rate_code = GetBaudRateEncoding(baud_rate);
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     if (baud_rate_code == baud_rate_encode_arr_len)
     {
         return RESP_ROTVALVE_ERR_PARAMS;
     }
     // send command
     res = this->SendCommandTX(SETTING_FUNC_SET_SPEED_RS232, baud_rate_code, CMD_LEN_FACTORY);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Send command successfully
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -281,11 +283,11 @@ int RotaryValve::FactorySetBaudRate(uint32_t baud_rate)
  * @param power_on_reset 
  * 0x00: non-automatic reset
  * 0x01: automatic reset
- * @return int success/error code
+ * @return uint16_t success/error code
  */
-int RotaryValve::FactorySetAutoReset(uint8_t power_on_reset)
+uint16_t RotaryValve::FactorySetAutoReset(uint8_t power_on_reset)
 {
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // paramater validation
     if (power_on_reset != SETTING_PARAMS_AUTO_RESET_ON &&
         power_on_reset != SETTING_PARAMS_AUTO_RESET_OFF)
@@ -294,18 +296,18 @@ int RotaryValve::FactorySetAutoReset(uint8_t power_on_reset)
     }
     // Send command
     res = this->SendCommandTX(SETTING_FUNC_SET_AUTO_RESET, power_on_reset, CMD_LEN_FACTORY);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -315,25 +317,25 @@ int RotaryValve::FactorySetAutoReset(uint8_t power_on_reset)
 /**
  * @brief restore factory setting
  * 
- * @return int success/error code
+ * @return uint16_t success/error code
  */
-int RotaryValve::FactoryReset()
+uint16_t RotaryValve::FactoryReset()
 {
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // Send command
     res = this->SendCommandTX(SETTING_FUNC_FACTORY_SETTING, 0x0000, CMD_LEN_FACTORY);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -350,25 +352,25 @@ int RotaryValve::FactoryReset()
  * @brief get address of current device
  * Address range from 0x0000 to 0x007F
  * Default: 0x00
- * @return int success/error code/ status
+ * @return uint16_t success/error code/ status
  */
-int RotaryValve::QueryAddress(int * addr)
+uint16_t RotaryValve::QueryAddress(uint32_t * addr)
 {
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // Send command
     res = this->SendCommandTX(QUERY_FUNC_ADDRESS);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -385,25 +387,25 @@ int RotaryValve::QueryAddress(int * addr)
  *        0x0002: 38400 bps
  *        0x0003: 57600 bps
  *        0x0004: 115200 bps
- * @return int success/error code/status
+ * @return uint16_t success/error code/status
  */
-int RotaryValve::QueryBaudRate(int * baud_rate)
+uint16_t RotaryValve::QueryBaudRate(uint32_t * baud_rate)
 {
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // Send command
     res = this->SendCommandTX(QUERY_FUNC_RS232_SPEED);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -419,27 +421,27 @@ int RotaryValve::QueryBaudRate(int * baud_rate)
  * @brief Get motor status
  * 
  * @param status status code
- * @return int error code/status
+ * @return uint16_t error code/status
  */
-int RotaryValve::QueryMotorStatus(int * status)
+uint16_t RotaryValve::QueryMotorStatus(uint32_t * status)
 {
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // Send command
     res = this->SendCommandTX(QUERY_FUNC_MOTOR_STATUS);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status == RESP_VALVE_ERROR_FRAME ||
-        this->_last_response.status == RESP_VALVE_ERROR_PARAMS ||
-        this->_last_response.status == RESP_VALVE_ERROR_OPTO)
+    if (this->_last_response.status == RESP_ROTVALVE_ERROR_FRAME ||
+        this->_last_response.status == RESP_ROTVALVE_ERROR_PARAMS ||
+        this->_last_response.status == RESP_ROTVALVE_ERROR_OPTOCOUPLER)
     {
         return this->_last_response.status;
     }
@@ -451,25 +453,25 @@ int RotaryValve::QueryMotorStatus(int * status)
  * @brief Get current version
  * 
  * @param version pointer value
- * @return int error code/status
+ * @return uint16_t error code/status
  */
-int RotaryValve::QueryCurrVersion(int * version)
+uint16_t RotaryValve::QueryCurrVersion(uint32_t * version)
 {
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // Send command
     res = this->SendCommandTX(QUERY_FUNC_CURRENT_VERSION);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -481,25 +483,25 @@ int RotaryValve::QueryCurrVersion(int * version)
  * @brief Query automatic reset when power on
  * 
  * @param power_on_reset pointer value
- * @return int error code/status
+ * @return uint16_t error code/status
  */
-int RotaryValve::QueryAutoReset(int * power_on_reset)
+uint16_t RotaryValve::QueryAutoReset(uint32_t * power_on_reset)
 {
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // Send command
     res = this->SendCommandTX(QUERY_FUNC_AUTO_RESET);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -516,25 +518,25 @@ int RotaryValve::QueryAutoReset(int * power_on_reset)
 /**
  * @brief The selector valve runs to the reset optocoupler and stops
  * 
- * @return int error/status code
+ * @return uint16_t error/status code
  */
-int RotaryValve::ActionReset()
+uint16_t RotaryValve::ActionReset()
 {
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // Send command
     res = this->SendCommandTX(ACT_FUNC_RESET);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -545,25 +547,25 @@ int RotaryValve::ActionReset()
  * @brief The selector valve runs to the encoder origin position
  *        Overlapping with reset position of RESET (0x45) command
  * 
- * @return int error/status code
+ * @return uint16_t error/status code
  */
-int RotaryValve::ActionResetOrigin()
+uint16_t RotaryValve::ActionResetOrigin()
 {
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // Send command
     res = this->SendCommandTX(ACT_FUNC_ORIGIN_RESET);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -575,11 +577,11 @@ int RotaryValve::ActionResetOrigin()
  *        select the best path automatically
  *         
  * @param port 1 - highest port number
- * @return int error/status code
+ * @return uint16_t error/status code
  */
-int RotaryValve::ActionMoveAuto(uint8_t port)
+uint16_t RotaryValve::ActionMoveAuto(uint8_t port)
 {
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // validate port number
     if (port < this->_port_first || port > this->_port_count)
     {
@@ -587,18 +589,18 @@ int RotaryValve::ActionMoveAuto(uint8_t port)
     }
     // Send command
     res = this->SendCommandTX(ACT_FUNC_ROTATE_AUTO, port);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -620,9 +622,9 @@ int RotaryValve::ActionMoveAuto(uint8_t port)
  * @param direction 
  * @return int 
  */
-int RotaryValve::ActionMoveWithDir(uint8_t port, uint8_t direction)
+uint16_t RotaryValve::ActionMoveWithDir(uint8_t port, uint8_t direction)
 {
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     uint8_t adjacent_port;
     // find adjacent_port
     if (direction == DIRECTION_CLOCKWISE)
@@ -645,18 +647,18 @@ int RotaryValve::ActionMoveWithDir(uint8_t port, uint8_t direction)
     
     // Send command
     res = this->SendCommandTX(ACT_FUNC_SWITCH_PORT_IN_DIR, (adjacent_port << 8) | port);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -676,11 +678,11 @@ int RotaryValve::ActionMoveWithDir(uint8_t port, uint8_t direction)
  * @param port1 the first port
  * @param port2 the second port
  * The valve stops between @b port1 and @b port2
- * @return int 
+ * @return uint16_t 
  */
-int RotaryValve::ActionMoveBetween(uint8_t port1, uint8_t port2)
+uint16_t RotaryValve::ActionMoveBetween(uint8_t port1, uint8_t port2)
 {
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // parameter processing
     if (port1 < this->_port_first || port1 > this->_port_count)
     {
@@ -693,18 +695,18 @@ int RotaryValve::ActionMoveBetween(uint8_t port1, uint8_t port2)
     
     // Send command
     res = this->SendCommandTX(ACT_FUNC_SWITCH_BETWEEN_PORT_IN_DIR, (port1 << 8) | port2);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -714,25 +716,25 @@ int RotaryValve::ActionMoveBetween(uint8_t port1, uint8_t port2)
 /**
  * @brief Stop forcibly
  * 
- * @return int error/status code
+ * @return uint16_t error/status code
  */
-int RotaryValve::ActionStop()
+uint16_t RotaryValve::ActionStop()
 {
-    int res = RESP_ROTVALVE_ERR_SEND_FAILED;
+    uint16_t res = RESP_ROTVALVE_ERR_SEND_FAILED;
     // Send command
     res = this->SendCommandTX(ACT_FUNC_FORCE_STOP);
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Get response
     res = this->GetResponseRX();
-    if (res != RESP_FEEDBACK_SUCCESS)
+    if (res != RESP_GENERAL_FEEDBACK_SUCCESS)
     {
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }

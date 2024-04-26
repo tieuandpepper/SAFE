@@ -15,9 +15,9 @@ Lighter::Lighter(uint8_t init_pin, uint8_t enable_pin)
 /**
  * @brief 
  * 
- * @return int 
+ * @return uint16_t 
  */
-int Lighter::Connect()
+uint16_t Lighter::Connect()
 {
     pinMode(_enable_pin,OUTPUT);
     digitalWrite(_enable_pin,LOW);
@@ -25,19 +25,19 @@ int Lighter::Connect()
     digitalWrite(_init_pin,HIGH);
     delay(200);
     digitalWrite(_init_pin,LOW);
-    return RESP_FEEDBACK_VOID;
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
 
 /**
  * @brief 
  * 
  * @param time_ms 
- * @return int 
+ * @return uint16_t 
  */
-int Lighter::Ignite(int time_ms = DEFAULT_IGNITION_TIME_MS)
+uint16_t Lighter::Ignite(uint32_t time_ms = DEFAULT_IGNITION_TIME_MS)
 {
     digitalWrite(_enable_pin,HIGH);
     delay(time_ms);
     digitalWrite(_enable_pin,LOW);
-    return RESP_FEEDBACK_VOID;
+    return RESP_GENERAL_FEEDBACK_VOID;
 }
