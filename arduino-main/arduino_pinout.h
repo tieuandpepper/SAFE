@@ -33,12 +33,12 @@
  *                         |           D13-|- 
  *                        -|-IOREF     D12-|- 
  *                        -|-RESET     D11-|- 
- *                        -|-3.3V      D10-|- rotary valve TX
- *        mixer_relay_Vcc -|-5V        D09-|- rotary valve RX
- *                        -|-GND       D08-|- mixer relay enable
+ *                        -|-3.3V      D10-|- 
+ *        mixer_relay_Vcc -|-5V        D09-|- rotary valve TX
+ *                        -|-GND       D08-|- rotary valve RX
  *                        -|-GND           | 
- *                        -|-VIN       D07-|- lighter enable pin
- *                         |           D06-|- lighter initialization pin
+ *                        -|-VIN       D07-|- mixer relay enable
+ *                         |           D06-|- lighter enable
  *                        -|-A0        D05-|- mixing_pump DB25_P01
  *                        -|-A1        D04-|- mixing_pump DB25_P15
  *                        -|-A2        D03-|- mixing_pump DB25_P16
@@ -48,26 +48,6 @@
  *                         |_______________|
  * 
  * 
- * 
- *                     +-----------------------+  
- *                     |    Wiring diagram     |
- *                     |        Lighter        |
- *                     +-----------------------+ 
- *                       __________________________________________
- *                       |   ______________         __________    |
- *                       |   |            |         |  pMOS  |    |
- *                       |   |            |         | Source-|----+    
- *                       +---|---button---|---------|-Drain  |     
- *                           |            |         |  Gate  |
- *                           |            |         |____|___|
- *                           |            |              |
- *         Arduino GND ------| - initial +|----+     Arduino D07
- *                           |   ization  |    |
- *                           |            |  Arduino D06
- *                           |  VCC   GND |
- *                           |___|_____|__|
- *                               |     |
- *                            5V Power supply
  * 
  *                     +-----------------------+
  *                     | PINOUT & POWER SUPPLY |
@@ -86,18 +66,16 @@
  *      MIXING PUMP      |    CONNECTOR-DB25 PIN-20    |    D02      |              
  *      MIXER            |          RELAY - GND        |    GND      |              
  *      MIXER            |          RELAY - VCC        |     5V      |          
- *      MIXER            |          RELAY - IN         |    D08      |              
- *      LIGHTER          |    ENABLE - ON/OFF BUTTON   |    D07      |               
- *      LIGHTER          |         INITIALIZATION      |    D06      |
- *      LIGHTER          |       INITIALIZATION_GND    |    GND      |      
- *      LIGHTER          |          POWER_VCC          |             |      3.7-5 V
+ *      MIXER            |          RELAY - IN         |    D07      |              
+ *      LIGHTER          |          ENABLE             |    D06      |    
+ *      LIGHTER          |          POWER_VCC          |             |      9-12V => 2.5->3A
  *      LIGHTER          |          POWER_GND          |             |       GND
  *      TEMP SENSOR      |             VCC             |     5V      |
  *      TEMP SENSOR      |             GND             |     GND     |
  *      TEMP SENSOR      |          SCL Clock          |     SCL     |
  *      TEMP SENSOR      |          SDA Data           |     SDA     |
- *      ROTARY VALVE     |           RS232 RX          |     D09     |
- *      ROTARY VALVE     |           RS232 TX          |     D10     |
+ *      ROTARY VALVE     |           RS232 RX          |     D08     |
+ *      ROTARY VALVE     |           RS232 TX          |     D09     |
  *      ROTARY VALVE     |           RS232 GND         |     GND     |
  *      ROTARY VALVE     |           DC 24V +          |             |       24V
  *      ROTARY VALVE     |           DC 24V -          |             |       GND
@@ -120,15 +98,14 @@
 #define PIN_MIXING_PUMP_SPEED_FEEDBACK      A3 // analog pin
 
 // Mixer pin
-#define PIN_MIXER_ENABLE                    8
+#define PIN_MIXER_ENABLE                    7
 
 // Lighter pins
-#define PIN_LIGHTER_INIT                    6
-#define PIN_LIGHTER_ENABLE                  7
+#define PIN_LIGHTER_ENABLE                  6
 
 // rotary valve
-#define PIN_ROTARY_VALVE_RX                 9
-#define PIN_ROTARY_VALVE_TX                 10
+#define PIN_ROTARY_VALVE_RX                 8
+#define PIN_ROTARY_VALVE_TX                 9
 
 // I2C Address
 #define I2C_ADDR_TEMP_SENSOR                0x10

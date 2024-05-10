@@ -26,7 +26,7 @@ PumpMasterflex mixing_pump = PumpMasterflex(mixing_pump_interface);
 // RotaryValve rotary_valve = RotaryValve(PIN_ROTARY_VALVE_RX,PIN_ROTARY_VALVE_TX,16,9600);
 Mixer mixer = Mixer(PIN_MIXER_ENABLE);
 TempSensorMAX31855 temp_sensor;
-Lighter lighter = Lighter(PIN_LIGHTER_INIT,PIN_LIGHTER_ENABLE);
+Lighter lighter = Lighter(PIN_LIGHTER_ENABLE);
 
 /// @brief Setup/ Initialization. Run first and run ONCE
 void setup() {

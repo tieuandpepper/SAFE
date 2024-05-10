@@ -19,10 +19,9 @@
 
 class Lighter {
     private:
-        uint8_t _init_pin;
         uint8_t _enable_pin;
     public:
-        Lighter(uint8_t init_pin, uint8_t enable_pin);
+        Lighter(uint8_t enable_pin);
         uint16_t Connect();
         uint16_t Ignite(uint32_t time_ms = DEFAULT_IGNITION_TIME_MS);
 };

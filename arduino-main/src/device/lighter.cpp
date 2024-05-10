@@ -3,12 +3,10 @@
 /**
  * @brief Construct a new Lighter:: Lighter object
  * 
- * @param init_pin 
  * @param enable_pin 
  */
-Lighter::Lighter(uint8_t init_pin, uint8_t enable_pin)
+Lighter::Lighter(uint8_t enable_pin)
 {
-    _init_pin = init_pin;
     _enable_pin = enable_pin;
 }
 
@@ -21,10 +19,7 @@ uint16_t Lighter::Connect()
 {
     pinMode(_enable_pin,OUTPUT);
     digitalWrite(_enable_pin,LOW);
-    pinMode(_init_pin,OUTPUT);
-    digitalWrite(_init_pin,HIGH);
     delay(200);
-    digitalWrite(_init_pin,LOW);
     return RESP_GENERAL_FEEDBACK_VOID;
 }
 
