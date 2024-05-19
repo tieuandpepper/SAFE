@@ -34,16 +34,16 @@ int GetCommand(cmd_t* command)
   buffer.toUpperCase();
   // extract target ID
   uint16_t first_idx = 0;
-  uint16_t last_idx = buffer.indexOf(',',first_idx);
+  uint16_t last_idx = buffer.indexOf(';',first_idx);
   if (first_idx >= last_idx){
     command->target = DEVICE_NONE;
     return CMD_INVALID;
   }
   command->target = buffer.substring(first_idx,last_idx);
-  Serial.println(command->target);
+  // Serial.println(command->target);
   // extract command ID
   first_idx = last_idx + 1;
-  last_idx = buffer.indexOf(',',first_idx);
+  last_idx = buffer.indexOf(';',first_idx);
   // cannot find the comma (no operand)
   if (last_idx == -1)
   {
@@ -55,7 +55,7 @@ int GetCommand(cmd_t* command)
     return CMD_INVALID;
   }
   command->instruction = buffer.substring(first_idx,last_idx);
-  Serial.println(command->instruction);
+  // Serial.println(command->instruction);
   // extract parameter
   first_idx = last_idx + 1;
   last_idx = buffer.length();
@@ -73,25 +73,28 @@ int GetCommand(cmd_t* command)
 /// @return 
 int SendResponse(resp_t response)
 {
-  String buffer = "<RESP,";
+  String buffer = "<RESP;";
   String error = "";
   buffer += response.source;
-  buffer += ",";
+  buffer += ";";
   buffer += response.type;
-  buffer += ",";
+  buffer += ";";
   error = String(response.error_code,HEX);
   error.toUpperCase();
-  buffer += ("0x" + error);
-  buffer += ",";
-  buffer += String(response.data,DEC);
+  buffer += (error);
+  if (response.data.length() > 0)
+  {
+    buffer += ";";
+    buffer += response.data;
+  }
   buffer += ">";
   Serial.println(buffer);
 }
 
 void PrintCommand(cmd_t command)
 {
-  Serial.print("<CMD,"); Serial.print(command.target);
-  Serial.print(","); Serial.print(command.instruction);
-  Serial.print(","); Serial.print(command.parameter);
+  Serial.print("<CMD;"); Serial.print(command.target);
+  Serial.print(";"); Serial.print(command.instruction);
+  Serial.print(";"); Serial.print(command.parameter);
   Serial.println(">");
 }

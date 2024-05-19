@@ -12,9 +12,9 @@ resp_t MasterflexPumpController(PumpMasterflex* pump, cmd_t command)
   resp_t response;
   uint32_t data;
   Serial.println("Mixpump received a command");
-  response.source = DEVICE_MIXPUMP;
+  response.source = DEVICE_MASTERFLEXPUMP;
   response.type = RESP_TYPE_VALID;
-  response.data = 0;
+  response.data = "";
   response.error_code = RESP_GENERAL_FEEDBACK_VOID;
   if (command.instruction.equals(MIXPUMP_START))
   {
@@ -64,28 +64,28 @@ resp_t MasterflexPumpController(PumpMasterflex* pump, cmd_t command)
   if (command.instruction.equals(MIXPUMP_GETSPEED))
   {
     response.error_code = pump->GetSpeed(&data);
-    response.data = data;
+    response.data = String(data);
     response.type = RESP_TYPE_FEEDBACK;
     return response;
   }
   if (command.instruction.equals(MIXPUMP_GETMAXSPEED))
   {
     response.error_code = pump->GetMaxSpeed(&data);
-    response.data = data;
+    response.data = String(data);
     response.type = RESP_TYPE_FEEDBACK;
     return response;
   }
   if (command.instruction.equals(MIXPUMP_GETMINSPEED))
   {
     response.error_code = pump->GetMinSpeed(&data);
-    response.data = data;
+    response.data = String(data);
     response.type = RESP_TYPE_FEEDBACK;
     return response;
   }
   if (command.instruction.equals(MIXPUMP_GETSPEEDSETTING))
   {
     response.error_code = pump->GetSpeedSetting(&data);
-    response.data = data;
+    response.data = String(data);
     response.type = RESP_TYPE_FEEDBACK;
     return response;
   }
@@ -108,7 +108,7 @@ resp_t MixerController(Mixer * mixer, cmd_t command)
   Serial.println("Mixer received a command");
   response.source = DEVICE_MIXER;
   response.type = RESP_TYPE_VALID;
-  response.data = 0;
+  response.data = "";
   response.error_code = RESP_GENERAL_FEEDBACK_VOID;
   if (command.instruction.equals(MIXER_START))
   {
@@ -142,7 +142,7 @@ resp_t TempSensorController(TempSensorMAX31855 * sensor, cmd_t command)
   resp_t response;
   float data = 0.0;
   response.source = DEVICE_TEMPSENSOR;
-  response.data = 0;
+  response.data = "";
   response.error_code = RESP_GENERAL_FEEDBACK_VOID;
   response.type = RESP_TYPE_VALID;
 
@@ -187,7 +187,7 @@ resp_t TempSensorController(TempSensorMAX31855 * sensor, cmd_t command)
   {
     response.error_code = sensor->ReadSensor(&data);
     // data = 123456.123456;
-    response.data = (uint32_t)(data*1000);
+    response.data = String(data*1000);
     response.type = RESP_TYPE_FEEDBACK;
     // Serial.println(data);
     // Serial.println(response.data);
@@ -229,7 +229,7 @@ resp_t RotaryValveController(RotaryValve * valve, cmd_t command)
   Serial.println("Rotary valve received a command");
   response.source = DEVICE_ROTARYVALVE;
   response.type = RESP_TYPE_VALID;
-  response.data = 0;
+  response.data = "";
   response.error_code = RESP_GENERAL_FEEDBACK_VOID;
   if (command.instruction.equals(ROTARYVALVE_SET_ADDR))
   {
@@ -249,28 +249,28 @@ resp_t RotaryValveController(RotaryValve * valve, cmd_t command)
   if (command.instruction.equals(ROTARYVALVE_GET_ADDR))
   {
     response.error_code = valve->QueryAddress(&data);
-    response.data = data;
+    response.data = String(data);
     response.type = RESP_TYPE_FEEDBACK;
     return response;
   }
   if (command.instruction.equals(ROTARYVALVE_GET_BAUD_RATE))
   {
     response.error_code = valve->QueryBaudRate(&data);
-    response.data = data;
+    response.data = String(data);
     response.type = RESP_TYPE_FEEDBACK;
     return response;
   }
   if (command.instruction.equals(ROTARYVALVE_GET_MOTOR_STATUS))
   {
     response.error_code = valve->QueryMotorStatus(&data);
-    response.data = data;
+    response.data = String(data);
     response.type = RESP_TYPE_FEEDBACK;
     return response;
   }
   if (command.instruction.equals(ROTARYVALVE_GET_VERSION))
   {
     response.error_code = valve->QueryCurrVersion(&data);
-    response.data = data;
+    response.data = String(data);
     response.type = RESP_TYPE_FEEDBACK;
     return response;
   }
@@ -297,21 +297,103 @@ resp_t RotaryValveController(RotaryValve * valve, cmd_t command)
 /**
  * @brief control lighter from command
  * 
- * @param lighter lighter object
+ * @param ArcLighter lighter object
  * @param command 
  * @return resp_t response
  */
-resp_t LighterController(Lighter * lighter, cmd_t command)
+resp_t ArcLighterController(ArcLighter * lighter, cmd_t command)
 {
   resp_t response;
   Serial.println("Lighter received a command");
   response.source = DEVICE_LIGHTER;
-  response.data = 0;
+  response.data = "";
   response.type = RESP_TYPE_VALID;
   response.error_code = RESP_GENERAL_FEEDBACK_VOID;
   if (command.instruction.equals(LIGHTER_IGNITE))
   {
-    response.error_code = lighter->Ignite();
+    if (command.parameter <= 0)
+    {
+      response.error_code = lighter->Ignite();
+    }
+    else 
+    {
+      // Serial.println("Ignite");
+      response.error_code = lighter->Ignite(command.parameter);
+    }
+    return response;
+  }
+  response.type = RESP_TYPE_INVALID;
+  response.error_code = RESP_GENERAL_ERROR_INVALID_INSTRUCTION;
+  return response;
+}
+
+resp_t EZOPumpController(EZOPump * pump, cmd_t command)
+{
+  resp_t response;
+  String data;
+  Serial.println("EZO Pump received a command");
+  response.source = DEVICE_EZOPUMP;
+  response.data = "";
+  response.type = RESP_TYPE_VALID;
+  response.error_code = RESP_GENERAL_FEEDBACK_VOID;
+  if (command.instruction.equals(EZOPUMP_DISPENSE_CONTINUOUS))
+  {
+    response.error_code = pump->DispenseContinuous(command.parameter);
+    return response;
+  }
+  if (command.instruction.equals(EZOPUMP_DISPENSE_AMOUNT))
+  {
+    response.error_code = pump->DispenseVolume((float)command.parameter/1000);
+    return response;
+  }
+  if (command.instruction.equals(EZOPUMP_DISPENSE_PAUSE))
+  {
+    response.error_code = pump->DispensePause();
+    return response;
+  }
+  if (command.instruction.equals(EZOPUMP_DISPENSE_STOP))
+  {
+    response.error_code = pump->DispenseStop(&data);
+    response.data = data;
+    return response;
+  }
+  if (command.instruction.equals(EZOPUMP_DISPENSE_READING))
+  {
+    response.error_code = pump->SingleReport(&data);
+    response.data = data;
+    return response;
+  }
+  if (command.instruction.equals(EZOPUMP_DISPENSE_STATUS))
+  {
+    response.error_code = pump->DispenseStatus(&data);
+    response.data = data;
+    return response;
+  }
+  if (command.instruction.equals(EZOPUMP_CALIBRATE))
+  {
+    response.error_code = pump->Calibrate((float)command.parameter/1000);
+    return response;
+  }
+  if (command.instruction.equals(EZOPUMP_CALIBRATE_RESET))
+  {
+    response.error_code = pump->CalibrateReset();
+    return response;
+  }
+  if (command.instruction.equals(EZOPUMP_VOLTAGE))
+  {
+    response.error_code = pump->VoltageCheck(&data);
+    response.data = data;
+    return response;
+  }
+  if (command.instruction.equals(EZOPUMP_DEVICE_INFO))
+  {
+    response.error_code = pump->DeviceInfo(&data);
+    response.data = data;
+    return response;
+  }
+  if (command.instruction.equals(EZOPUMP_DIRECTION_CHANGE))
+  {
+    response.error_code = pump->DirectionChange();
     return response;
   }
   response.type = RESP_TYPE_INVALID;

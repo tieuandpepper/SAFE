@@ -15,6 +15,7 @@
 #define ROTARY_VALVE_H
 
 #include <Arduino.h>
+// #include <AltSoftSerial.h>
 #include <SoftwareSerial.h>
 #include "response_error_code.h"
 

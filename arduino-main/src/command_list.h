@@ -14,12 +14,12 @@
 
 
 // define target/source for command/response
-#define DEVICE_MIXPUMP             "PUMP1"
+#define DEVICE_MASTERFLEXPUMP      "MIXPUMP"
 #define DEVICE_MIXER               "MIXER"
-#define DEVICE_ROTARYVALVE         "VALVE"
-#define DEVICE_TEMPSENSOR          "TEMP"
+#define DEVICE_ROTARYVALVE         "ROTARYVALVE"
+#define DEVICE_TEMPSENSOR          "TEMPSENSOR"
 #define DEVICE_LIGHTER             "LIGHTER"
-#define DEVICE_TRANSFERPUMP        "PUMP2"
+#define DEVICE_EZOPUMP             "TRANSFERPUMP"
 #define DEVICE_NONE                "NONE"
 #define DEVICE_SYSTEM              "SYSTEM"
 
@@ -59,5 +59,19 @@
 #define ROTARYVALVE_RESET_ORIGIN        "MOVEORIGIN"
 #define ROTARYVALVE_MOVE_AUTO           "MOVEAUTO"
 #define ROTARYVALVE_STOP                "STOP"
+
+#define EZOPUMP_DISPENSE_CONTINUOUS     "START"
+#define EZOPUMP_DISPENSE_STOP           "STOP"
+#define EZOPUMP_DISPENSE_PAUSE          "PAUSE"
+#define EZOPUMP_DISPENSE_AMOUNT         "DISPENSE"
+#define EZOPUMP_DISPENSE_READING        "READING"
+#define EZOPUMP_DISPENSE_GET_VOL        "AMOUNT"
+#define EZOPUMP_DISPENSE_STATUS         "STATUS"
+#define EZOPUMP_CALIBRATE               "CALIBRATE"
+#define EZOPUMP_VOLTAGE                 "VOLTAGE"
+#define EZOPUMP_DEVICE_INFO             "INFO"
+#define EZOPUMP_DIRECTION_CHANGE        "DIRECTION"
+#define EZOPUMP_CALIBRATE_RESET         "CALRESET"
+
 
 #endif

@@ -54,4 +54,16 @@
 #define RESP_ROTVALVE_POSITION_UNKNOWN           0x0006
 #define RESP_ROTVALVE_TASK_EXECUTING             0x00FE
 
+/* Response code for EZO pump from manual */
+#define RESP_EZOPUMP_SUCCESS                    0x0001 
+#define RESP_EZOPUMP_ERR_SYNTAX                 0x0002
+#define RESP_EZOPUMP_ERR_PENDING                0x00FE // 254
+#define RESP_EZOPUMP_ERR_NO_DATA                0x00FF // 255
+
+/* Response code for EZO pump software driver */
+#define RESP_EZOPUMP_ERR_PARAMS                 0xE201 // Error in user input parameters
+#define RESP_EZOPUMP_ERR_SEND_FAILED            0xE202 // Error in sending command to pump
+#define RESP_EZOPUMP_ERR_SEND_OVERFLOW          0xE203 // Too many bytes per command were sent to pump
+#define RESP_EZOPUMP_ERR_BUFFER_EMPTY           0xE204 // Missing bytes from response
+
 #endif

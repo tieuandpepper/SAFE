@@ -33,12 +33,12 @@
  *                         |           D13-|- 
  *                        -|-IOREF     D12-|- 
  *                        -|-RESET     D11-|- 
- *                        -|-3.3V      D10-|- 
+ *                        -|-3.3V      D10-|- mixer relay enable
  *        mixer_relay_Vcc -|-5V        D09-|- rotary valve TX
  *                        -|-GND       D08-|- rotary valve RX
  *                        -|-GND           | 
- *                        -|-VIN       D07-|- mixer relay enable
- *                         |           D06-|- lighter enable
+ *                        -|-VIN       D07-|- lighter charger enable
+ *                         |           D06-|- lighter on/off enable
  *                        -|-A0        D05-|- mixing_pump DB25_P01
  *                        -|-A1        D04-|- mixing_pump DB25_P15
  *                        -|-A2        D03-|- mixing_pump DB25_P16
@@ -66,8 +66,9 @@
  *      MIXING PUMP      |    CONNECTOR-DB25 PIN-20    |    D02      |              
  *      MIXER            |          RELAY - GND        |    GND      |              
  *      MIXER            |          RELAY - VCC        |     5V      |          
- *      MIXER            |          RELAY - IN         |    D07      |              
+ *      MIXER            |          RELAY - IN         |    D10      |              
  *      LIGHTER          |          ENABLE             |    D06      |    
+ *      LIGHTER          |          CHARGER            |    D07      |    
  *      LIGHTER          |          POWER_VCC          |             |      9-12V => 2.5->3A
  *      LIGHTER          |          POWER_GND          |             |       GND
  *      TEMP SENSOR      |             VCC             |     5V      |
@@ -80,9 +81,9 @@
  *      ROTARY VALVE     |           DC 24V +          |             |       24V
  *      ROTARY VALVE     |           DC 24V -          |             |       GND
  *      TRANSFER PUMP    |             VCC             |     5V      |
- *      TRANSFER PUMP    |             GND             |     GND     |
- *      TRANSFER PUMP    |             SDA             |     A4      |
- *      TRANSFER PUMP    |             SCL             |     A5      |
+ *      TRANSFER PUMP    |             GND             |     GND     |      
+ *      TRANSFER PUMP    |             SDA             |     A4      |      4.7kOhm PUR
+ *      TRANSFER PUMP    |             SCL             |     A5      |      4.7kOhm PUR
  *      
  * 
  *      
@@ -98,10 +99,11 @@
 #define PIN_MIXING_PUMP_SPEED_FEEDBACK      A3 // analog pin
 
 // Mixer pin
-#define PIN_MIXER_ENABLE                    7
+#define PIN_MIXER_ENABLE                    10
 
 // Lighter pins
 #define PIN_LIGHTER_ENABLE                  6
+#define PIN_LIGHTER_CHARGER                 7
 
 // rotary valve
 #define PIN_ROTARY_VALVE_RX                 8

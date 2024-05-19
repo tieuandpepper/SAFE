@@ -23,6 +23,7 @@
 #define RESP_TYPE_VALID    "VALID"
 #define RESP_TYPE_INVALID  "INVALID"
 #define RESP_TYPE_FEEDBACK "FEEDBACK"
+#define RESP_TYPE_UNSUPPORTED "UNSUPPORTED"
 #define RESP_TYPE_NOTHING  "NOTHING" // use to signal there is no meaningful response to send
 
 // Command structure: <TARGET>,<INSTRUCTION>,<OPERAND>.
@@ -37,7 +38,7 @@ typedef struct resp_type {
   String source;
   String type;
   uint16_t error_code;
-  uint32_t data = 0;
+  String data = "";
 } resp_t;
 
 int GetCommand(cmd_t* command);
