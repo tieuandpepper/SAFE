@@ -12,8 +12,9 @@
 #include "src/device_controller.h"
 #include "arduino_pinout.h"
 /*----------------------------------------------------------------------------------------------------------*/
+#define ARDUINO_CENTRAL 1
 
-
+#if ARDUINO_CENTRAL
 MasterflexDB25Interface_t mixing_pump_interface {
   .start_stop_pin  = PIN_MIXING_PUMP_REMOTE_CONTROL,
   .direction_pin   = PIN_MIXING_PUMP_CLOCKWISE_CONTROL,
@@ -23,20 +24,21 @@ MasterflexDB25Interface_t mixing_pump_interface {
 };
 
 PumpMasterflex mixing_pump = PumpMasterflex(mixing_pump_interface);
-// RotaryValve rotary_valve = RotaryValve(PIN_ROTARY_VALVE_RX,PIN_ROTARY_VALVE_TX,16,9600);
 Mixer mixer = Mixer(PIN_MIXER_ENABLE);
 TempSensorMAX31855 temp_sensor;
-ArcLighter lighter = ArcLighter(PIN_LIGHTER_ENABLE,PIN_LIGHTER_CHARGER);
 EZOPump transfer_pump = EZOPump();
-
+#else
+RotaryValve rotary_valve = RotaryValve(PIN_ROTARY_VALVE_RX,PIN_ROTARY_VALVE_TX,16,9600);
+ArcLighter lighter = ArcLighter(PIN_LIGHTER_ENABLE,PIN_LIGHTER_CHARGER);
+#endif
 /// @brief Setup/ Initialization. Run first and run ONCE
 void setup() {
   // setup Serial communication to computer. Baud rate 115200 bps
   Serial.begin(115200);
   // Connect and initialize Masterflex pump
   Serial.println("SYSTEM INITIALIZING...");
-  lighter.SetChargerPin(PIN_LIGHTER_CHARGER);
-  lighter.SetEnablePin(PIN_LIGHTER_ENABLE);
+#if ARDUINO_CENTRAL
+  // connect mixing pump
   mixing_pump.Connect();
   mixing_pump.Stop();
   mixing_pump.SetDirection(DIR_CW);
@@ -49,15 +51,19 @@ void setup() {
   mixing_pump.PipeSetVol(2000);
   // Connect temperature sensor
   temp_sensor.Connect();
-  // Connect lighter
-  lighter.Connect();
-  // Connecct rotary valve
-  // rotary_valve.Connect();
   // Connect mixer
   mixer.Connect();
   transfer_pump.Connect();
   // delay(1000);
   // Serial.println(temp_sensor.readCelsius());
+#else
+  // Connecct rotary valve
+  rotary_valve.Connect();
+  // Connect lighter
+  lighter.Connect();
+  lighter.SetChargerPin(PIN_LIGHTER_CHARGER);
+  lighter.SetEnablePin(PIN_LIGHTER_ENABLE);
+#endif
   Serial.println("SYSTEM READY");
 }
 
@@ -73,8 +79,9 @@ void loop() {
   // new command is received
   if (GetCommand(&command) == CMD_RECEIVED)
   {
-    Serial.println("Active command");
+    // Serial.println("Active command");
     // filter command target
+#if ARDUINO_CENTRAL
     if (command.target.equals(DEVICE_MASTERFLEXPUMP))
     {
       response  = MasterflexPumpController(&mixing_pump, command);
@@ -87,35 +94,35 @@ void loop() {
     {
       response = TempSensorController(&temp_sensor, command);
     }
+    else if (command.target.equals(DEVICE_EZOPUMP))
+    {
+      response = EZOPumpController(&transfer_pump, command);
+    }
+#else
     else if (command.target.equals(DEVICE_LIGHTER))
     {
       response = ArcLighterController(&lighter, command);
     }
     else if (command.target.equals(DEVICE_ROTARYVALVE))
     {
-      // response = RotaryValveController(&rotary_valve, command);
-      response.source = DEVICE_SYSTEM;
-      response.error_code = RESP_GENERAL_ERROR_INVALID_TARGET;
-      response.data = "";
-      response.type = RESP_TYPE_UNSUPPORTED;
+      response = RotaryValveController(&rotary_valve, command);
     }
-    else if (command.target.equals(DEVICE_EZOPUMP))
-    {
-      response = EZOPumpController(&transfer_pump, command);
-    }
+#endif
     else {
       // no command target found -> send back system error with invalid target error code
       response.source = DEVICE_SYSTEM;
       response.error_code = RESP_GENERAL_ERROR_INVALID_TARGET;
       response.data = "";
-      response.type = RESP_TYPE_INVALID;
+      response.type = RESP_TYPE_UNSUPPORTED;
     }
   }
+#if !ARDUINO_CENTRAL
   else {
     // check for periodic tasks (background)
     // Serial.println("Run peridic tasks");
     response = TempSensorController(&temp_sensor, command);
   }
+#endif
   // only send back response if source is different than none
   if (response.source != DEVICE_NONE && response.type != RESP_TYPE_NOTHING)
   {
