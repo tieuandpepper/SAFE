@@ -228,7 +228,7 @@ uint8_t RotaryValve::FactorySetAddr(uint32_t addr)
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -265,7 +265,7 @@ uint8_t RotaryValve::FactorySetBaudRate(uint32_t baud_rate)
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -305,7 +305,7 @@ uint8_t RotaryValve::FactorySetAutoReset(uint8_t power_on_reset)
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -333,7 +333,7 @@ uint8_t RotaryValve::FactoryReset()
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -368,7 +368,7 @@ uint8_t RotaryValve::QueryAddress(uint32_t * addr)
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -403,7 +403,7 @@ uint8_t RotaryValve::QueryBaudRate(uint32_t * baud_rate)
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -437,9 +437,9 @@ uint8_t RotaryValve::QueryMotorStatus(uint32_t * status)
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status == RESP_VALVE_ERROR_FRAME ||
-        this->_last_response.status == RESP_VALVE_ERROR_PARAMS ||
-        this->_last_response.status == RESP_VALVE_ERROR_OPTO)
+    if (this->_last_response.status == RESP_ROTVALVE_ERROR_FRAME ||
+        this->_last_response.status == RESP_ROTVALVE_ERROR_PARAMS ||
+        this->_last_response.status == RESP_ROTVALVE_ERROR_OPTOCOUPLER)
     {
         return this->_last_response.status;
     }
@@ -469,7 +469,7 @@ uint8_t RotaryValve::QueryCurrVersion(uint32_t * version)
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -499,7 +499,7 @@ uint8_t RotaryValve::QueryAutoReset(uint32_t * power_on_reset)
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -536,7 +536,7 @@ uint8_t RotaryValve::ActionReset()
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -565,7 +565,7 @@ uint8_t RotaryValve::ActionResetOrigin()
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -600,7 +600,7 @@ uint8_t RotaryValve::ActionMoveAuto(uint8_t port)
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -658,7 +658,7 @@ uint8_t RotaryValve::ActionMoveWithDir(uint8_t port, uint8_t direction)
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -706,7 +706,7 @@ uint8_t RotaryValve::ActionMoveBetween(uint8_t port1, uint8_t port2)
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }
@@ -734,7 +734,7 @@ uint8_t RotaryValve::ActionStop()
         return res;
     }
     // Success getting a response, check for response status
-    if (this->_last_response.status != RESP_VALVE_NORMAL_STATUS)
+    if (this->_last_response.status != RESP_ROTVALVE_NORMAL_STATUS)
     {
         return this->_last_response.status;
     }

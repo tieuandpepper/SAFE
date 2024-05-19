@@ -50,11 +50,11 @@ void loop() {                                                                   
 
       if (strcmp(computerdata, "sleep") != 0) {                                   //if the command that has been sent is NOT the sleep command, wait the correct amount of time and request data.
 
-        delay(time_);                                                             //wait the correct amount of time for the device to complete its instruction.
 
         Wire.requestFrom(address, 20, 1);                                         //call the device and request 20 bytes (this may be more than we need)
         code = Wire.read();                                                       //the first byte is the response code, we read this separately.
-        Serial.print("Received: "); Serial.println(code);
+        delay(time_);                                                             //wait the correct amount of time for the device to complete its instruction.
+
         switch (code) {                                                           //switch case based on what the response code is.
           case 1:                                                                 //decimal 1.
             Serial.println("Success");                                            //means the command was successful.

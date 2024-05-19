@@ -18,7 +18,7 @@ DFRobot_MAX31855 max31855;
 
 void setup(){
   /*Set baudrate*/
-  Serial.begin(9600);
+  Serial.begin(115200);
   max31855.begin();
 }
 
@@ -27,5 +27,5 @@ void loop(){
   Serial.print("Temperature:");
   Serial.print(temp);
   Serial.println(" ℃");
-  delay(1000);
+  delay(50);
 }

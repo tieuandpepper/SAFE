@@ -1,21 +1,24 @@
-
+#include <Arduino.h>
+#define CHARGER_PIN 7
+#define ENABLE_PIN  6
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
-  pinMode(13, OUTPUT);
-  pinMode(8,OUTPUT);
-  digitalWrite(8,HIGH);
-  delay(60000);
-  digitalWrite(8,LOW);
+  Serial.begin(112500);
+  pinMode(CHARGER_PIN, OUTPUT);
+  pinMode(ENABLE_PIN,OUTPUT);
+  digitalWrite(CHARGER_PIN,HIGH);
+  delay(5000);
+  digitalWrite(CHARGER_PIN,LOW);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  digitalWrite(13, HIGH);
+  digitalWrite(ENABLE_PIN, HIGH);
   Serial.println("turn ON lighter");
-  delay(5000);
-  digitalWrite(13, LOW);
+  delay(2000);
+  digitalWrite(ENABLE_PIN, LOW);
   Serial.println("turn OFF lighter");
-  delay(10000);
+  delay(4000);
+  // digitalWrite(CHARGER_PIN,HIGH);
   // while(1) {};
 }
