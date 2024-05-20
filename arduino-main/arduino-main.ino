@@ -99,7 +99,7 @@ void loop() {
       response = EZOPumpController(&transfer_pump, command);
     }
 #else
-    else if (command.target.equals(DEVICE_LIGHTER))
+    if (command.target.equals(DEVICE_LIGHTER))
     {
       response = ArcLighterController(&lighter, command);
     }
@@ -116,7 +116,7 @@ void loop() {
       response.type = RESP_TYPE_UNSUPPORTED;
     }
   }
-#if !ARDUINO_CENTRAL
+#if ARDUINO_CENTRAL
   else {
     // check for periodic tasks (background)
     // Serial.println("Run peridic tasks");
