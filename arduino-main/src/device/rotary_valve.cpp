@@ -135,7 +135,7 @@ uint16_t RotaryValve::SendCommandTX(uint8_t func_code, uint32_t params, uint8_t 
 uint16_t RotaryValve::GetResponseRX()
 {
     uint8_t response_rx[CMD_LEN_COMMON] = {0};
-    uint8_t read_count = 20;
+    uint8_t read_count = 10;
     bool data_available = false;
     uint8_t i = 0;
     // wait for response to arrive
@@ -146,7 +146,7 @@ uint16_t RotaryValve::GetResponseRX()
             data_available = true;
             break;
         }
-        delay(50);
+        delay(400);
     }
 
     // unavailable data in buffer

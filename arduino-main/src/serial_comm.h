@@ -13,11 +13,16 @@
 
 #include "Arduino.h"
 #include "command_list.h"
+#include "Wire.h"
 
 #define BUFFER_SIZE         64
-#define CMD_RECEIVED        0xCD01
-#define CMD_UNAVAILABLE     0xCDE2
-#define CMD_INVALID         0xCDE3
+#define CMD_RECEIVED        0xCCF1
+#define CMD_UNAVAILABLE     0xCCE2
+#define CMD_INVALID         0xCCE3
+
+#define RESP_SENT           0xDDF1
+#define RESP_UNAVAILABLE    0xDDE1
+#define RESP_INVALID        0xDDE2
 
 // define reponse type
 #define RESP_TYPE_VALID    "VALID"

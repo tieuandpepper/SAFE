@@ -73,6 +73,10 @@ int GetCommand(cmd_t* command)
 /// @return 
 int SendResponse(resp_t response)
 {
+  if (response.source == DEVICE_NONE || response.type == RESP_TYPE_NOTHING)
+  {
+    return RESP_UNAVAILABLE;
+  }
   String buffer = "<RESP;";
   String error = "";
   buffer += response.source;
@@ -89,6 +93,7 @@ int SendResponse(resp_t response)
   }
   buffer += ">";
   Serial.println(buffer);
+  return RESP_SENT;
 }
 
 void PrintCommand(cmd_t command)

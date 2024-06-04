@@ -112,7 +112,7 @@ uint16_t TempSensorMAX31855::ReadSensorbyDuration(float* data)
         _read_flag = FLAG_READ_ONCE;
         return this->ReadSensor(data);
     }
-    return RESP_TEMPSENSOR_READ_TIMER_WAITING;
+    return RESP_GENERAL_FEEDBACK_WAITING;
 }
 
 /**
@@ -132,7 +132,7 @@ uint16_t TempSensorMAX31855::ReadSensorbyPeriod(float* data)
         _end_time = millis() + _period_time;
         return this->ReadSensor(data);
     }
-    return RESP_TEMPSENSOR_READ_TIMER_WAITING;
+    return RESP_GENERAL_FEEDBACK_WAITING;
 }
 
 /**
