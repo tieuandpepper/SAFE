@@ -2,12 +2,15 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
-df = pd.read_fwf('temp_data_5-17.txt')
+PERIOD_SEC = 0.5
+VOLUME_ML = 1.0
+DENSITY_G_CM3 = 1.3
+df = pd.read_fwf('temp_data_5-24-1.00ml.txt')
 # df.drop(df.index[0:260], inplace=True) 
 # df.drop(df.index[50::], inplace=True)
 # print(df)
 df["time"] = range(0,len(df["temperature"]))
-df["time"] = [x for x in df["time"]]
+df["time"] = [x/2 for x in df["time"]]
 print(df.head())
 
 temp_np = df["temperature"].to_numpy()
@@ -21,16 +24,20 @@ df["np_gradient"] = temp_np
 
 df = df.assign(fire=0)
 fire_ignited = False
+fire_time = 0
 for i in df.index:
     if df['np_gradient'][i] > 2:
         fire_ignited = True
-    if fire_ignited and df['np_gradient'][i] < 0:
+    if fire_ignited and df['np_gradient'][i] < -0.5:
         fire_ignited = False
     if fire_ignited:
         df['fire'][i] = 1
-
-
-print(df)
+        fire_time += 1
+print("Volume:", VOLUME_ML, "ml")
+print("Weight:",VOLUME_ML*DENSITY_G_CM3,"g")
+print("SET: ", fire_time*PERIOD_SEC, "s")
+print("Normalized SET: ",round(fire_time*PERIOD_SEC / (VOLUME_ML*DENSITY_G_CM3),4),"s/g")
+# print(df)
 # df.to_csv("output 3-4.csv")
 # fix, ax = plt.subplots(1, 2)
 # ax[0].scatter(df["time"],df["temperature"],s = 0.5)
