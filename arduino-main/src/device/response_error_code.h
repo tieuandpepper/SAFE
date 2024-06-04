@@ -24,12 +24,12 @@
 /* Common/General feedback and error 0xFC0__ or OxEC0__ */ 
 #define RESP_GENERAL_FEEDBACK_VOID              0xFC00  //nothing (for data and error_code) to return (some execution has no response)
 #define RESP_GENERAL_FEEDBACK_SUCCESS           0xFC01  //successful execution
+#define RESP_GENERAL_FEEDBACK_WAITING           0xFC02  // waiting
 #define RESP_GENERAL_ERROR_INVALID_TARGET       0xEC01  //invalid command's target
 #define RESP_GENERAL_ERROR_INVALID_INSTRUCTION  0xEC02  //invalid command's instruction -> no command execution
 #define RESP_GENERAL_ERROR_INVALID_PARAMS       0xEC03  //invalid parameter value
 
 /* TEMPERATURE SENSOR */
-#define RESP_TEMPSENSOR_READ_TIMER_WAITING      0xF000
 #define RESP_TEMPSENSOR_ERR_SENSOR              0xE001
 
 /* Response from ROTARY VALVE software driver */

@@ -37,14 +37,17 @@ uint16_t ArcLighter::Connect()
 uint16_t ArcLighter::Ignite(uint32_t time_ms = DEFAULT_IGNITION_TIME_MS)
 {
     this->Uncharging();
-    delay(100);
+    delay(10);
     // Serial.println("Stop charging, ignite");
+    _ignition_duration = time_ms;
+    _status = STATUS_ON;
+    _ignition_time = millis();
     digitalWrite(_enable_pin,HIGH);
-    delay(time_ms);
-    digitalWrite(_enable_pin,LOW);
+    // delay(time_ms);
+    // digitalWrite(_enable_pin,LOW);
     // Serial.println("Stop ignition, charging");
-    delay(100);
-    this->Charging();
+    // delay(100);
+    // this->Charging();
     return RESP_GENERAL_FEEDBACK_VOID;
 }
 
@@ -66,4 +69,17 @@ uint16_t ArcLighter::Charging()
 uint16_t ArcLighter::Uncharging()
 {
     digitalWrite(_charger_pin, LOW);
+}
+
+uint16_t ArcLighter::CheckStop()
+{
+    if (millis() - _ignition_time >= _ignition_duration && _status == STATUS_ON)
+    {
+        digitalWrite(_enable_pin,LOW);
+        delay(10);
+        this->Charging();
+        _status = STATUS_OFF;
+        return RESP_GENERAL_FEEDBACK_VOID;
+    }
+    return RESP_GENERAL_FEEDBACK_WAITING;
 }

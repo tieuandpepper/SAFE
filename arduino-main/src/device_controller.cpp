@@ -151,7 +151,7 @@ resp_t TempSensorController(TempSensorMAX31855 * sensor, cmd_t command)
   {
     // Serial.println("read by duration");
     response.error_code = sensor->ReadSensorbyDuration(&data);
-    if (response.error_code == RESP_TEMPSENSOR_READ_TIMER_WAITING)
+    if (response.error_code == RESP_GENERAL_FEEDBACK_WAITING)
     {
       response.type = RESP_TYPE_NOTHING;
     }
@@ -165,7 +165,7 @@ resp_t TempSensorController(TempSensorMAX31855 * sensor, cmd_t command)
   {
     // Serial.println("Read by period");
     response.error_code = sensor->ReadSensorbyPeriod(&data);
-    if (response.error_code == RESP_TEMPSENSOR_READ_TIMER_WAITING)
+    if (response.error_code == RESP_GENERAL_FEEDBACK_WAITING)
     {
       response.type = RESP_TYPE_NOTHING;
     }
@@ -304,11 +304,31 @@ resp_t RotaryValveController(RotaryValve * valve, cmd_t command)
 resp_t ArcLighterController(ArcLighter * lighter, cmd_t command)
 {
   resp_t response;
-  Serial.println("Lighter received a command");
+  // Serial.println("Lighter received a command");
   response.source = DEVICE_LIGHTER;
   response.data = "";
   response.type = RESP_TYPE_VALID;
   response.error_code = RESP_GENERAL_FEEDBACK_VOID;
+  // check for background/periodic tasks
+  if (lighter->GetStatus() == STATUS_ON && command.target == DEVICE_NONE)
+  {
+    response.error_code = lighter->CheckStop();
+    if (response.error_code == RESP_GENERAL_FEEDBACK_WAITING)
+    {
+      response.type = RESP_TYPE_NOTHING;
+    }
+    else {
+      response.type = RESP_TYPE_VALID;
+    }
+    return response;
+  }
+  // no periodic task and no active command
+  if (command.target == DEVICE_NONE)
+  {
+    response.source = DEVICE_NONE;
+    return response;
+  }
+  // active commands
   if (command.instruction.equals(LIGHTER_IGNITE))
   {
     if (command.parameter <= 0)
