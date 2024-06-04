@@ -43,7 +43,7 @@ typedef struct PumpSpeed {
 typedef struct MasterflexDB25Pins {
     uint8_t start_stop_pin;
     uint8_t direction_pin;
-    uint8_t prime_pin;
+    // uint8_t prime_pin;
     uint8_t voltage_in_pin;
     uint8_t voltage_out_pin;
 } MasterflexDB25Interface_t;

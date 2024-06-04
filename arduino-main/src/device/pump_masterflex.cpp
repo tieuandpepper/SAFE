@@ -8,7 +8,7 @@
 PumpMasterflex::PumpMasterflex(MasterflexDB25Interface_t bd25)
 {
     _pins.direction_pin = bd25.direction_pin;
-    _pins.prime_pin = bd25.prime_pin;
+    // _pins.prime_pin = bd25.prime_pin;
     _pins.start_stop_pin = bd25.start_stop_pin;
     _pins.voltage_in_pin = bd25.voltage_in_pin;
     _pins.voltage_out_pin = bd25.voltage_out_pin;
@@ -24,7 +24,7 @@ uint16_t PumpMasterflex::Connect()
     pinMode(_pins.voltage_in_pin, OUTPUT);
     pinMode(_pins.start_stop_pin, OUTPUT);
     pinMode(_pins.direction_pin, OUTPUT);
-    pinMode(_pins.prime_pin, OUTPUT);
+    // pinMode(_pins.prime_pin, OUTPUT);
     _state_op = this->GetOpState();
     _state_dir = this->GetDirection();
     _speed_control.speed_ml_min = 0.0;
