@@ -7,13 +7,13 @@ def PrintResponse(comm_port):
   response = "No response"
   while response.find("RESP") == -1:
     time.sleep(0.2)
-    response = comm_port.readline().decode('utf-8')
+    response = comm_port.readline().decode('utf-8') 
   
   print("-> ", response)
 
 def PrintCommand(comm_port):
   command = "Invalid command"
-  while command.find("Target") == -1:
+  while command.find("CMD") == -1:
     time.sleep(0.2)
     command = comm_port.readline().decode('utf-8')
   
@@ -26,10 +26,10 @@ def SendCommand(comm_port, command):
 ###################################################################################
 def main():
   # comm port used
-  ARDUINO_PORT = "/dev/tty.usbserial-1410"
+  ARDUINO_PORT = "/dev/tty.usbserial-1110"
   # ARDUINO_PORT = "COM9"
   # COND_METER_PORT = "COM15"
-  baud_rate = 9600
+  baud_rate = 115200
   arduino = serial.Serial(port = ARDUINO_PORT,  baudrate=baud_rate, timeout=.5)
   # cond_meter = cm.ConductivityMeter(COND_METER_PORT, baud_rate)
 
@@ -41,22 +41,21 @@ def main():
       print(ready_msg)
   
   command_list = [
-                  "mixpump,clock.",
-                  "rotvalve, port, 12.",
-                  "mixpump,dispense,3000.",
-                  "rotvalve, port, 14.",
-                  "mixpump,dispense,3000.",
-                  # "mixer, run, 20000.",
-                  # "mixpump,counterclock.",
-                  # "mixpump,dispense,25000",
-                  # "condmeter, getmeas.",
-                  # "pump2, dispense, 15000.",
-                  # "lighter, ignite, 2000.",
-                  # "fire, read, 10.",
+                  "<temp,periodic,500>",
+                  "<lighter,ignite,4000>"
                   ]
 
   for cmd in command_list:
-    component = cmd[:cmd.find(",")].upper()
+    first_idx = cmd.find("<")
+    last_idx = cmd.find(">")
+    if (first_idx == -1 or last_idx == -1):
+      print("Invalid command")
+      continue
+    if (first_idx + 1 == last_idx):
+      print("Empty command")
+      continue
+
+    component = cmd[(first_idx+1):last_idx].upper()
     # print(component)
     if component == "CONDMETER":
       # conductivity = cond_meter.getConductivity()
