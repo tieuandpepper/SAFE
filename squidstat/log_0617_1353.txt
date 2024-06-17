@@ -1,0 +1,344 @@
+PS C:\Users\phatt\Local Source Code\SAFE> python .\squidstat\squidstat_control.py
+"Plus1215 channel 0: Error loading calibration data."
+New Node beginning: Constant Current step number:  1  step sub :  1
+Plus1215 channel 0: Reference electrode potential out of range!
+Device is Connected: Plus1215
+timestamp: 0.999999400 workingElectrodeVoltage:  -10.010163307
+timestamp: 1.999999420 workingElectrodeVoltage:  -10.010163307
+timestamp: 2.999999410 workingElectrodeVoltage:  -10.010163307
+timestamp: 3.999999460 workingElectrodeVoltage:  -10.010163307
+timestamp: 4.999999410 workingElectrodeVoltage:  -10.010163307
+timestamp: 5.999999410 workingElectrodeVoltage:  -10.010163307
+timestamp: 6.999999620 workingElectrodeVoltage:  -10.010163307
+timestamp: 7.999999450 workingElectrodeVoltage:  -10.010163307
+timestamp: 8.999999540 workingElectrodeVoltage:  0.001016543
+timestamp: 9.989999410 workingElectrodeVoltage:  0.000810625
+New Node beginning: Constant Potential step number:  2  step sub :  1
+timestamp: 11.000174020 workingElectrodeVoltage:  0.000793571
+timestamp: 12.000174030 workingElectrodeVoltage:  0.000794059
+timestamp: 13.000174020 workingElectrodeVoltage:  0.000769105
+timestamp: 14.000174020 workingElectrodeVoltage:  0.000762546
+Plus1215 channel 0: The current limit for the current range has been exceeded. Current Range incremented to 6
+timestamp: 15.000174130 workingElectrodeVoltage:  0.019752851
+timestamp: 16.000174070 workingElectrodeVoltage:  0.388768792
+timestamp: 17.000174070 workingElectrodeVoltage:  4.998149395
+timestamp: 18.000174060 workingElectrodeVoltage:  4.998127937
+timestamp: 19.000174020 workingElectrodeVoltage:  4.998229980
+timestamp: 19.990174020 workingElectrodeVoltage:  4.998195171
+New Node beginning: Constant Current step number:  3  step sub :  1
+Plus1215 channel 0: Reference electrode potential out of range!
+timestamp: 21.000217420 workingElectrodeVoltage:  10.004271507
+timestamp: 22.000217450 workingElectrodeVoltage:  10.004271507
+timestamp: 23.000217460 workingElectrodeVoltage:  10.004271507
+timestamp: 24.000217430 workingElectrodeVoltage:  10.004271507
+timestamp: 25.000217430 workingElectrodeVoltage:  10.004271507
+timestamp: 26.000217420 workingElectrodeVoltage:  10.004271507
+timestamp: 27.000217500 workingElectrodeVoltage:  10.004271507
+timestamp: 28.000217420 workingElectrodeVoltage:  10.004271507
+timestamp: 29.000217420 workingElectrodeVoltage:  10.004271507
+timestamp: 29.990217430 workingElectrodeVoltage:  10.004271507
+New Node beginning: Constant Potential step number:  4  step sub :  1
+timestamp: 31.000075390 workingElectrodeVoltage:  5.736047745
+timestamp: 32.000075320 workingElectrodeVoltage:  5.526592731
+timestamp: 33.000075320 workingElectrodeVoltage:  5.375157833
+timestamp: 34.000075490 workingElectrodeVoltage:  5.255555153
+timestamp: 35.000075700 workingElectrodeVoltage:  5.150310993
+timestamp: 36.000075440 workingElectrodeVoltage:  5.059192657
+timestamp: 37.000075320 workingElectrodeVoltage:  5.002328873
+timestamp: 38.000075460 workingElectrodeVoltage:  4.998589516
+timestamp: 39.000075450 workingElectrodeVoltage:  4.998517036
+timestamp: 39.990075390 workingElectrodeVoltage:  4.998763084
+New Node beginning: Constant Current step number:  3  step sub :  2
+timestamp: 41.000176080 workingElectrodeVoltage:  9.205795288
+timestamp: 42.000176040 workingElectrodeVoltage:  9.008790970
+timestamp: 43.000176010 workingElectrodeVoltage:  8.824034691
+timestamp: 44.000176010 workingElectrodeVoltage:  8.638602257
+timestamp: 45.000176020 workingElectrodeVoltage:  8.464943886
+timestamp: 46.000176020 workingElectrodeVoltage:  8.288279533
+timestamp: 47.000176020 workingElectrodeVoltage:  8.004503250
+timestamp: 48.000176050 workingElectrodeVoltage:  7.791028023
+timestamp: 49.000176030 workingElectrodeVoltage:  7.680786133
+timestamp: 49.990176020 workingElectrodeVoltage:  7.575890541
+New Node beginning: Constant Potential step number:  4  step sub :  2
+timestamp: 51.000183910 workingElectrodeVoltage:  4.998502254
+timestamp: 52.000183900 workingElectrodeVoltage:  4.998497009
+timestamp: 53.000184060 workingElectrodeVoltage:  4.998516560
+timestamp: 54.000184050 workingElectrodeVoltage:  4.998510361
+timestamp: 55.000184030 workingElectrodeVoltage:  4.998495102
+timestamp: 56.000183910 workingElectrodeVoltage:  4.998513699
+timestamp: 57.000184050 workingElectrodeVoltage:  4.998503685
+timestamp: 58.000184040 workingElectrodeVoltage:  4.998508930
+timestamp: 59.000184040 workingElectrodeVoltage:  4.998539448
+timestamp: 59.990184050 workingElectrodeVoltage:  4.998787403
+Plus1215 channel 0: Unknown response. Response ID: 106
+New Node beginning: Potentiostatic EIS step number:  5  step sub :  1
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 9999.983398438 absoluteImpedance:  1.181052249 phaseAngle:  147.890667802
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 7943.250000000 absoluteImpedance:  1.266524832 phaseAngle:  142.113906827
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 6309.570800781 absoluteImpedance:  1.385751630 phaseAngle:  135.729720897
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 5011.865722656 absoluteImpedance:  1.572907762 phaseAngle:  129.374109653
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 3981.054687500 absoluteImpedance:  1.831703621 phaseAngle:  123.038625573
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 3162.259277344 absoluteImpedance:  2.172450515 phaseAngle:  117.550908207
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 2511.881835938 absoluteImpedance:  2.621319133 phaseAngle:  112.517074184
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 1995.253784180 absoluteImpedance:  3.207407359 phaseAngle:  108.264578324
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 1584.889892578 absoluteImpedance:  3.962457709 phaseAngle:  104.797212607
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 1258.921142578 absoluteImpedance:  0.535880857 phaseAngle:  115.361962102
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 999.995971680 absoluteImpedance:  0.650104172 phaseAngle:  110.735889454
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 794.325012207 absoluteImpedance:  0.797343390 phaseAngle:  106.804473323
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 630.956481934 absoluteImpedance:  0.986761630 phaseAngle:  103.529441717
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 501.185424805 absoluteImpedance:  1.228415381 phaseAngle:  100.923271560
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 398.105468750 absoluteImpedance:  1.564590342 phaseAngle:  98.780082330
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 316.227661133 absoluteImpedance:  1.958264514 phaseAngle:  96.982794772
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 251.187881470 absoluteImpedance:  2.463448701 phaseAngle:  95.639969430
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 199.525680542 absoluteImpedance:  3.090270355 phaseAngle:  94.517954630
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 158.489273071 absoluteImpedance:  4.255308899 phaseAngle:  93.613904985
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 125.892257690 absoluteImpedance:  5.352200013 phaseAngle:  93.971317848
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 99.999305725 absoluteImpedance:  6.688913001 phaseAngle:  92.936634093
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 79.432723999 absoluteImpedance:  8.476350452 phaseAngle:  92.151340756
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 63.095649719 absoluteImpedance:  10.554983980 phaseAngle:  94.633833999
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 50.118614197 absoluteImpedance:  13.380310357 phaseAngle:  91.180425094
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 39.810585022 absoluteImpedance:  17.223870626 phaseAngle:  90.937054729
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 31.622766495 absoluteImpedance:  21.683170010 phaseAngle:  91.548025136
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 25.118787766 absoluteImpedance:  26.705747432 phaseAngle:  91.883982403
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 19.952585220 absoluteImpedance:  3.075281259 phaseAngle:  101.772362110
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 15.848855019 absoluteImpedance:  3.845019872 phaseAngle:  99.670783043
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 12.589225769 absoluteImpedance:  4.888827557 phaseAngle:  97.655580501
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 9.999984741 absoluteImpedance:  6.011809858 phaseAngle:  96.349593600
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 7.943253994 absoluteImpedance:  7.689539130 phaseAngle:  95.956702073
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 6.309528351 absoluteImpedance:  8.889523838 phaseAngle:  92.742687347
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 5.011861324 absoluteImpedance:  10.406346877 phaseAngle:  99.249870399
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 3.981062889 absoluteImpedance:  14.792691930 phaseAngle:  105.500888483
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 3.162267685 absoluteImpedance:  18.803075890 phaseAngle:  92.579752345
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 2.511876583 absoluteImpedance:  45.588999136 phaseAngle:  -20.945078601
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 1.995260835 absoluteImpedance:  43.762573032 phaseAngle:  34.270565087
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 1.584885478 absoluteImpedance:  22.950364266 phaseAngle:  88.810624048
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+Plus1215 channel 0: Unknown response. Response ID: 106
+frequency: 1.258922577 absoluteImpedance:  12.755197633 phaseAngle:  93.203325234
+frequency: 0.999995112 absoluteImpedance:  35.320983182 phaseAngle:  91.744997924
+Experiment Completed: 0
