@@ -14,14 +14,15 @@
 
 
 // define target/source for command/response
+#define DEVICE_NONE                "NONE"
+#define DEVICE_SYSTEM              "SYSTEM"
 #define DEVICE_MASTERFLEXPUMP      "MIXPUMP"
 #define DEVICE_MIXER               "MIXER"
 #define DEVICE_ROTARYVALVE         "ROTARYVALVE"
 #define DEVICE_TEMPSENSOR          "TEMPSENSOR"
 #define DEVICE_LIGHTER             "LIGHTER"
 #define DEVICE_EZOPUMP             "TRANSFERPUMP"
-#define DEVICE_NONE                "NONE"
-#define DEVICE_SYSTEM              "SYSTEM"
+#define DEVICE_SOLENOIDVALVE       "SOLENOID"
 
 // define command instruction
 #define MIXPUMP_START          "START"
@@ -73,5 +74,8 @@
 #define EZOPUMP_DIRECTION_CHANGE        "DIRECTION"
 #define EZOPUMP_CALIBRATE_RESET         "CALRESET"
 
+#define SOLENOIDVALVE_START         "START"
+#define SOLENOIDVALVE_STOP          "STOP"
+#define SOLENOIDVALVE_RUN           "RUN"
 
 #endif

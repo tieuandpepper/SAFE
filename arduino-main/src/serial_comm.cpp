@@ -16,12 +16,16 @@
 /// @return 0 if no command and 1 for valid command
 int GetCommand(cmd_t* command)
 {
+  String buffer =  "";
   if (!Serial.available())
   {
     return CMD_UNAVAILABLE;
   }
   Serial.println("serial data received");
-  String buffer = Serial.readStringUntil('>');
+  command->size = Serial.readBytesUntil('>',command->buffer,64);
+  command->buffer[command->size++] = '>';
+  buffer = String(command->buffer);
+  Serial.println(command->buffer);
   if (buffer.indexOf('<') != 0)
   {
     return CMD_INVALID;
@@ -71,28 +75,30 @@ int GetCommand(cmd_t* command)
 /// @brief 
 /// @param response 
 /// @return 
-int SendResponse(resp_t response)
+int SendResponse(resp_t * response)
 {
-  if (response.source == DEVICE_NONE || response.type == RESP_TYPE_NOTHING)
+  if (response->source == DEVICE_NONE || response->type == RESP_TYPE_NOTHING)
   {
     return RESP_UNAVAILABLE;
   }
   String buffer = "<RESP;";
   String error = "";
-  buffer += response.source;
+  buffer += response->source;
   buffer += ";";
-  buffer += response.type;
+  buffer += response->type;
   buffer += ";";
-  error = String(response.error_code,HEX);
+  error = String(response->error_code,HEX);
   error.toUpperCase();
   buffer += (error);
-  if (response.data.length() > 0)
+  if (response->data.length() > 0)
   {
     buffer += ";";
-    buffer += response.data;
+    buffer += response->data;
   }
   buffer += ">";
   Serial.println(buffer);
+  response->size = buffer.length();
+  buffer.toCharArray(response->buffer,response->size);
   return RESP_SENT;
 }
 

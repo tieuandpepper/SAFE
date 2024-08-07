@@ -33,6 +33,8 @@
 
 // Command structure: <TARGET>,<INSTRUCTION>,<OPERAND>.
 typedef struct command_type {
+  char buffer[64];
+  int size;
   String target;
   String instruction;
   uint32_t parameter = 0;
@@ -40,6 +42,8 @@ typedef struct command_type {
 
 // Response structure: RESP,<SOURCE>,<TYPE>,<ERROR_CODE>,<DATA>.
 typedef struct resp_type {
+  char buffer[64];
+  int size;
   String source;
   String type;
   uint16_t error_code;
@@ -47,7 +51,7 @@ typedef struct resp_type {
 } resp_t;
 
 int GetCommand(cmd_t* command);
-int SendResponse(resp_t response);
+int SendResponse(resp_t* response);
 void PrintCommand(cmd_t command);
 
 #endif

@@ -106,8 +106,3 @@
 // rotary valve
 #define PIN_ROTARY_VALVE_RX                 8
 #define PIN_ROTARY_VALVE_TX                 9
-
-// I2C Address
-#define I2C_ADDR_TEMP_SENSOR                0x10
-#define I2C_ADDR_TRANSFER_PUMP              0x67
-#define I2C_ADDR_UART_ARDUINO               0xAA

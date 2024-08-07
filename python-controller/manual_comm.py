@@ -41,8 +41,8 @@ def main():
       print(ready_msg)
   
   command_list = [
-                  "<temp,periodic,500>",
-                  "<lighter,ignite,4000>"
+                  "<temp;periodic;500>",
+                  "<lighter;ignite;4000>"
                   ]
 
   for cmd in command_list:

@@ -11,7 +11,9 @@ resp_t MasterflexPumpController(PumpMasterflex* pump, cmd_t command)
 {
   resp_t response;
   uint32_t data;
+  #if ARDUINO_VERBOSE
   Serial.println("Mixpump received a command");
+  #endif
   response.source = DEVICE_MASTERFLEXPUMP;
   response.type = RESP_TYPE_VALID;
   response.data = "";
@@ -105,8 +107,10 @@ resp_t MasterflexPumpController(PumpMasterflex* pump, cmd_t command)
 resp_t MixerController(Mixer * mixer, cmd_t command)
 {
   resp_t response;
+  #if ARDUINO_VERBOSE
   Serial.println("Mixer received a command");
   response.source = DEVICE_MIXER;
+  #endif
   response.type = RESP_TYPE_VALID;
   response.data = "";
   response.error_code = RESP_GENERAL_FEEDBACK_VOID;
@@ -225,8 +229,9 @@ resp_t RotaryValveController(RotaryValve * valve, cmd_t command)
 {
   resp_t response;
   uint32_t data;
-
+  #if ARDUINO_VERBOSE
   Serial.println("Rotary valve received a command");
+  #endif
   response.source = DEVICE_ROTARYVALVE;
   response.type = RESP_TYPE_VALID;
   response.data = "";
@@ -304,7 +309,9 @@ resp_t RotaryValveController(RotaryValve * valve, cmd_t command)
 resp_t ArcLighterController(ArcLighter * lighter, cmd_t command)
 {
   resp_t response;
-  // Serial.println("Lighter received a command");
+  #if ARDUINO_VERBOSE
+  Serial.println("Lighter received a command");
+  #endif
   response.source = DEVICE_LIGHTER;
   response.data = "";
   response.type = RESP_TYPE_VALID;
@@ -347,11 +354,20 @@ resp_t ArcLighterController(ArcLighter * lighter, cmd_t command)
   return response;
 }
 
+/**
+ * @brief 
+ * 
+ * @param pump 
+ * @param command 
+ * @return resp_t 
+ */
 resp_t EZOPumpController(EZOPump * pump, cmd_t command)
 {
   resp_t response;
   String data;
+  #if ARDUINO_VERBOSE
   Serial.println("EZO Pump received a command");
+  #endif
   response.source = DEVICE_EZOPUMP;
   response.data = "";
   response.type = RESP_TYPE_VALID;
@@ -414,6 +430,43 @@ resp_t EZOPumpController(EZOPump * pump, cmd_t command)
   if (command.instruction.equals(EZOPUMP_DIRECTION_CHANGE))
   {
     response.error_code = pump->DirectionChange();
+    return response;
+  }
+  response.type = RESP_TYPE_INVALID;
+  response.error_code = RESP_GENERAL_ERROR_INVALID_INSTRUCTION;
+  return response;
+}
+
+/**
+ * @brief controller for solenoid valve
+ * 
+ * @param valve valve object
+ * @param command 
+ * @return * resp_t response
+ */
+resp_t SolenoidValveController(SolenoidValve * valve, cmd_t command)
+{
+  resp_t response;
+  #if ARDUINO_VERBOSE
+  Serial.println("Solenoid valve received a command");
+  #endif
+  response.source = DEVICE_SOLENOIDVALVE;
+  response.type = RESP_TYPE_VALID;
+  response.data = "";
+  response.error_code = RESP_GENERAL_FEEDBACK_VOID;
+  if (command.instruction.equals(SOLENOIDVALVE_START))
+  {
+    response.error_code = valve->Start();
+    return response;
+  }
+  if (command.instruction.equals(SOLENOIDVALVE_STOP))
+  {
+    response.error_code = valve->Stop();
+    return response;
+  }
+  if (command.instruction.equals(SOLENOIDVALVE_RUN))
+  {
+    response.error_code = valve->Run(command.parameter);
     return response;
   }
   response.type = RESP_TYPE_INVALID;

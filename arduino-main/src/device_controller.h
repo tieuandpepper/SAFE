@@ -4,12 +4,14 @@
 #include <Arduino.h>
 #include "serial_comm.h"
 #include "command_list.h"
+#include "arduino_setting.h"
 #include "device/mixer.h"
 #include "device/pump_masterflex.h"
 #include "device/rotary_valve.h"
 #include "device/temp_sensor.h"
 #include "device/ezo_pump.h"
 #include "device/arc_lighter.h"
+#include "device/solenoid_valve.h"
 
 resp_t MasterflexPumpController(PumpMasterflex* pump, cmd_t command);
 resp_t MixerController(Mixer * mixer, cmd_t command);
@@ -17,5 +19,5 @@ resp_t TempSensorController(TempSensorMAX31855 * sensor, cmd_t command);
 resp_t RotaryValveController(RotaryValve * valve, cmd_t command);
 resp_t ArcLighterController(ArcLighter * lighter, cmd_t command);
 resp_t EZOPumpController(EZOPump * pump, cmd_t command);
-
+resp_t SolenoidValveController(SolenoidValve * valve, cmd_t command);
 #endif
